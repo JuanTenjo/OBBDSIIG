@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{45CC4355-4692-4394-9606-6527256AE12A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>OBBDSIIG</RootNamespace>
+    <AssemblyName>OBBDSIIG</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>SIIGHOSPLUSICONO.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class\Conexion.cs" />
+    <Compile Include="Class\Utils.cs" />
+    <Compile Include="Forms\FrmExportar\FrmExportHigieneOral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmExportar\FrmExportHigieneOral.Designer.cs">
+      <DependentUpon>FrmExportHigieneOral.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmExportar\FrmExportSedeCentral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmExportar\FrmExportSedeCentral.Designer.cs">
+      <DependentUpon>FrmExportSedeCentral.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmExportar\FrmExportSedeCentralCito.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmExportar\FrmExportSedeCentralCito.Designer.cs">
+      <DependentUpon>FrmExportSedeCentralCito.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmExportar\FrmExportSedeCentralHistorias.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmExportar\FrmExportSedeCentralHistorias.Designer.cs">
+      <DependentUpon>FrmExportSedeCentralHistorias.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmImportar\FrmImportHigieneOral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmImportar\FrmImportHigieneOral.Designer.cs">
+      <DependentUpon>FrmImportHigieneOral.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmImportar\FrmImportSedeCentral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmImportar\FrmImportSedeCentral.Designer.cs">
+      <DependentUpon>FrmImportSedeCentral.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmImportar\FrmImportSedeCentralHistorias.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmImportar\FrmImportSedeCentralHistorias.Designer.cs">
+      <DependentUpon>FrmImportSedeCentralHistorias.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmIntegrar\FrmIntegrarBiometria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmIntegrar\FrmIntegrarBiometria.Designer.cs">
+      <DependentUpon>FrmIntegrarBiometria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmIntegrar\FrmIntegrarEntidades.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmIntegrar\FrmIntegrarEntidades.Designer.cs">
+      <DependentUpon>FrmIntegrarEntidades.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmIntegrar\FrmIntegrarMedicos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmIntegrar\FrmIntegrarMedicos.Designer.cs">
+      <DependentUpon>FrmIntegrarMedicos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmIntegrar\FrmIntegrarPacientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmIntegrar\FrmIntegrarPacientes.Designer.cs">
+      <DependentUpon>FrmIntegrarPacientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmIntegrar\FrmIntegrarServicios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmIntegrar\FrmIntegrarServicios.Designer.cs">
+      <DependentUpon>FrmIntegrarServicios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmIntegrar\FrmIntegrarUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmIntegrar\FrmIntegrarUsuarios.Designer.cs">
+      <DependentUpon>FrmIntegrarUsuarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmPrincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmPrincipal.Designer.cs">
+      <DependentUpon>FrmPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\FrmExportar\FrmExportHigieneOral.resx">
+      <DependentUpon>FrmExportHigieneOral.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmExportar\FrmExportSedeCentral.resx">
+      <DependentUpon>FrmExportSedeCentral.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmExportar\FrmExportSedeCentralCito.resx">
+      <DependentUpon>FrmExportSedeCentralCito.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmExportar\FrmExportSedeCentralHistorias.resx">
+      <DependentUpon>FrmExportSedeCentralHistorias.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmImportar\FrmImportHigieneOral.resx">
+      <DependentUpon>FrmImportHigieneOral.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmImportar\FrmImportSedeCentral.resx">
+      <DependentUpon>FrmImportSedeCentral.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmImportar\FrmImportSedeCentralHistorias.resx">
+      <DependentUpon>FrmImportSedeCentralHistorias.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmIntegrar\FrmIntegrarBiometria.resx">
+      <DependentUpon>FrmIntegrarBiometria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmIntegrar\FrmIntegrarEntidades.resx">
+      <DependentUpon>FrmIntegrarEntidades.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmIntegrar\FrmIntegrarMedicos.resx">
+      <DependentUpon>FrmIntegrarMedicos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmIntegrar\FrmIntegrarPacientes.resx">
+      <DependentUpon>FrmIntegrarPacientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmIntegrar\FrmIntegrarServicios.resx">
+      <DependentUpon>FrmIntegrarServicios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmIntegrar\FrmIntegrarUsuarios.resx">
+      <DependentUpon>FrmIntegrarUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmPrincipal.es-CO.resx">
+      <DependentUpon>FrmPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmPrincipal.resx">
+      <DependentUpon>FrmPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Report\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 y x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Pictures\icons8-exportar-30.png" />
+    <Content Include="SIIGHOSPLUSICONO.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
