@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using OBBDSIIG.Class;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace OBBDSIIG.Forms.FrmIntegrar
 {
@@ -178,7 +179,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                 string PfiCen = TxtPrefiCenFor.Text;
                 string PfiPor = TxtPrefiPorFor.Text;
 
-
+                Utils.Titulo01 = "Control para integrar medicos";
                 Utils.Informa = "¿Usted desea iniciar el proceso de integración" + "\r";
                 Utils.Informa += "de los medicos en la instancia del" + "\r";
                 Utils.Informa += "servidor central a la instancia del portatil.?" + "\r";
@@ -186,12 +187,15 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                 if (res == DialogResult.Yes)
                 {
+                    TxtCanMediFor.Text = "0";
+                    TxtCanMediForm.Text = "0";
+                    TxtCanMediExis.Text = "0";
+
 
                     SqlMedi = "SELECT CodiMedico, CodEspecial, TipoDocum, NumDocum, NomMedico, Apellido1Medico, Apellido2Medico, FecNaciMedi, SexoMedico, ";
                     SqlMedi += "CargoMedico, DirecMedico, TeleResiden, TeleConsul, TeleCelular, RegisProfes, LicenOcupa, TrabajaPor, ActiMedico, ";
                     SqlMedi += "HaceConsul, FirmaD, FotoMedico, CodiRegis, FecRegis, CodiModi, FecModi, Nom2Medico ";
-                    SqlMedi += "FROM [GEOGRAXPSQL].[dbo].[Datos de los medicos] ";
-                    SqlMedi += "ORDER BY CodiMedico";
+                    SqlMedi += "FROM [GEOGRAXPSQL].[dbo].[Datos de los medicos]";
 
                     ConectarCentral();
 
@@ -208,12 +212,21 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                             Utils.Informa = "Lo siento pero no hay datos " + "\r";
                             Utils.Informa += "para exportar o modificar en , " + "\r";
                             Utils.Informa += "Datos de los medicos." + "\r";
-                            MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                         else
                         {
+                            byte[] bytes;
+                            byte[] bytes2;
+                            List<SqlParameter> parameters = new List<SqlParameter>();
+                            string Tipo = "null";
+                            string Tipo2 = "null";
+                            SqlDataReader TabMediCentra;
                             while (TabMedi.Read())
                             {
+                                Tipo = "null";
+                                Tipo2 = "null";
+                                parameters.Clear();
                                 //Revisamos si el código interno de la entidad existe
                                 CodMedi = TabMedi["CodiMedico"].ToString();
                                 ContiPro = 0;
@@ -227,8 +240,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                                 ConectarPortatil();
 
-                                SqlDataReader TabMediCentra;
-
+                                
                                 using (SqlConnection connection2 = new SqlConnection(Conexion.conexionSQL))
                                 {
                                     SqlCommand command2 = new SqlCommand(SqlMediCentra, connection2);
@@ -237,6 +249,35 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                                     if (TabMediCentra.HasRows == false)
                                     {
+
+                                        if (string.IsNullOrWhiteSpace(TabMedi["FirmaD"].ToString()) || TabMedi["FirmaD"].ToString() == null)
+                                        {
+                                            bytes = (byte[])(null);
+                                            Tipo = "null";
+                                        }
+                                        else
+                                        {
+                                            bytes = (byte[])(TabMedi["FirmaD"]);
+                                            Tipo = "@FirmaD";
+
+                                            parameters.Add(new SqlParameter("@FirmaD", SqlDbType.Image) { Value = bytes });
+
+                                        }
+
+                                        if (string.IsNullOrWhiteSpace(TabMedi["FotoMedico"].ToString()) || TabMedi["FotoMedico"].ToString() == null)
+                                        {
+                                            bytes2 = (byte[])(null);
+                                            Tipo2 = "null";
+                                        }
+                                        else
+                                        {
+                                            bytes2 = (byte[])(TabMedi["FotoMedico"]);
+                                            Tipo2 = "@FotoMedico";
+
+                                            parameters.Add(new SqlParameter("@FotoMedico", SqlDbType.Image) { Value = bytes2 });
+
+                                        }
+
                                         Utils.SqlDatos = "INSERT INTO [GEOGRAXPSQL].[dbo].[Datos de los medicos]" +
                                         "(" +
                                         "CodiMedico," + 
@@ -275,7 +316,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                          "'" + TabMedi["NomMedico"].ToString() + "'," +
                                          "'" + TabMedi["Apellido1Medico"].ToString() + "'," +
                                          "'" + TabMedi["Apellido2Medico"].ToString() + "'," +
-                                         "'" + TabMedi["FecNaciMedi"].ToString() + "'," +
+                                         $"{ValidarFechaNula(TabMedi["FecNaciMedi"].ToString())}" +
                                          "'" + TabMedi["SexoMedico"].ToString() + "'," +
                                          "'" + TabMedi["CargoMedico"].ToString() + "'," +
                                          "'" + TabMedi["DirecMedico"].ToString() + "'," +
@@ -287,8 +328,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                          "'" + TabMedi["TrabajaPor"].ToString() + "'," +
                                          "'" + TabMedi["ActiMedico"].ToString() + "'," +
                                          "'" + TabMedi["HaceConsul"].ToString() + "'," +
-                                         "'" + TabMedi["FirmaD"].ToString() + "'," +
-                                         "'" + TabMedi["FotoMedico"].ToString() + "'," +
+                                         "" + Tipo + "," +
+                                         "" + Tipo2 + "," +
                                          "'" + TabMedi["CodiRegis"].ToString() + "'," +
                                         $"{ValidarFechaNula(TabMedi["FecRegis"].ToString())}" +
                                          "'" + TabMedi["CodiModi"].ToString() + "'," +
@@ -297,7 +338,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         ")";
 
 
-                                        Boolean Regis = Conexion.SqlInsert(Utils.SqlDatos);
+                                        Boolean Regis = Conexion.SqlInsert(Utils.SqlDatos,parameters);
 
                                         if (Regis)
                                         {
@@ -312,36 +353,68 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                     else
                                     {
 
+
+                                        if (string.IsNullOrWhiteSpace(TabMedi["FirmaD"].ToString()) || TabMedi["FirmaD"].ToString() == null)
+                                        {
+                                            bytes = (byte[])(null);
+                                            Tipo = "null";
+                                        }
+                                        else
+                                        {
+
+                                            bytes = (byte[])(TabMedi["FirmaD"]);
+                                            Tipo = "@FirmaD";
+
+                                            parameters.Add(new SqlParameter("@FirmaD", SqlDbType.Image) { Value = bytes });
+
+
+                                        }
+
+                                        if (string.IsNullOrWhiteSpace(TabMedi["FotoMedico"].ToString()) || TabMedi["FotoMedico"].ToString() == null)
+                                        {
+                                            bytes2 = (byte[])(null);
+                                            Tipo2 = "null";
+                                        }
+                                        else
+                                        {
+
+                                            bytes2 = (byte[])(TabMedi["FotoMedico"]);
+                                            Tipo2 = "@FotoMedico";
+
+                                            parameters.Add(new SqlParameter("@FotoMedico", SqlDbType.Image) { Value = bytes2 });
+
+                                        }
+
                                         //Modifique los datos
-                                        Utils.SqlDatos = $"UPDATE [GEOGRAXPSQL].[dbo].[Datos de los medicos] SET " +
+                                        Utils.SqlDatos = "UPDATE [GEOGRAXPSQL].[dbo].[Datos de los medicos] SET " +
                                         "CodEspecial ='" + TabMedi["CodEspecial"].ToString() + "', " +
                                         "TipoDocum ='" + TabMedi["TipoDocum"].ToString() + "', " +
-                                        "NumDocum ='" + TabMedi["NumDocum"].ToString() + "', " +
-                                        "NomMedico ='" + TabMedi["NomMedico"].ToString() + "', " +
-                                        "Apellido1Medico ='" + TabMedi["Apellido1Medico"].ToString() + "', " +
-                                        "Apellido2Medico ='" + TabMedi["Apellido2Medico"].ToString() + "', " +
-                                        "FecNaciMedi ='" + TabMedi["FecNaciMedi"].ToString() + "', " +
-                                        "SexoMedico ='" + TabMedi["SexoMedico"].ToString() + "', " +
-                                        "CargoMedico ='" + TabMedi["CargoMedico"].ToString() + "', " +
-                                        "DirecMedico ='" + TabMedi["DirecMedico"].ToString() + "', " +
-                                        "TeleResiden ='" + TabMedi["TeleResiden"].ToString() + "', " +
-                                        "TeleConsul ='" + TabMedi["TeleConsul"].ToString() + "', " +
-                                        "TeleCelular ='" + TabMedi["TeleCelular"].ToString() + "', " +
-                                        "RegisProfes ='" + TabMedi["RegisProfes"].ToString() + "', " +
-                                        "LicenOcupa ='" + TabMedi["LicenOcupa"].ToString() + "', " +
-                                        "TrabajaPor ='" + TabMedi["TrabajaPor"].ToString() + "', " +
-                                        "ActiMedico ='" + TabMedi["ActiMedico"].ToString() + "', " +
-                                        "HaceConsul ='" + TabMedi["HaceConsul"].ToString() + "', " +
-                                        "FirmaD ='" + TabMedi["FirmaD"].ToString() + "', " +
-                                        "FotoMedico ='" + TabMedi["FotoMedico"].ToString() + "', " +
-                                        "CodiRegis = '" + TabMedi["CodiRegis"].ToString() + "', " +
+                                        "NumDocum ='" + TabMedi["NumDocum"].ToString() + "'," +
+                                        "NomMedico ='" + TabMedi["NomMedico"].ToString() + "'," +
+                                        "Apellido1Medico ='" + TabMedi["Apellido1Medico"].ToString() + "'," +
+                                        "Apellido2Medico ='" + TabMedi["Apellido2Medico"].ToString() + "'," +
+                                        $"FecNaciMedi = {ValidarFechaNula(TabMedi["FecNaciMedi"].ToString())} " +
+                                        "SexoMedico ='" + TabMedi["SexoMedico"].ToString() + "'," +
+                                        "CargoMedico ='" + TabMedi["CargoMedico"].ToString() + "'," +
+                                        "DirecMedico ='" + TabMedi["DirecMedico"].ToString() + "'," +
+                                        "TeleResiden ='" + TabMedi["TeleResiden"].ToString() + "'," +
+                                        "TeleConsul ='" + TabMedi["TeleConsul"].ToString() + "'," +
+                                        "TeleCelular ='" + TabMedi["TeleCelular"].ToString() + "'," +
+                                        "RegisProfes ='" + TabMedi["RegisProfes"].ToString() + "'," +
+                                        "LicenOcupa ='" + TabMedi["LicenOcupa"].ToString() + "'," +
+                                        "TrabajaPor ='" + TabMedi["TrabajaPor"].ToString() + "'," +
+                                        "ActiMedico ='" + TabMedi["ActiMedico"].ToString() + "'," +
+                                        "HaceConsul ='" + TabMedi["HaceConsul"].ToString() + "'," +
+                                        "FirmaD = " + Tipo + ", " +
+                                        "FotoMedico =" + Tipo2 + "," +
+                                        "CodiRegis ='" + TabMedi["CodiRegis"].ToString() + "'," +
                                         $"FecRegis = {ValidarFechaNula(TabMedi["FecRegis"].ToString())} " +
-                                        "CodiModi ='" + TabMedi["CodiModi"].ToString() + "', " +
+                                        "CodiModi ='" + TabMedi["CodiModi"].ToString() + "'," +
                                         $"FecModi = {ValidarFechaNula(TabMedi["FecModi"].ToString())} " +
-                                        "Nom2Medico = '" + TabMedi["Nom2Medico "].ToString() + "' " +
+                                        "Nom2Medico = '" + TabMedi["Nom2Medico"].ToString() + "' " +
                                         "WHERE (CodiMedico = '" + CodMedi + "')";
 
-                                        Boolean ActControl = Conexion.SQLUpdate(Utils.SqlDatos);
+                                        bool ActControl = Conexion.SQLUpdate(Utils.SqlDatos,parameters);
 
                                         if (ActControl)
                                         {
@@ -354,9 +427,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                                     }//'Final deif (TabPlacaCen.HasRows == false)
 
-                                    TabMediCentra.Close();
+                                   
 
                                 }//USing
+                                TabMediCentra.Close();
                             }//While
 
                             Utils.Informa = "El proceso ha terminado satisfactoriamente";
@@ -368,7 +442,6 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     }
 
                 }
-
             }
             catch (Exception ex)
             {
@@ -379,5 +452,25 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        public Image byteArrayToImage(byte[] byteArrayIn)
+        {
+            try
+            {
+                MemoryStream ms = new MemoryStream(byteArrayIn);
+                Image returnImage = Image.FromStream(ms);
+                return returnImage;
+            }
+            catch (Exception ex)
+            {
+                Utils.Informa = "Error: " + ex.Message + " - " + ex.StackTrace;
+                MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+
+        }
+
+
+
     }
 }

@@ -101,6 +101,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             // 
             this.TxtInstanCenFor.Location = new System.Drawing.Point(134, 8);
             this.TxtInstanCenFor.Name = "TxtInstanCenFor";
+            this.TxtInstanCenFor.ReadOnly = true;
             this.TxtInstanCenFor.Size = new System.Drawing.Size(301, 20);
             this.TxtInstanCenFor.TabIndex = 2;
             // 
@@ -108,6 +109,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             // 
             this.TxtInstanPortaFor.Location = new System.Drawing.Point(134, 30);
             this.TxtInstanPortaFor.Name = "TxtInstanPortaFor";
+            this.TxtInstanPortaFor.ReadOnly = true;
             this.TxtInstanPortaFor.Size = new System.Drawing.Size(301, 20);
             this.TxtInstanPortaFor.TabIndex = 3;
             // 
@@ -140,6 +142,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.TxtPrefiCenFor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtPrefiCenFor.Location = new System.Drawing.Point(496, 8);
             this.TxtPrefiCenFor.Name = "TxtPrefiCenFor";
+            this.TxtPrefiCenFor.ReadOnly = true;
             this.TxtPrefiCenFor.Size = new System.Drawing.Size(94, 20);
             this.TxtPrefiCenFor.TabIndex = 6;
             // 
@@ -148,6 +151,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.TxtPrefiPorFor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtPrefiPorFor.Location = new System.Drawing.Point(496, 30);
             this.TxtPrefiPorFor.Name = "TxtPrefiPorFor";
+            this.TxtPrefiPorFor.ReadOnly = true;
             this.TxtPrefiPorFor.Size = new System.Drawing.Size(94, 20);
             this.TxtPrefiPorFor.TabIndex = 7;
             // 
@@ -297,6 +301,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.TxtCanConsuForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtCanConsuForm.Location = new System.Drawing.Point(268, 111);
             this.TxtCanConsuForm.Name = "TxtCanConsuForm";
+            this.TxtCanConsuForm.ReadOnly = true;
             this.TxtCanConsuForm.Size = new System.Drawing.Size(65, 20);
             this.TxtCanConsuForm.TabIndex = 25;
             this.TxtCanConsuForm.Text = "0";
@@ -306,6 +311,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.TxtCanFacForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtCanFacForm.Location = new System.Drawing.Point(268, 88);
             this.TxtCanFacForm.Name = "TxtCanFacForm";
+            this.TxtCanFacForm.ReadOnly = true;
             this.TxtCanFacForm.Size = new System.Drawing.Size(65, 20);
             this.TxtCanFacForm.TabIndex = 24;
             this.TxtCanFacForm.Text = "0";
@@ -315,6 +321,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.TxtCanCuenExis.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtCanCuenExis.Location = new System.Drawing.Point(268, 64);
             this.TxtCanCuenExis.Name = "TxtCanCuenExis";
+            this.TxtCanCuenExis.ReadOnly = true;
             this.TxtCanCuenExis.Size = new System.Drawing.Size(65, 20);
             this.TxtCanCuenExis.TabIndex = 23;
             this.TxtCanCuenExis.Text = "0";
@@ -324,6 +331,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.TxtCanhisForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtCanhisForm.Location = new System.Drawing.Point(268, 41);
             this.TxtCanhisForm.Name = "TxtCanhisForm";
+            this.TxtCanhisForm.ReadOnly = true;
             this.TxtCanhisForm.Size = new System.Drawing.Size(65, 20);
             this.TxtCanhisForm.TabIndex = 22;
             this.TxtCanhisForm.Text = "0";
@@ -381,6 +389,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.TxtCanFacFor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtCanFacFor.Location = new System.Drawing.Point(200, 14);
             this.TxtCanFacFor.Name = "TxtCanFacFor";
+            this.TxtCanFacFor.ReadOnly = true;
             this.TxtCanFacFor.Size = new System.Drawing.Size(108, 20);
             this.TxtCanFacFor.TabIndex = 17;
             // 

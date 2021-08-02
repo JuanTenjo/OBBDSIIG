@@ -283,8 +283,8 @@ namespace OBBDSIIG.Forms.FrmExportar
                     MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                string FecIniPro = Convert.ToString(DateInicial.Value.ToString("yyy-MM-dd"));
-                string FecFinPro = Convert.ToString(DateFinal.Value.ToString("yyy-MM-dd"));
+                string FecIniPro = Convert.ToString(DateInicial.Value.ToString("yyyy-MM-dd"));
+                string FecFinPro = Convert.ToString(DateFinal.Value.ToString("yyyy-MM-dd"));
 
                 string PfiCen = TxtPrefiCenFor.Text;
                 string PfiPor = TxtPrefiPorFor.Text;
@@ -292,7 +292,7 @@ namespace OBBDSIIG.Forms.FrmExportar
 
                 Utils.Informa = "¿Usted desea iniciar el proceso de exportación" + "\r";
                 Utils.Informa += "todas las citologias en la instancia del" + "\r";
-                Utils.Informa += "portatil a la instancia del servidor central.?" + "\r";
+                Utils.Informa += "portatil a la instancia del servidor central?" + "\r";
                 Utils.Informa += "Fecha Inicial: " + FecIniPro + "\r";
                 Utils.Informa += "Fecha Final: " + FecFinPro;
                 var res = MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -300,6 +300,10 @@ namespace OBBDSIIG.Forms.FrmExportar
 
                 if(res == DialogResult.Yes)
                 {
+                    TxtCanCitoFor.Text = "0";
+                    TxtCanCitoFormExis.Text = "0";
+
+
                     SqlCito = "SELECT * FROM [BDSITOI].[dbo].[Datos basicos citologia] ";
                     SqlCito += "WHERE ([Datos basicos citologia].PrefiCito = N'" + PfiPor + "') AND";
                     SqlCito += "([Datos basicos citologia].CierreToma = 'True' ) AND ";
@@ -557,11 +561,14 @@ namespace OBBDSIIG.Forms.FrmExportar
                                         "'" + TabCitologia["NoConCiPa"].ToString() + "'," +
                                         "'" + TabCitologia["CodRegis"].ToString() + "'," +
                                         $"{ValidarFechaNula(TabCitologia["FecRegis"].ToString())}" + 
-                                        "CONVERT(DATETIME,'" + TabCitologia["HorRegis"].ToString() + "',8)," +
+                                        $"{Conexion.ValidarHoraNula(TabCitologia["HorRegis"].ToString())}" +
                                         "'" + TabCitologia["CodIPSLec"].ToString() + "'," +
                                         "'" + TabCitologia["PrefiCito"].ToString() + "')";
 
                                         Boolean RegisCito = Conexion.SqlInsert(Utils.SqlDatos);
+
+                                        int con = Convert.ToInt32(TxtCanCitoFor.Text) + 1;
+                                        TxtCanCitoFor.Text = con.ToString();
 
 
                                     }
@@ -665,18 +672,19 @@ namespace OBBDSIIG.Forms.FrmExportar
                                                         "NoConCiPa = '" + TabCitologia["NoConCiPa"].ToString() + "'," + 
                                                         "CodRegis = '" + TabCitologia["CodRegis"].ToString() + "'," +
                                                         $"FecRegis = {ValidarFechaNula(TabCitologia["FecRegis"].ToString())} " +
-                                                        "HorRegis = '" + Convert.ToDateTime(TabCitologia["HorRegis"]).ToString("hh:ss:mm") + "'," +
+                                                        $"HorRegis = {Conexion.ValidarHoraNula(TabCitologia["HorRegis"].ToString())}" +
                                                         "CodIPSLec = '" + TabCitologia["CodIPSLec"].ToString() + "'," + 
                                                         "PrefiCito = '" + TabCitologia["PrefiCito"].ToString() + "'" +
                                                         "WHERE (CodFiCito = '" + CodBusCito + "') ";
 
                                         Boolean ActCito = Conexion.SQLUpdate(Utils.SqlDatos);
 
+                                        int con = Convert.ToInt32(TxtCanCitoFormExis.Text) + 1;
+                                        TxtCanCitoFormExis.Text = con.ToString();
+
                                     }//'Final de TabHistorCen.BOF
                                     TabCitoCen.Close();
-                                    int con = Convert.ToInt32(TxtCanCitoFormExis.Text) + 1;
-
-                                    TxtCanCitoFormExis.Text = con.ToString();
+      
 
                                 }//Using TabHi
                             }//Fin While

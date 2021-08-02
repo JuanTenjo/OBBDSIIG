@@ -44,11 +44,15 @@ namespace OBBDSIIG.Forms
             this.sedeCentralHistoriasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.integrarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.biometriaSedeCentralToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.entidadesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.medicosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pacientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.serviciosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.usuariosToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.lblFecha = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblCodUsuario = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblNomUsuario = new System.Windows.Forms.ToolStripStatusLabel();
-            this.entidadesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -141,7 +145,11 @@ namespace OBBDSIIG.Forms
             // 
             this.integrarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.biometriaSedeCentralToolStripMenuItem,
-            this.entidadesToolStripMenuItem});
+            this.entidadesToolStripMenuItem,
+            this.medicosToolStripMenuItem,
+            this.pacientesToolStripMenuItem,
+            this.serviciosToolStripMenuItem,
+            this.usuariosToolStripMenuItem1});
             this.integrarToolStripMenuItem.Name = "integrarToolStripMenuItem";
             resources.ApplyResources(this.integrarToolStripMenuItem, "integrarToolStripMenuItem");
             // 
@@ -150,6 +158,36 @@ namespace OBBDSIIG.Forms
             this.biometriaSedeCentralToolStripMenuItem.Name = "biometriaSedeCentralToolStripMenuItem";
             resources.ApplyResources(this.biometriaSedeCentralToolStripMenuItem, "biometriaSedeCentralToolStripMenuItem");
             this.biometriaSedeCentralToolStripMenuItem.Click += new System.EventHandler(this.biometriaSedeCentralToolStripMenuItem_Click);
+            // 
+            // entidadesToolStripMenuItem
+            // 
+            this.entidadesToolStripMenuItem.Name = "entidadesToolStripMenuItem";
+            resources.ApplyResources(this.entidadesToolStripMenuItem, "entidadesToolStripMenuItem");
+            this.entidadesToolStripMenuItem.Click += new System.EventHandler(this.entidadesToolStripMenuItem_Click);
+            // 
+            // medicosToolStripMenuItem
+            // 
+            this.medicosToolStripMenuItem.Name = "medicosToolStripMenuItem";
+            resources.ApplyResources(this.medicosToolStripMenuItem, "medicosToolStripMenuItem");
+            this.medicosToolStripMenuItem.Click += new System.EventHandler(this.medicosToolStripMenuItem_Click);
+            // 
+            // pacientesToolStripMenuItem
+            // 
+            this.pacientesToolStripMenuItem.Name = "pacientesToolStripMenuItem";
+            resources.ApplyResources(this.pacientesToolStripMenuItem, "pacientesToolStripMenuItem");
+            this.pacientesToolStripMenuItem.Click += new System.EventHandler(this.pacientesToolStripMenuItem_Click);
+            // 
+            // serviciosToolStripMenuItem
+            // 
+            this.serviciosToolStripMenuItem.Name = "serviciosToolStripMenuItem";
+            resources.ApplyResources(this.serviciosToolStripMenuItem, "serviciosToolStripMenuItem");
+            this.serviciosToolStripMenuItem.Click += new System.EventHandler(this.serviciosToolStripMenuItem_Click);
+            // 
+            // usuariosToolStripMenuItem1
+            // 
+            this.usuariosToolStripMenuItem1.Name = "usuariosToolStripMenuItem1";
+            resources.ApplyResources(this.usuariosToolStripMenuItem1, "usuariosToolStripMenuItem1");
+            this.usuariosToolStripMenuItem1.Click += new System.EventHandler(this.usuariosToolStripMenuItem1_Click);
             // 
             // toolStrip1
             // 
@@ -179,11 +217,6 @@ namespace OBBDSIIG.Forms
             this.lblNomUsuario.BackColor = System.Drawing.Color.White;
             this.lblNomUsuario.Name = "lblNomUsuario";
             resources.ApplyResources(this.lblNomUsuario, "lblNomUsuario");
-            // 
-            // entidadesToolStripMenuItem
-            // 
-            this.entidadesToolStripMenuItem.Name = "entidadesToolStripMenuItem";
-            resources.ApplyResources(this.entidadesToolStripMenuItem, "entidadesToolStripMenuItem");
             // 
             // FrmPrincipal
             // 
@@ -227,5 +260,9 @@ namespace OBBDSIIG.Forms
         private System.Windows.Forms.ToolStripMenuItem sedeCentralHistoriasToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem sedeCentralHistoriasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem entidadesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem medicosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pacientesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem serviciosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem usuariosToolStripMenuItem1;
     }
 }

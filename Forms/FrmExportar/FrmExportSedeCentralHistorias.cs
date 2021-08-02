@@ -187,6 +187,16 @@ namespace OBBDSIIG.Forms.FrmExportar
 
         }
 
+        //private string ValidarHoraNula(string Hora)
+        //{
+        //    string ValidarHora = null;
+
+        //    ValidarHora = string.IsNullOrWhiteSpace(Hora) ? "null" + "," : "CONVERT(DATETIME,'" + Convert.ToDateTime(Hora).ToString("hh:mm:ss") + "',8),";
+
+        //    return ValidarHora;
+
+        //}
+
         private void FrmExportSedeCentralHistorias_Load(object sender, EventArgs e)
         {
             try
@@ -268,8 +278,8 @@ namespace OBBDSIIG.Forms.FrmExportar
                     MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                string FecIniPro = Convert.ToString(DateInicial.Value.ToString("yyy-MM-dd"));
-                string FecFinPro = Convert.ToString(DateFinal.Value.ToString("yyy-MM-dd"));
+                string FecIniPro = Convert.ToString(DateInicial.Value.ToString("yyyy-MM-dd"));
+                string FecFinPro = Convert.ToString(DateFinal.Value.ToString("yyyy-MM-dd"));
 
                 string PfiCen = TxtPrefiCenFor.Text;
                 string PfiPor = TxtPrefiPorFor.Text;
@@ -277,7 +287,7 @@ namespace OBBDSIIG.Forms.FrmExportar
 
                 Utils.Informa = "¿Usted desea iniciar el proceso de exportación" + "\r";
                 Utils.Informa += "todas las historias clinicas en la instancia del" + "\r";
-                Utils.Informa += "portatil a la instancia del servidor central.?" + "\r";
+                Utils.Informa += "portatil a la instancia del servidor central?" + "\r";
                 Utils.Informa += "Fecha Inicial: " + FecIniPro + "\r";
                 Utils.Informa += "Fecha Final: " + FecFinPro;
                 var res = MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -285,6 +295,11 @@ namespace OBBDSIIG.Forms.FrmExportar
 
                 if (res == DialogResult.Yes)
                 {
+
+                    TxtCanHistFor.Text = "0";
+                    TxtCanhisFormExis.Text = "0";
+                    TxtCanNotAnex.Text = "0";
+
 
                     SqlHistoCli = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos atencion de la consulta] ";
                     SqlHistoCli += "WHERE ([Datos atencion de la consulta].PrefiHis = N'" + PfiPor + "') AND";
@@ -309,11 +324,15 @@ namespace OBBDSIIG.Forms.FrmExportar
                             Utils.Informa += "digitado no existen datos para exportar, " + "\r";
                             Utils.Informa += "atenciones de consultas.";
                             MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            return;
                         }
                         else
                         {
+                            SqlDataReader TabHistorCen;
+
                             while (TabHistoCli.Read())
                             {
+                                ConectarCentral();
                                 // 'Revisamos si el número de codigo de atencion existe
 
                                 CodBusAten = TabHistoCli["CodConExt"].ToString();
@@ -322,11 +341,8 @@ namespace OBBDSIIG.Forms.FrmExportar
                                 SqlHistCen = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos atencion de la consulta] ";
                                 SqlHistCen += "Where CodConExt = '" + CodBusAten + "'";
 
-                                ConectarCentral();
-
-
-                                SqlDataReader TabHistorCen;
-
+                               
+                           
                                 using (SqlConnection connection2 = new SqlConnection(Conexion.conexionSQL))
                                 {
                                     SqlCommand command2 = new SqlCommand(SqlHistCen, connection2);
@@ -395,7 +411,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                         "IMC," +
                                         "CatIMC," +
                                         "PerimetroCefalico," +
-                                        "SPO2," + 
+                                        "SPO2," +
                                         "CabezaCuello," +
                                         "Endocrino," +
                                         "CardioPulmonar," +
@@ -469,7 +485,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                          "'" + TabHistoCli["NumCuenta"].ToString() + "'," +
                                          "'" + TabHistoCli["HistoriaNum"].ToString() + "'," +
                                         $"{ValidarFechaNula(TabHistoCli["FecAtenc"].ToString())}" +
-                                         "CONVERT(DATETIME,'" + TabHistoCli["HoraInicio"].ToString() + "',8)," +
+                                        $"{Conexion.ValidarHoraNula(TabHistoCli["HoraInicio"].ToString())}" +
                                          "'" + TabHistoCli["Dxprinc"].ToString() + "'," +
                                          "'" + TabHistoCli["DxEntra"].ToString() + "'," +
                                          "'" + TabHistoCli["DxMuer"].ToString() + "'," +
@@ -482,7 +498,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                          "'" + TabHistoCli["UnidadEdad"].ToString() + "'," +
                                          "'" + TabHistoCli["ValorEdad"].ToString() + "'," +
                                          "'" + TabHistoCli["EdadMeses"].ToString() + "'," +
-                                         "'" + TabHistoCli["CodMediIngresan"].ToString() + "'," +
+                                         "'" + TabHistoCli["CodMediIngresa"].ToString() + "'," +
                                          "'" + TabHistoCli["CodiMedi"].ToString() + "'," +
                                          "'" + TabHistoCli["CodEspeci"].ToString() + "'," +
                                          "'" + TabHistoCli["CodiMediSalida"].ToString() + "'," +
@@ -495,7 +511,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                          "'" + TabHistoCli["TipoControl"].ToString() + "'," +
                                          "'" + TabHistoCli["TuvoProcedimiento"].ToString() + "'," +
                                          $"{ValidarFechaNula(TabHistoCli["Fechallega"].ToString())}" +
-                                         "CONVERT(DATETIME,'" + TabHistoCli["HoraLlega"].ToString() + "',8)," +
+                                         $"{Conexion.ValidarHoraNula(TabHistoCli["HoraLlega"].ToString())}" +
                                          "'" + TabHistoCli["CodEstado"].ToString() + "'," +
                                          "'" + TabHistoCli["MedioLlegada"].ToString() + "'," +
                                          "'" + TabHistoCli["CualMedio"].ToString() + "'," +
@@ -504,10 +520,10 @@ namespace OBBDSIIG.Forms.FrmExportar
                                          "'" + TabHistoCli["DirParen"].ToString() + "'," +
                                          "'" + TabHistoCli["TelParen"].ToString() + "'," +
                                         $"{ValidarFechaNula(TabHistoCli["FechaOcurre"].ToString())}" +
-                                         "CONVERT(DATETIME,'" + TabHistoCli["HoraOcurre"].ToString() + "',8)," +
+                                         $"{Conexion.ValidarHoraNula(TabHistoCli["HoraOcurre"].ToString())}" +
                                          "'" + TabHistoCli["CausaBase"].ToString() + "'," +
                                          "'" + TabHistoCli["SitOcurre"].ToString() + "'," +
-                                         "'" + TabHistoCli["MotConsul"].ToString() + "'," +
+                                         "'" + TabHistoCli["MotConsul"].ToString().Replace("'", "") + "'," +
                                          "'" + TabHistoCli["HistEnfActual"].ToString() + "'," +
                                          "'" + TabHistoCli["TensionSisto"].ToString() + "'," +
                                          "'" + TabHistoCli["TensionDiasto"].ToString() + "'," +
@@ -519,7 +535,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                          "'" + TabHistoCli["IMC"].ToString() + "'," +
                                          "'" + TabHistoCli["CatIMC"].ToString() + "'," +
                                          "'" + TabHistoCli["PerimetroCefalico"].ToString() + "'," +
-                                         "'" + TabHistoCli["SPO2SPO2"].ToString() + "'," +
+                                         "'" + TabHistoCli["SPO2"].ToString() + "'," +
                                          "'" + TabHistoCli["CabezaCuello"].ToString() + "'," +
                                          "'" + TabHistoCli["Endocrino"].ToString() + "'," +
                                          "'" + TabHistoCli["CardioPulmonar"].ToString() + "'," +
@@ -565,7 +581,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                          "'" + TabHistoCli["ValoraH"].ToString() + "'," +
                                          "'" + TabHistoCli["CodiMediValor"].ToString() + "'," +
                                          $"{ValidarFechaNula(TabHistoCli["FechaValora"].ToString())}" +
-                                         "CONVERT(DATETIME,'" + TabHistoCli["HoraLlegaValora"].ToString() + "',8)," +
+                                         $"{Conexion.ValidarHoraNula(TabHistoCli["HoraLlegaValora"].ToString())}" +
                                          "'" + TabHistoCli["DetalleValora"].ToString() + "'," +
                                          "'" + TabHistoCli["Soporte"].ToString() + "'," +
                                          "'" + TabHistoCli["OtAnteceCE"].ToString() + "'," +
@@ -576,15 +592,15 @@ namespace OBBDSIIG.Forms.FrmExportar
                                         //TabHistorCen!ObservaImagen = TabHistoCli!ObservaImagen
                                         //'**********
                                          "'" + TabHistoCli["IngresoEPI"].ToString() + "'," +
-                                         "'" + TabHistoCli["EvolucionEPI, +"].ToString() + "'," +
+                                         "'" + TabHistoCli["EvolucionEPI"].ToString() + "'," +
                                          "'" + TabHistoCli["EgresoEPI"].ToString() + "'," +
                                          "'" + TabHistoCli["CodiMediEpi"].ToString() + "'," +
                                         $"{ValidarFechaNula(TabHistoCli["FechaEpi"].ToString())}" +
-                                         "CONVERT(DATETIME,'" + TabHistoCli["HoraEpi"].ToString() + "',8)," +
+                                         $"{Conexion.ValidarHoraNula(TabHistoCli["HoraEpi"].ToString())}" +
                                          "'" + TabHistoCli["CodColor"].ToString() + "'," +
                                          "'" + TabHistoCli["NumeroCitas"].ToString() + "'," +
-                                         "CONVERT(DATETIME,'" + TabHistoCli["Horaregis"].ToString() + "',8)," +
-                                         "CONVERT(DATETIME,'" + TabHistoCli["HoraAtencion"].ToString() + "',8)," +
+                                         $"{Conexion.ValidarHoraNula(TabHistoCli["Horaregis"].ToString())}" +
+                                         $"{Conexion.ValidarHoraNula(TabHistoCli["HoraAtencion"].ToString())}" +
                                          "'" + TabHistoCli["CodiRegis"].ToString() + "'," +
                                          $"{ValidarFechaNula(TabHistoCli["FecRegis"].ToString())}" +
                                          "'" + TabHistoCli["CodiModi"].ToString() + "'," +
@@ -610,7 +626,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                          "'" + TabHistoCli["PrefiHis"].ToString() + "'" +
                                         ")";
 
-                                    Boolean Insert = Conexion.SqlInsert(Utils.SqlDatos);
+                                        Boolean Insert = Conexion.SqlInsert(Utils.SqlDatos);
 
 
                                         FunDetAntCon = DetalleatencionconsultaEXP(CodBusAten);
@@ -678,9 +694,13 @@ namespace OBBDSIIG.Forms.FrmExportar
                                             break;
                                         }
 
+                                        int COUN = Convert.ToInt32(TxtCanHistFor.Text) + 1;
+                                        TxtCanHistFor.Text = COUN.ToString();
+
                                     }
                                     else
                                     {
+                                        TabHistorCen.Read();
                                         //Modifique los datos
                                         Utils.SqlDatos = "UPDATE [DACONEXTSQL].[dbo].[Datos atencion de la consulta] SET " +
                                         "Dxprinc = '" + TabHistoCli["Dxprinc"].ToString() + "'," +
@@ -708,7 +728,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                         "TipoControl = '" + TabHistoCli["TipoControl"].ToString() + "'," +
                                         "TuvoProcedimiento = '" + TabHistoCli["TuvoProcedimiento"].ToString() + "'," +
                                         $"Fechallega = {ValidarFechaNula(TabHistoCli["Fechallega"].ToString())}" +
-                                        "HoraLlega = CONVERT(DATETIME,'" + TabHistoCli["HoraLlega"].ToString() + "',8)," +
+                                        $"HoraLlega = {Conexion.ValidarHoraNula(TabHistoCli["HoraLlega"].ToString())}" +
                                         "CodEstado = '" + TabHistoCli["CodEstado"].ToString() + "'," +
                                         "MedioLlegada = '" + TabHistoCli["MedioLlegada"].ToString() + "'," +
                                         "CualMedio = '" + TabHistoCli["CualMedio"].ToString() + "'," +
@@ -717,10 +737,10 @@ namespace OBBDSIIG.Forms.FrmExportar
                                         "DirParen = '" + TabHistoCli["DirParen"].ToString() + "'," +
                                         "TelParen = '" + TabHistoCli["TelParen"].ToString() + "'," +
                                          $"FechaOcurre = {ValidarFechaNula(TabHistoCli["FechaOcurre"].ToString())}" +
-                                        "HoraOcurre = CONVERT(DATETIME,'" + TabHistoCli["HoraOcurre"].ToString() + "',8)," +
+                                        $"HoraOcurre = {Conexion.ValidarHoraNula(TabHistoCli["HoraOcurre"].ToString())}" +
                                         "CausaBase = '" + TabHistoCli["CausaBase"].ToString() + "'," +
                                         "SitOcurre = '" + TabHistoCli["SitOcurre"].ToString() + "'," +
-                                        "MotConsul = '" + TabHistoCli["MotConsul"].ToString() + "'," +
+                                        "MotConsul = '" + TabHistoCli["MotConsul"].ToString().Replace("'", "") + "'," +
                                         "HistEnfActual = '" + TabHistoCli["HistEnfActual"].ToString() + "'," +
                                         "TensionSisto = '" + TabHistoCli["TensionSisto"].ToString() + "'," +
                                         "TensionDiasto = '" + TabHistoCli["TensionDiasto"].ToString() + "'," +
@@ -778,7 +798,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                         "ValoraH = '" + TabHistoCli["ValoraH"].ToString() + "'," +
                                         "CodiMediValor = '" + TabHistoCli["CodiMediValor"].ToString() + "'," +
                                         $"FechaValora = {ValidarFechaNula(TabHistoCli["FechaValora"].ToString())}" +
-                                        "HoraLlegaValora = CONVERT(DATETIME,'" + TabHistoCli["HoraLlegaValora"].ToString() + "',8)," +
+                                        $"HoraLlegaValora = {Conexion.ValidarHoraNula(TabHistoCli["HoraLlegaValora"].ToString())}" +
                                         "DetalleValora = '" + TabHistoCli["DetalleValora"].ToString() + "'," +
                                         "Soporte = '" + TabHistoCli["Soporte"].ToString() + "'," +
                                         "OtAnteceCE = '" + TabHistoCli["OtAnteceCE"].ToString() + "'," +
@@ -787,11 +807,11 @@ namespace OBBDSIIG.Forms.FrmExportar
                                         "EgresoEPI = '" + TabHistoCli["EgresoEPI"].ToString() + "'," +
                                         "CodiMediEpi = '" + TabHistoCli["CodiMediEpi"].ToString() + "'," +
                                         $"FechaEpi = {ValidarFechaNula(TabHistoCli["FechaEpi"].ToString())}" +
-                                        "HoraEpi = CONVERT(DATETIME,'" + TabHistoCli["HoraEpi"].ToString() + "',8)," +
+                                        $"HoraEpi = {Conexion.ValidarHoraNula(TabHistoCli["HoraEpi"].ToString())}" +
                                         "CodColor = '" + TabHistoCli["CodColor"].ToString() + "'," +
                                         "NumeroCitas = '" + TabHistoCli["NumeroCitas"].ToString() + "'," +
-                                        "Horaregis = CONVERT(DATETIME,'" + TabHistoCli["Horaregis"].ToString() + "',8)," +
-                                        "HoraAtencion = CONVERT(DATETIME,'" + TabHistoCli["HoraAtencion"].ToString() + "',8)," +
+                                        $"Horaregis = {Conexion.ValidarHoraNula(TabHistoCli["Horaregis"].ToString())}" +
+                                        $"HoraAtencion = {Conexion.ValidarHoraNula(TabHistoCli["HoraAtencion"].ToString())}" +
                                         "CodiRegis = '" + TabHistoCli["CodiRegis"].ToString() + "'," +
                                         $"FecRegis = {ValidarFechaNula(TabHistoCli["FecRegis"].ToString())}" +
                                         "CodiModi = '" + TabHistoCli["CodiModi"].ToString() + "'," +
@@ -806,14 +826,15 @@ namespace OBBDSIIG.Forms.FrmExportar
                                         //TabHistorCen!TratamientosEPI = TabHistoCli!TratamientosEPI
                                         //TabHistorCen!ResumenEPI = TabHistoCli!ResumenEPI
                                         //'**********
+
                                         "ResumenEvoEPI = '" + TabHistoCli["ResumenEvoEPI"].ToString() + "'," +
-                                        "PrefiHis = '" + TabHistoCli["PrefiHis"].ToString() + "'" +
+                                        "PrefiHis = '" + TabHistoCli["PrefiHis"].ToString() + "' " +
                                         "WHERE CodConExt = '" + CodBusAten + "'";
 
 
-                                        Boolean Act = Conexion.SQLUpdate(Utils.SqlDatos);
+                                        bool Act = Conexion.SQLUpdate(Utils.SqlDatos);
 
-
+                                            
 
                                         FunDetAntCon = DetalleatencionconsultaEXP(CodBusAten);
 
@@ -887,181 +908,189 @@ namespace OBBDSIIG.Forms.FrmExportar
 
                                     }//Final de TabHistorCen.BOF
 
-                                    TabHistorCen.Close();
+                                   
 
                                 }//using
+
+                                TabHistorCen.Close();
+
                             }//While
 
 
+                            SqlAnexPor = "SELECT ConsecutivoANexo, PrefAnexo, NumAnexo, HistoNumero, TipoDocANEX, CodigoConsentimiento, CodigAtencion, FechaIngAnteced, " +
+                            "HoraNotaANEX, Descripcion, Tratamiento, Riesgo, RiesgoAnes, CodEspeNA, CodMed, ActivaANE, Anulada, " +
+                            "CodAnula, RazonAnula, FechaAnula, Tutor, NomTutor, TDTutor, IDTutor, CodParenT, TutorLegal, " +
+                            "Testigo, CodMed2, Transfusion " +
+                            "FROM [DACONEXTSQL].[dbo].[Datos anotaciones anexas historias] " +
+                            "WHERE (PrefAnexo = N'" + PfiPor + "') AND (FechaIngAnteced >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) " +
+                            "and  (FechaIngAnteced <= CONVERT(DATETIME, '" + FecFinPro + "', 102)) " +
+                            "ORDER BY ConsecutivoANexo";
 
-                        }// if(TabHistoCli.HasRows == false)
-                    }//uSING
-
-                    SqlAnexPor = "SELECT ConsecutivoANexo, PrefAnexo, NumAnexo, HistoNumero, TipoDocANEX, CodigoConsentimiento, CodigAtencion, FechaIngAnteced, " +
-                    "HoraNotaANEX, Descripcion, Tratamiento, Riesgo, RiesgoAnes, CodEspeNA, CodMed, ActivaANE, Anulada, " +
-                    "CodAnula, RazonAnula, FechaAnula, Tutor, NomTutor, TDTutor, IDTutor, CodParenT, TutorLegal, " +
-                    "Testigo, CodMed2, Transfusion " +
-                    "FROM [DACONEXTSQL].[dbo].[Datos anotaciones anexas historias] " +
-                    "WHERE (PrefAnexo = N'" + PfiPor + "') AND (FechaIngAnteced >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) " +
-                    "and  (FechaIngAnteced <= CONVERT(DATETIME, '" + FecFinPro + "', 102)) " +
-                    "ORDER BY ConsecutivoANexo";
-
-                    ConectarPortatil();
+                            ConectarPortatil();
 
 
 
-                    SqlDataReader TabAnexPor;
+                            SqlDataReader TabAnexPor;
 
-                    using (SqlConnection connection2 = new SqlConnection(Conexion.conexionSQL))
-                    {
-                        SqlCommand command2 = new SqlCommand(SqlAnexPor, connection2);
-                        command2.Connection.Open();
-                        TabAnexPor = command2.ExecuteReader();
-
-                        if(TabAnexPor.HasRows == false)
-                        {
-                            //'No hay notas anexas
-                        }
-                        else
-                        {
-                            ConectarCentral();
-                            while (TabAnexPor.Read())
+                            using (SqlConnection connection2 = new SqlConnection(Conexion.conexionSQL))
                             {
-                                NumUniAnexa = TabAnexPor["NumAnexo"].ToString();
-                                HistoPaci = TabAnexPor["HistoNumero"].ToString();
+                                SqlCommand command2 = new SqlCommand(SqlAnexPor, connection2);
+                                command2.Connection.Open();
+                                TabAnexPor = command2.ExecuteReader();
 
-                                SqlAnexCen = "SELECT * ";
-                                SqlAnexCen += "FROM [DACONEXTSQL].[dbo].[Datos anotaciones anexas historias] ";
-                                SqlAnexCen += "WHERE (NumAnexo = N'" + PfiPor + "') AND (HistoNumero = N'" + HistoPaci + "') ";
-
-
-                                SqlDataReader TabAnexCen;
-
-                                using (SqlConnection connection = new SqlConnection(Conexion.conexionSQL))
+                                if(TabAnexPor.HasRows == false)
                                 {
-                                    SqlCommand command = new SqlCommand(SqlAnexCen, connection);
-                                    command.Connection.Open();
-                                    TabAnexCen = command.ExecuteReader();
-
-                                    if (TabAnexCen.HasRows == false)
+                                    //'No hay notas anexas
+                                }
+                                else
+                                {
+                                    ConectarCentral();
+                                    while (TabAnexPor.Read())
                                     {
-                                        Utils.SqlDatos = "INSERT INTO [DACONEXTSQL].[dbo].[Datos anotaciones anexas historias] " +
-                                        "(" +
-                                        "PrefAnexo," + 
-                                        "NumAnexo," + 
-                                        "HistoNumero," + 
-                                        "TipoDocANEX," + 
-                                        "CodigoConsentimiento," + 
-                                        "CodigAtencion," + 
-                                        "FechaIngAnteced," + 
-                                        "HoraNotaANEX," + 
-                                        "Descripcion," + 
-                                        "Tratamiento," + 
-                                        "Riesgo," + 
-                                        "RiesgoAnes," + 
-                                        "CodEspeNA," + 
-                                        "CodMed," + 
-                                        "ActivaANE," + 
-                                        "Anulada," + 
-                                        "CodAnula," + 
-                                        "RazonAnula," + 
-                                        "FechaAnula," + 
-                                        "Tutor," + 
-                                        "NomTutor," + 
-                                        "TDTutor," + 
-                                        "IDTutor," + 
-                                        "CodParenT," + 
-                                        "TutorLegal," + 
-                                        "Testigo," + 
-                                        "CodMed2," + 
-                                        "Transfusion" + 
-                                        ") " + "Values(" +
-                                        "'" + TabAnexPor["PrefAnexo"].ToString() + "'," +
-                                        "'" + TabAnexPor["NumAnexo"].ToString() + "'," +
-                                        "'" + TabAnexPor["HistoNumero"].ToString() + "'," +
-                                        "'" + TabAnexPor["TipoDocANEX"].ToString() + "'," +
-                                        "'" + TabAnexPor["CodigoConsentimiento"].ToString() + "'," +
-                                        "'" + TabAnexPor["CodigAtencion"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabHistoCli["FechaIngAnteced"].ToString())}" +
-                                        "CONVERT(DATETIME,'" + TabHistoCli["HoraNotaANEX"].ToString() + "',8)," +
-                                        "'" + TabAnexPor["Descripcion"].ToString() + "'," +
-                                        "'" + TabAnexPor["Tratamiento"].ToString() + "'," +
-                                        "'" + TabAnexPor["Riesgo"].ToString() + "'," +
-                                        "'" + TabAnexPor["RiesgoAnes"].ToString() + "'," +
-                                        "'" + TabAnexPor["CodEspeNA"].ToString() + "'," +
-                                        "'" + TabAnexPor["CodMed"].ToString() + "'," +
-                                        "'" + TabAnexPor["ActivaANE"].ToString() + "'," +
-                                        "'" + TabAnexPor["Anulada"].ToString() + "'," +
-                                        "'" + TabAnexPor["CodAnula"].ToString() + "'," +
-                                        "'" + TabAnexPor["RazonAnula"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabHistoCli["FechaAnula"].ToString())}" +
-                                        "'" + TabAnexPor["Tutor"].ToString() + "'," +
-                                        "'" + TabAnexPor["NomTutor"].ToString() + "'," +
-                                        "'" + TabAnexPor["TDTutor"].ToString() + "'," +
-                                        "'" + TabAnexPor["IDTutor"].ToString() + "'," +
-                                        "'" + TabAnexPor["CodParenT"].ToString() + "'," +
-                                        "'" + TabAnexPor["TutorLegal"].ToString() + "'," +
-                                        "'" + TabAnexPor["Testigo"].ToString() + "'," +
-                                        "'" + TabAnexPor["CodMed2"].ToString() + "'," +
-                                        "'" + TabAnexPor["Transfusion"].ToString() + "' " +
-                                        ")";
+                                        NumUniAnexa = TabAnexPor["NumAnexo"].ToString();
+                                        HistoPaci = TabAnexPor["HistoNumero"].ToString();
+
+                                        SqlAnexCen = "SELECT * ";
+                                        SqlAnexCen += "FROM [DACONEXTSQL].[dbo].[Datos anotaciones anexas historias] ";
+                                        SqlAnexCen += "WHERE (NumAnexo = N'" + PfiPor + "') AND (HistoNumero = N'" + HistoPaci + "') ";
+
+                                        
+                                        SqlDataReader TabAnexCen;
+
+                                        using (SqlConnection connection6 = new SqlConnection(Conexion.conexionSQL))
+                                        {
+                                            SqlCommand command6 = new SqlCommand(SqlAnexCen, connection6);
+                                            command6.Connection.Open();
+                                            TabAnexCen = command6.ExecuteReader();
+
+                                            if (TabAnexCen.HasRows == false)
+                                            {
+                                                Utils.SqlDatos = "INSERT INTO [DACONEXTSQL].[dbo].[Datos anotaciones anexas historias] " +
+                                                "(" +
+                                                "PrefAnexo," + 
+                                                "NumAnexo," + 
+                                                "HistoNumero," + 
+                                                "TipoDocANEX," + 
+                                                "CodigoConsentimiento," + 
+                                                "CodigAtencion," + 
+                                                "FechaIngAnteced," + 
+                                                "HoraNotaANEX," + 
+                                                "Descripcion," + 
+                                                "Tratamiento," + 
+                                                "Riesgo," + 
+                                                "RiesgoAnes," + 
+                                                "CodEspeNA," + 
+                                                "CodMed," + 
+                                                "ActivaANE," + 
+                                                "Anulada," + 
+                                                "CodAnula," + 
+                                                "RazonAnula," + 
+                                                "FechaAnula," + 
+                                                "Tutor," + 
+                                                "NomTutor," + 
+                                                "TDTutor," + 
+                                                "IDTutor," + 
+                                                "CodParenT," + 
+                                                "TutorLegal," + 
+                                                "Testigo," + 
+                                                "CodMed2," + 
+                                                "Transfusion" + 
+                                                ") " + "Values(" +
+                                                "'" + TabAnexPor["PrefAnexo"].ToString() + "'," +
+                                                "'" + TabAnexPor["NumAnexo"].ToString() + "'," +
+                                                "'" + TabAnexPor["HistoNumero"].ToString() + "'," +
+                                                "'" + TabAnexPor["TipoDocANEX"].ToString() + "'," +
+                                                "'" + TabAnexPor["CodigoConsentimiento"].ToString() + "'," +
+                                                "'" + TabAnexPor["CodigAtencion"].ToString() + "'," +
+                                                $"{ValidarFechaNula(TabHistoCli["FechaIngAnteced"].ToString())}" +
+                                                $"{Conexion.ValidarHoraNula(TabHistoCli["HoraNotaANEX"].ToString())}" +
+                                                "'" + TabAnexPor["Descripcion"].ToString() + "'," +
+                                                "'" + TabAnexPor["Tratamiento"].ToString() + "'," +
+                                                "'" + TabAnexPor["Riesgo"].ToString() + "'," +
+                                                "'" + TabAnexPor["RiesgoAnes"].ToString() + "'," +
+                                                "'" + TabAnexPor["CodEspeNA"].ToString() + "'," +
+                                                "'" + TabAnexPor["CodMed"].ToString() + "'," +
+                                                "'" + TabAnexPor["ActivaANE"].ToString() + "'," +
+                                                "'" + TabAnexPor["Anulada"].ToString() + "'," +
+                                                "'" + TabAnexPor["CodAnula"].ToString() + "'," +
+                                                "'" + TabAnexPor["RazonAnula"].ToString() + "'," +
+                                                $"{ValidarFechaNula(TabHistoCli["FechaAnula"].ToString())}" +
+                                                "'" + TabAnexPor["Tutor"].ToString() + "'," +
+                                                "'" + TabAnexPor["NomTutor"].ToString() + "'," +
+                                                "'" + TabAnexPor["TDTutor"].ToString() + "'," +
+                                                "'" + TabAnexPor["IDTutor"].ToString() + "'," +
+                                                "'" + TabAnexPor["CodParenT"].ToString() + "'," +
+                                                "'" + TabAnexPor["TutorLegal"].ToString() + "'," +
+                                                "'" + TabAnexPor["Testigo"].ToString() + "'," +
+                                                "'" + TabAnexPor["CodMed2"].ToString() + "'," +
+                                                "'" + TabAnexPor["Transfusion"].ToString() + "' " +
+                                                ")";
 
 
-                                        Boolean Insert = Conexion.SqlInsert(Utils.SqlDatos);
+                                                Boolean Insert = Conexion.SqlInsert(Utils.SqlDatos);
 
-                                    }
-                                    else
-                                    {
-                                        //Modifiquela
+                                            }
+                                            else
+                                            {
+                                                //Modifiquela
 
-                                        Utils.SqlDatos = "UPDATE [DACONEXTSQL].[dbo].[Datos anotaciones anexas historias] SET " +
-                                        "PrefAnexo ='" + TabAnexPor["PrefAnexo"].ToString() + "'," +
-                                        "NumAnexo ='" + TabAnexPor["NumAnexo"].ToString() + "'," +
-                                        "HistoNumero ='" + TabAnexPor["HistoNumero"].ToString() + "'," +
-                                        "TipoDocANEX ='" + TabAnexPor["TipoDocANEX"].ToString() + "'," +
-                                        "CodigoConsentimiento ='" + TabAnexPor["CodigoConsentimiento"].ToString() + "'," +
-                                        "CodigAtencion ='" + TabAnexPor["CodigAtencion"].ToString() + "'," +
-                                        $"FechaIngAnteced = {ValidarFechaNula(TabHistoCli["FechaIngAnteced"].ToString())}" +
-                                        "HoraNotaANEX = CONVERT(DATETIME,'" + TabHistoCli["HoraNotaANEX"].ToString() + "',8)," +
-                                        "Descripcion ='" + TabAnexPor["Descripcion"].ToString() + "'," +
-                                        "Tratamiento ='" + TabAnexPor["Tratamiento"].ToString() + "'," +
-                                        "Riesgo ='" + TabAnexPor["Riesgo"].ToString() + "'," +
-                                        "RiesgoAnes ='" + TabAnexPor["RiesgoAnes"].ToString() + "'," +
-                                        "CodEspeNA ='" + TabAnexPor["CodEspeNA"].ToString() + "'," +
-                                        "CodMed ='" + TabAnexPor["CodMed"].ToString() + "'," +
-                                        "ActivaANE ='" + TabAnexPor["ActivaANE"].ToString() + "'," +
-                                        "Anulada ='" + TabAnexPor["Anulada"].ToString() + "'," +
-                                        "CodAnula ='" + TabAnexPor["CodAnula"].ToString() + "'," +
-                                        "RazonAnula ='" + TabAnexPor["RazonAnula"].ToString() + "'," +
-                                        $"FechaAnula = {ValidarFechaNula(TabHistoCli["FechaAnula"].ToString())}" +
-                                        "Tutor ='" + TabAnexPor["Tutor"].ToString() + "'," +
-                                        "NomTutor ='" + TabAnexPor["NomTutor"].ToString() + "'," +
-                                        "TDTutor ='" + TabAnexPor["TDTutor"].ToString() + "'," +
-                                        "IDTutor ='" + TabAnexPor["IDTutor"].ToString() + "'," +
-                                        "CodParenT ='" + TabAnexPor["CodParenT"].ToString() + "'," +
-                                        "TutorLegal ='" + TabAnexPor["TutorLegal"].ToString() + "'," +
-                                        "Testigo ='" + TabAnexPor["Testigo"].ToString() + "'," +
-                                        "CodMed2 ='" + TabAnexPor["CodMed2"].ToString() + "'," +
-                                        "Transfusion ='" + TabAnexPor["Transfusion"].ToString() + "' " +
-                                        "WHERE (NumAnexo = N'" + PfiPor + "') AND (HistoNumero = N'" + HistoPaci + "')  ";
+                                                Utils.SqlDatos = "UPDATE [DACONEXTSQL].[dbo].[Datos anotaciones anexas historias] SET " +
+                                                "PrefAnexo ='" + TabAnexPor["PrefAnexo"].ToString() + "'," +
+                                                "NumAnexo ='" + TabAnexPor["NumAnexo"].ToString() + "'," +
+                                                "HistoNumero ='" + TabAnexPor["HistoNumero"].ToString() + "'," +
+                                                "TipoDocANEX ='" + TabAnexPor["TipoDocANEX"].ToString() + "'," +
+                                                "CodigoConsentimiento ='" + TabAnexPor["CodigoConsentimiento"].ToString() + "'," +
+                                                "CodigAtencion ='" + TabAnexPor["CodigAtencion"].ToString() + "'," +
+                                                $"FechaIngAnteced = {ValidarFechaNula(TabHistoCli["FechaIngAnteced"].ToString())}" +
+                                                "HoraNotaANEX = CONVERT(DATETIME,'" + TabHistoCli["HoraNotaANEX"].ToString() + "',8)," +
+                                                $"HoraNotaANEX = {Conexion.ValidarHoraNula(TabHistoCli["HoraNotaANEX"].ToString())}" +
+                                                "Descripcion ='" + TabAnexPor["Descripcion"].ToString() + "'," +
+                                                "Tratamiento ='" + TabAnexPor["Tratamiento"].ToString() + "'," +
+                                                "Riesgo ='" + TabAnexPor["Riesgo"].ToString() + "'," +
+                                                "RiesgoAnes ='" + TabAnexPor["RiesgoAnes"].ToString() + "'," +
+                                                "CodEspeNA ='" + TabAnexPor["CodEspeNA"].ToString() + "'," +
+                                                "CodMed ='" + TabAnexPor["CodMed"].ToString() + "'," +
+                                                "ActivaANE ='" + TabAnexPor["ActivaANE"].ToString() + "'," +
+                                                "Anulada ='" + TabAnexPor["Anulada"].ToString() + "'," +
+                                                "CodAnula ='" + TabAnexPor["CodAnula"].ToString() + "'," +
+                                                "RazonAnula ='" + TabAnexPor["RazonAnula"].ToString() + "'," +
+                                                $"FechaAnula = {ValidarFechaNula(TabHistoCli["FechaAnula"].ToString())}" +
+                                                "Tutor ='" + TabAnexPor["Tutor"].ToString() + "'," +
+                                                "NomTutor ='" + TabAnexPor["NomTutor"].ToString() + "'," +
+                                                "TDTutor ='" + TabAnexPor["TDTutor"].ToString() + "'," +
+                                                "IDTutor ='" + TabAnexPor["IDTutor"].ToString() + "'," +
+                                                "CodParenT ='" + TabAnexPor["CodParenT"].ToString() + "'," +
+                                                "TutorLegal ='" + TabAnexPor["TutorLegal"].ToString() + "'," +
+                                                "Testigo ='" + TabAnexPor["Testigo"].ToString() + "'," +
+                                                "CodMed2 ='" + TabAnexPor["CodMed2"].ToString() + "'," +
+                                                "Transfusion ='" + TabAnexPor["Transfusion"].ToString() + "' " +
+                                                "WHERE (NumAnexo = N'" + PfiPor + "') AND (HistoNumero = N'" + HistoPaci + "')  ";
 
 
-                                        Boolean Act = Conexion.SQLUpdate(Utils.SqlDatos);
+                                                Boolean Act = Conexion.SQLUpdate(Utils.SqlDatos);
 
-                                    }
+                                            }
 
-                                    TabAnexCen.Close();
+                                            TabAnexCen.Close();
 
-                                }//Using
+                                        }//Using
 
-                            }//While
-                        }
-                    }
 
-                    TabAnexPor.Close();
 
-                    Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
-                    MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        int COUN = Convert.ToInt32(TxtCanNotAnex.Text) + 1;
+                                        TxtCanNotAnex.Text = COUN.ToString();
+
+                                    }//While
+                                }
+                            }
+
+                            TabAnexPor.Close();
+
+                            Utils.Informa = "El proceso ha terminado satisfactoriamente" + "\r";
+                            MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    }// if(TabHistoCli.HasRows == false)
+                }//uSING
 
 
                 }//´Pregunta
@@ -1107,9 +1136,10 @@ namespace OBBDSIIG.Forms.FrmExportar
                     }
                     else
                     {
-                        ConectarCentral();
+                      
                         while (TabRemis.Read())
                         {
+                            ConectarCentral();
                             //Revisamos si el número de codigo de atencion existe
                             CodAteRem = TabRemis["NumeroAten"].ToString();
                             CodRem = TabRemis["RemisionNum"].ToString();
@@ -1186,7 +1216,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "'" + TabRemis["HistoriaPaci"].ToString() + "'," +
                                     "'" + TabRemis["NumeroAten"].ToString() + "'," +
                                     $"{ValidarFechaNula(TabRemis["FechaEgreso"].ToString())}" +
-                                    "CONVERT(DATETIME,'" + TabRemis["HoraEgreso"].ToString() + "',8)," +
+                                    $"{Conexion.ValidarHoraNula(TabRemis["HoraEgreso"].ToString())}" +
                                     "'" + TabRemis["RegimenRemis"].ToString() + "'," +
                                     "'" + TabRemis["CardinalEmp"].ToString() + "'," +
                                     "'" + TabRemis["ServiRemite"].ToString() + "'," +
@@ -1195,8 +1225,8 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "'" + TabRemis["MotivoRemi"].ToString() + "'," +
                                     "'" + TabRemis["NivelRemite"].ToString() + "'," +
                                     "'" + TabRemis["NivelRefere"].ToString() + "'," +
-                                    "CONVERT(DATETIME,'" + TabRemis["HoraSolicita"].ToString() + "',8)," +
-                                    "CONVERT(DATETIME,'" + TabRemis["HoraConfirma"].ToString() + "',8)," +
+                                    $"{Conexion.ValidarHoraNula(TabRemis["HoraSolicita"].ToString())}" +
+                                    $"{Conexion.ValidarHoraNula(TabRemis["HoraConfirma"].ToString())}" +
                                     "'" + TabRemis["Qconfirma"].ToString() + "'," +
                                     "'" + TabRemis["Conductor"].ToString() + "'," +
                                     "'" + TabRemis["PlacaAmbu"].ToString() + "'," +
@@ -1255,8 +1285,8 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "MotivoRemi ='" + TabRemis["MotivoRemi"].ToString() + "'," +
                                     "NivelRemite ='" + TabRemis["NivelRemite"].ToString() + "'," +
                                     "NivelRefere ='" + TabRemis["NivelRefere"].ToString() + "'," +
-                                    "HoraSolicita = CONVERT(DATETIME,'" + TabRemis["HoraSolicita"].ToString() + "',8)," +
-                                    "HoraConfirma = CONVERT(DATETIME,'" + TabRemis["HoraConfirma"].ToString() + "',8)," +
+                                    $"HoraSolicita = {Conexion.ValidarHoraNula(TabRemis["HoraSolicita"].ToString())}" +
+                                    $"HoraConfirma = {Conexion.ValidarHoraNula(TabRemis["HoraConfirma"].ToString())}" +
                                     "Qconfirma ='" + TabRemis["Qconfirma"].ToString() + "'," +
                                     "Conductor ='" + TabRemis["Conductor"].ToString() + "'," +
                                     "PlacaAmbu ='" + TabRemis["PlacaAmbu"].ToString() + "'," +
@@ -1609,7 +1639,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "'" + TabSegControl["Abortos"].ToString() + "'," +
                                     "'" + TabSegControl["EspConse"].ToString() + "'," +
                                     "'" + TabSegControl["Vivos"].ToString() + "'," +
-                                    "'" + TabSegControl["Viven, +"].ToString() + "'," +
+                                    "'" + TabSegControl["Viven"].ToString() + "'," +
                                     "'" + TabSegControl["Muertos"].ToString() + "'," +
                                     "'" + TabSegControl["Muertos1Sem"].ToString() + "'," +
                                     "'" + TabSegControl["Muertos1SemDes"].ToString() + "'," +
@@ -2178,7 +2208,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                      "'" + TabTratamiento["CodigoAten"].ToString() + "'," +
                                      "'" + TabTratamiento["CuentaCon"].ToString() + "'," +
                                     $"{ValidarFechaNula(TabTratamiento["FechaAten"].ToString())}" +
-                                     "CONVERT(DATETIME,'" + TabTratamiento["HoraAten"].ToString() + "',8)," +
+                                     $"{Conexion.ValidarHoraNula(TabTratamiento["HoraAten"].ToString())}" +
                                      "'" + TabTratamiento["Der21"].ToString() + "'," +
                                      "'" + TabTratamiento["Der22"].ToString() + "'," +
                                      "'" + TabTratamiento["Der23"].ToString() + "'," +
@@ -2256,7 +2286,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "HistorTrata ='" + TabTratamiento["HistorTrata"].ToString() + "'," +
                                     "CuentaCon ='" + TabTratamiento["CuentaCon"].ToString() + "'," +
                                     $"FechaAten = {ValidarFechaNula(TabTratamiento["FechaAten"].ToString())}" +
-                                    "HoraAten = CONVERT(DATETIME,'" + TabTratamiento["HoraAten"].ToString() + "',8), " +
+                                    $"HoraAten = {Conexion.ValidarHoraNula(TabTratamiento["HoraAten"].ToString())}" +
                                     "Der21 ='" + TabTratamiento["Der21"].ToString() + "'," +
                                     "Der22 ='" + TabTratamiento["Der22"].ToString() + "'," +
                                     "Der23 ='" + TabTratamiento["Der23"].ToString() + "'," +
@@ -2882,7 +2912,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "TomaUroAnal= '" + TabRegHtaDiabe["TomaUroAnal"].ToString() + "'," +
                                     $"FecUroAnal = {ValidarFechaNula(TabRegHtaDiabe["FecUroAnal"].ToString())}" +
                                     "UroAnal= '" + TabRegHtaDiabe["UroAnal"].ToString() + "' " +
-                                    "WHERE Where CodAten = N'" + CodRegHtaDiabe + "'";
+                                    "WHERE CodAten = N'" + CodRegHtaDiabe + "'";
 
                                     Boolean Act = Conexion.SQLUpdate(Utils.SqlDatos);
 
@@ -2943,9 +2973,9 @@ namespace OBBDSIIG.Forms.FrmExportar
                         while (TabDetEscAbre.Read())
                         {
                             //Revisamos si el número de codigo de atencion existe
-                            CodConReg = TabDetEscAbre["CodAten"].ToString();
-                            CodDetEscAbre = TabDetEscAbre["CodProce"].ToString();
-                            CodItemEscREF = TabDetEscAbre["NumPro"].ToString();
+                            CodConReg = TabDetEscAbre["CodControl"].ToString();
+                            CodDetEscAbre = TabDetEscAbre["CodAtencion"].ToString();
+                            CodItemEscREF = TabDetEscAbre["Item"].ToString();
 
                             SqlDetEscAbreCen = "SELECT [Datos detalle escala abreviada].* ";
                             SqlDetEscAbreCen = SqlDetEscAbreCen + "FROM [DACONEXTSQL].[dbo].[Datos detalle escala abreviada] ";
@@ -3023,7 +3053,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             {
                 Utils.Titulo01 = "Control de errores de ejecución";
                 Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
-                Utils.Informa += "en la funcion DetalleescalaabreviadaEXP  " + "\r";
+                Utils.Informa += "en la funcion Detalle escalaa breviadaEXP  " + "\r";
                 Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return -1;
@@ -3058,9 +3088,10 @@ namespace OBBDSIIG.Forms.FrmExportar
                     }
                     else
                     {
-                        ConectarCentral();
+                        
                         while (TabDetObsDoc.Read())
                         {
+                            ConectarCentral();
                             //Revisamos si el número de codigo de atencion existe
 
                             CodDetObsDoc = "";
@@ -3118,7 +3149,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "'" + TabDetObsDoc["CodiOrden"].ToString() + "'," + 
                                     "'" + TabDetObsDoc["CodRegis"].ToString() + "'," + 
                                    $"{ValidarFechaNula(TabDetObsDoc["FechaRegis"].ToString())}" +
-                                   "CONVERT(DATETIME,'" + TabDetObsDoc["Horaregis"].ToString() + "',8)" +
+                                   $"{Conexion.ValidarHoraNula(TabDetObsDoc["Horaregis"].ToString(), false)}" +
                                    ")";
 
                                     Boolean Insert = Conexion.SqlInsert(Utils.SqlDatos);
@@ -3140,7 +3171,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "CodiOrden = '" + TabDetObsDoc["CodiOrden"].ToString() + "'," +
                                     "CodRegis = '" + TabDetObsDoc["CodRegis"].ToString() + "'," +
                                     $"FechaRegis = {ValidarFechaNula(TabDetObsDoc["FechaRegis"].ToString())}" +
-                                    "Horaregis = CONVERT(DATETIME,'" + TabDetObsDoc["Horaregis"].ToString() + "',8) " +
+                                    $"Horaregis = {Conexion.ValidarHoraNula(TabDetObsDoc["Horaregis"].ToString(), false)}" +
                                     "WHERE  (CodigoAtencion = N'" + CodDetObsDoc + "') AND (NumeroDocumento = N'" + CodNumeroDocumento + "') AND (TipoDocumento = N'" + TipoDocRegis + "')  ";
 
                                     Boolean Act = Conexion.SQLUpdate(Utils.SqlDatos);   
@@ -3231,9 +3262,10 @@ namespace OBBDSIIG.Forms.FrmExportar
                     }
                     else
                     {
-                        ConectarCentral();
+                       
                         while (TabRegProced.Read())
                         {
+                            ConectarCentral();
                             //Revisamos si el número de codigo de atencion existe
                             CodRegProced = TabRegProced["CodAten"].ToString();
                             ProcedCodProce = TabRegProced["CodProce"].ToString();
@@ -3262,11 +3294,6 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "Obser," + 
                                     "CodMed," + 
                                     "Leido," + 
-
-                                    //'********** Campos que no aparecen en la E.S.E de san agustin
-                                    //'"TipoOrdenIMA," +TipoOrdenIMA
-                                    //'**********
-
                                     "LugarAten," + 
                                     "POS," + 
                                     "Frecuencia," + 
@@ -3294,10 +3321,11 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "'" + TabRegProced["Frecuencia"].ToString() + "'," +
                                     "'" + TabRegProced["Control"].ToString() + "'," +
                                     "'" + TabRegProced["EfectoTerapeutico"].ToString() + "'," +
+                                    "'" + TabRegProced["AternativaPOS"].ToString() + "'," +
                                     "'" + TabRegProced["CopPOSAlternativo"].ToString() + "'," +
                                     "'" + TabRegProced["PorquenoSerealiza"].ToString() + "'," +
                                    $"{ValidarFechaNula(TabRegProced["FechaReg"].ToString())}" +
-                                   "CONVERT(DATETIME,'" + TabRegProced["HoraReg"].ToString() + "',8), " +
+                                   $"{Conexion.ValidarHoraNula(TabRegProced["HoraReg"].ToString())}" +
                                     "'" + TabRegProced["TipoFormula"].ToString() + "'" +
                                     ")";
 
@@ -3324,7 +3352,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "CopPOSAlternativo = '" + TabRegProced["CopPOSAlternativo"].ToString() + "'," +
                                     "PorquenoSerealiza = '" + TabRegProced["PorquenoSerealiza"].ToString() + "'," +
                                     $"FechaReg = {ValidarFechaNula(TabRegProced["FechaReg"].ToString())} " +
-                                    "HoraReg = CONVERT(DATETIME,'" + TabRegProced["HoraReg"].ToString() + "',8), " +
+                                    $"HoraReg = {Conexion.ValidarHoraNula(TabRegProced["HoraReg"].ToString())}" +
                                     "TipoFormula = '" + TabRegProced["TipoFormula"].ToString() + "'" +
                                     "WHERE CodAten = N'" + CodRegProced + "' AND CodProce = N'" + ProcedCodProce + "' AND NumPro = N'" + ProcedNumPro + "'";
 
@@ -3683,8 +3711,8 @@ namespace OBBDSIIG.Forms.FrmExportar
 
                 ConectarPortatil();
 
-                SqlRegImag = "SELECT [DACONEXTSQL].[dbo].[Datos registro de imagenologia].* ";
-                SqlRegImag = SqlRegImag + "FROM [Datos registro de imagenologia] ";
+                SqlRegImag = "SELECT [Datos registro de imagenologia].* ";
+                SqlRegImag = SqlRegImag + "FROM [DACONEXTSQL].[dbo].[Datos registro de imagenologia] ";
                 SqlRegImag = SqlRegImag + "WHERE ([Datos registro de imagenologia].CodAten = N'" + CodHistRI + "')";
 
                 SqlDataReader TabRegImag, TabRegImagCen;
@@ -3787,7 +3815,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "CopPOSAlternativo = '" + TabRegImag["CopPOSAlternativo"].ToString() + "'," +
                                     "PorquenoSerealiza = '" + TabRegImag["PorquenoSerealiza"].ToString() + "'," +
                                     "POS = '" + TabRegImag["POS"].ToString() + "'," +
-                                    "TipoFormula = '" + TabRegImag["TipoFormula"].ToString() + "'" +
+                                    "TipoFormula = '" + TabRegImag["TipoFormula"].ToString() + "' " +
                                     "WHERE CodAten = N'" + CodRegImag + "' AND CodProce = N'" + ImagCodProce + "' AND NumIma = N'" + ProceNumIma + "' ";
 
                                     Boolean Act = Conexion.SQLUpdate(Utils.SqlDatos);
@@ -3845,8 +3873,10 @@ namespace OBBDSIIG.Forms.FrmExportar
                     {
 
                         ConectarCentral();
+
                         while (TabRegEvo.Read())
                         {
+                          
                             //Revisamos si el número de codigo de atencion existe
                             CodRegiEvol = "";
                             ItemEvoCen = "";
@@ -3856,9 +3886,9 @@ namespace OBBDSIIG.Forms.FrmExportar
                             SqlRegEvoCen = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos registro de evoluciones] ";
                             SqlRegEvoCen = SqlRegEvoCen + "WHERE CodAtencion = N'" + CodRegiEvol + "' AND ItemREF = N'" + ItemEvoCen + "'";
 
-                            using (SqlConnection connection = new SqlConnection(Conexion.conexionSQL))
+                            using (SqlConnection connection10 = new SqlConnection(Conexion.conexionSQL))
                             {
-                                SqlCommand command = new SqlCommand(SqlRegEvoCen, connection);
+                                SqlCommand command = new SqlCommand(SqlRegEvoCen, connection10);
                                 command.Connection.Open();
                                 TabRegEvoCen = command.ExecuteReader();
 
@@ -3903,12 +3933,12 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "'" + TabRegEvo["TipodeIngreso"].ToString() + "'," +
                                     "'" + TabRegEvo["CodAtencion"].ToString() + "'," +
                                     $"{ValidarFechaNula(TabRegEvo["FechaEvolucion"].ToString())}" +
-                                    $"CONVERT(DATETIME,'" + TabRegEvo["HoraEvolucion"].ToString() + "',8)," +
-                                    "'" + TabRegEvo["NotaEvolucion"].ToString() + "'," +
-                                    "'" + TabRegEvo["Subjetivo"].ToString() + "'," +
-                                    "'" + TabRegEvo["Objetivo"].ToString() + "'," +
-                                    "'" + TabRegEvo["Analisis"].ToString() + "'," +
-                                    "'" + TabRegEvo["PlanN"].ToString() + "'," +
+                                    $"{Conexion.ValidarHoraNula(TabRegEvo["HoraEvolucion"].ToString())}" +
+                                    "'" + TabRegEvo["NotaEvolucion"].ToString().Replace("'", "") + "'," +
+                                    "'" + TabRegEvo["Subjetivo"].ToString().Replace("'", "") + "'," +
+                                    "'" + TabRegEvo["Objetivo"].ToString().Replace("'", "") + "'," +
+                                    "'" + TabRegEvo["Analisis"].ToString().Replace("'", "") + "'," +
+                                    "'" + TabRegEvo["PlanN"].ToString().Replace("'", "") + "'," +
                                     "'" + TabRegEvo["TensionSisto"].ToString() + "'," +
                                     "'" + TabRegEvo["TensionDiasto"].ToString() + "'," +
                                     "'" + TabRegEvo["FrecuCardi"].ToString() + "'," +
@@ -3927,8 +3957,8 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "'" + TabRegEvo["Activa"].ToString() + "'," +
                                     "'" + TabRegEvo["CodRegis"].ToString() + "'," +
                                     $"{ValidarFechaNula(TabRegEvo["FechaRegis"].ToString())}" +
-                                    $"CONVERT(DATETIME,'" + TabRegEvo["Horaregis"].ToString() + "',8)," +
-                                    "'" + TabRegEvo["ItemREF"].ToString() + "'" +
+                                    $"{Conexion.ValidarHoraNula(TabRegEvo["Horaregis"].ToString())}" +
+                                    "'" + TabRegEvo["ItemREF"].ToString() + "' " +
                                     ")";
 
                                     Boolean Insert = Conexion.SqlInsert(Utils.SqlDatos);
@@ -3939,12 +3969,12 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     Utils.SqlDatos = "UPDATE [DACONEXTSQL].[dbo].[Datos registro de evoluciones]  SET " +
                                     "TipodeIngreso = '" + TabRegEvo["TipodeIngreso"].ToString() + "'," +
                                    $"FechaEvolucion = {ValidarFechaNula(TabRegEvo["FechaEvolucion"].ToString())} " +
-                                    "HoraEvolucion = '" + Convert.ToDateTime(TabRegEvo["HoraEvolucion"]).ToString("hh:ss:mm") + "'," +
-                                    "NotaEvolucion = '" + TabRegEvo["NotaEvolucion"].ToString() + "'," +
-                                    "Subjetivo = '" + TabRegEvo["Subjetivo"].ToString() + "'," +
-                                    "Objetivo = '" + TabRegEvo["Objetivo"].ToString() + "'," +
-                                    "Analisis = '" + TabRegEvo["Analisis"].ToString() + "'," +
-                                    "PlanN = '" + TabRegEvo["PlanN"].ToString() + "'," +
+                                    $"HoraEvolucion = {Conexion.ValidarHoraNula(TabRegEvo["HoraEvolucion"].ToString())}" +
+                                    "NotaEvolucion = '" + TabRegEvo["NotaEvolucion"].ToString().Replace("'","") + " '," +
+                                    "Subjetivo = '" + TabRegEvo["Subjetivo"].ToString().Replace("'", "") + "'," +
+                                    "Objetivo = '" + TabRegEvo["Objetivo"].ToString().Replace("'", "") + "'," +
+                                    "Analisis = '" + TabRegEvo["Analisis"].ToString().Replace("'", "") + "'," +
+                                    "PlanN = '" + TabRegEvo["PlanN"].ToString().Replace("'", "") + "'," +
                                     "TensionSisto = '" + TabRegEvo["TensionSisto"].ToString() + "'," +
                                     "TensionDiasto = '" + TabRegEvo["TensionDiasto"].ToString() + "'," +
                                     "FrecuCardi = '" + TabRegEvo["FrecuCardi"].ToString() + "'," +
@@ -3963,7 +3993,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "Activa = '" + TabRegEvo["Activa"].ToString() + "'," +
                                     "CodRegis = '" + TabRegEvo["CodRegis"].ToString() + "'," +
                                     $"FechaRegis = {ValidarFechaNula(TabRegEvo["FechaRegis"].ToString())} " +
-                                    "Horaregis = '" + Convert.ToDateTime(TabRegEvo["Horaregis"]).ToString("hh:ss:mm") + "' " +
+                                    $"Horaregis = {Conexion.ValidarHoraNula(TabRegEvo["Horaregis"].ToString(),false)} " +
                                     "WHERE CodAtencion = N'" + CodRegiEvol + "' AND ItemREF = N'" + ItemEvoCen + "'";
 
                                     Boolean Act = Conexion.SQLUpdate(Utils.SqlDatos);
@@ -3976,11 +4006,12 @@ namespace OBBDSIIG.Forms.FrmExportar
 
                         }//While
 
+                        TabRegEvo.Close();
                         return 1;
 
                     }//if(TabRegEvo.HasRows == false)
 
-                    TabRegEvo.Close();
+                   
 
                 }//USing
             }
@@ -4075,13 +4106,13 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "'" + TabAntPac["CodigoAnteced"].ToString() + "'," +
                                     "'" + TabAntPac["TipoAnteced"].ToString() + "'," +
                                     "'" + TabAntPac["CodAten"].ToString() + "'," +
-                                    "'" + TabAntPac["Observaciones"].ToString() + "'," +
+                                    "'" + TabAntPac["Observaciones"].ToString().Replace("'", "") + "'," +
                                     "'" + TabAntPac["Cantidad"].ToString() + "'," +
                                      $"{ValidarFechaNula(TabAntPac["FechasAntecede"].ToString())}" +
                                     "'" + TabAntPac["Incluido"].ToString() + "'," +
                                     "'" + TabAntPac["CodRegis"].ToString() + "'," +
                                     $"{ValidarFechaNula(TabAntPac["FechaRegis"].ToString())}" +
-                                    $"CONVERT(DATETIME,'" + TabAntPac["Horaregis"].ToString() + "',8)" +
+                                    $"{Conexion.ValidarHoraNula(TabAntPac["Horaregis"].ToString(),false)}" +
                                     ")";
 
                                     Boolean Insert = Conexion.SqlInsert(Utils.SqlDatos);
@@ -4093,13 +4124,13 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     Utils.SqlDatos = "UPDATE [DACONEXTSQL].[dbo].[Datos antecedentes pacientes]  SET " +
                                     "CodigoAnteced = '" + TabAntPac["CodigoAnteced"].ToString() + "'," +
                                     "TipoAnteced = '" + TabAntPac["TipoAnteced"].ToString() + "'," +
-                                    "Observaciones = '" + TabAntPac["Observaciones"].ToString() + "'," +
+                                    "Observaciones = '" + TabAntPac["Observaciones"].ToString().Replace("'", "") + "'," +
                                     "Cantidad = '" + TabAntPac["Cantidad"].ToString() + "'," +
                                     $"FechasAntecede = {ValidarFechaNula(TabAntPac["FechasAntecede"].ToString())} " +
                                     "Incluido = '" + TabAntPac["Incluido"].ToString() + "'," +
                                     "CodRegis = '" + TabAntPac["CodRegis"].ToString() + "'," +
                                     $"FechaRegis = {ValidarFechaNula(TabAntPac["FechaRegis"].ToString())} " +
-                                    "Horaregis = '" + Convert.ToDateTime(TabAntPac["Horaregis"]).ToString("hh:ss:mm") + "' " +
+                                    $"Horaregis = {Conexion.ValidarHoraNula(TabAntPac["Horaregis"].ToString(),false)} " +
                                     "WHERE (TipoAnteced = N'" + TipAnteRegis + "') AND (CodAten = '" + CodAntePaci + "')  AND  (HistoNumero = N'" + HisRegis + "') AND (CodigoAnteced = N'" + CodAntPacPort + "') ";
 
                                     Boolean Act = Conexion.SQLUpdate(Utils.SqlDatos);
@@ -4145,9 +4176,9 @@ namespace OBBDSIIG.Forms.FrmExportar
 
                 SqlDataReader TabDetAteCon, TabDetAteConCen;
 
-                using (SqlConnection connection2 = new SqlConnection(Conexion.conexionSQL))
+                using (SqlConnection connection5 = new SqlConnection(Conexion.conexionSQL))
                 {
-                    SqlCommand command2 = new SqlCommand(SqlDetAteCon, connection2);
+                    SqlCommand command2 = new SqlCommand(SqlDetAteCon, connection5);
                     command2.Connection.Open();
                     TabDetAteCon = command2.ExecuteReader();
 
@@ -4158,7 +4189,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                     }
                     else
                     {
-                           ConectarCentral();
+                        ConectarCentral();
                         while (TabDetAteCon.Read())
                         {
                             //'Revisamos si el número de codigo de atencion existe
@@ -4172,16 +4203,16 @@ namespace OBBDSIIG.Forms.FrmExportar
                             SqlDetAteConCen = "SELECT * FROM  [DACONEXTSQL].[dbo].[Datos detalle atencion de consulta] ";
                             SqlDetAteConCen = SqlDetAteConCen + "WHERE (CodigoAten = N'" + CodDetAteCon + "') AND (CodigoNodo = '" + CodDetAteConPort + "')";
 
-                            using (SqlConnection connection = new SqlConnection(Conexion.conexionSQL))
+                            using (SqlConnection connection6 = new SqlConnection(Conexion.conexionSQL))
                             {
-                                SqlCommand command = new SqlCommand(SqlDetAteConCen, connection);
+                                SqlCommand command = new SqlCommand(SqlDetAteConCen, connection6);
                                 command.Connection.Open();
                                 TabDetAteConCen = command.ExecuteReader();
 
                                 if (TabDetAteConCen.HasRows == false)
                                 {
                                     //Agregue
-                                    Utils.SqlDatos = "INSERT INTO [DACONEXTSQL].[dbo].Datos detalle atencion de consulta " +
+                                    Utils.SqlDatos = "INSERT INTO [DACONEXTSQL].[dbo].[Datos detalle atencion de consulta] " +
                                     "(" +
                                     "CodigoAten," +
                                     "CodigoNodo," +
@@ -4199,7 +4230,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "'" + TabDetAteCon["CodigoTExam"].ToString() + "'," +
                                     "'" + TabDetAteCon["CodiMedi"].ToString() + "'," +
                                     $"{ValidarFechaNula(TabDetAteCon["FecRegis"].ToString())}" +
-                                    $"CONVERT(DATETIME,'" + TabDetAteCon["Horaregis"].ToString() + "',8)" +
+                                    $"{Conexion.ValidarHoraNula(TabDetAteCon["Horaregis"].ToString(),false)}" +
                                     ")";
 
                                     Boolean Insert = Conexion.SqlInsert(Utils.SqlDatos);
@@ -4208,12 +4239,12 @@ namespace OBBDSIIG.Forms.FrmExportar
                                 else
                                 {
                                     //Modifique los datos
-                                    Utils.SqlDatos = "UPDATE [DACONEXTSQL].[dbo].Datos detalle atencion de consulta SET " +
+                                    Utils.SqlDatos = "UPDATE [DACONEXTSQL].[dbo].[Datos detalle atencion de consulta] SET " +
                                     "DescripcionSIS = '" + TabDetAteCon["DescripcionSIS"].ToString() + "'," +
                                     "CodigoTExam = '" + TabDetAteCon["CodigoTExam"].ToString() + "'," +
                                     "CodiMedi = '" + TabDetAteCon["CodiMedi"].ToString() + "'," +
                                     $"FecRegis = {ValidarFechaNula(TabDetAteCon["FecRegis"].ToString())} " +
-                                    "HorRegis = '" + Convert.ToDateTime(TabDetAteCon["Horaregis"]).ToString("hh:ss:mm") + "' " +
+                                    $"Horaregis = {Conexion.ValidarHoraNula(TabDetAteCon["Horaregis"].ToString(), false)}" +
                                     "WHERE (CodigoAten = N'" + CodDetAteCon + "') AND (CodigoNodo = '" + CodDetAteConPort + "') ";
 
                                     Boolean Act = Conexion.SQLUpdate(Utils.SqlDatos);
@@ -4224,11 +4255,10 @@ namespace OBBDSIIG.Forms.FrmExportar
                             TabDetAteConCen.Close();
                         }
 
+                        TabDetAteCon.Close();
                         return 1;
                     }
-                }
-
-                TabDetAteCon.Close();
+                }       
 
             }
             catch (Exception ex)

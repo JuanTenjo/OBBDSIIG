@@ -63,6 +63,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // 
             this.TxtInstanPortaFor.Location = new System.Drawing.Point(110, 33);
             this.TxtInstanPortaFor.Name = "TxtInstanPortaFor";
+            this.TxtInstanPortaFor.ReadOnly = true;
             this.TxtInstanPortaFor.Size = new System.Drawing.Size(362, 20);
             this.TxtInstanPortaFor.TabIndex = 71;
             // 
@@ -70,6 +71,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // 
             this.TxtInstanCenFor.Location = new System.Drawing.Point(110, 11);
             this.TxtInstanCenFor.Name = "TxtInstanCenFor";
+            this.TxtInstanCenFor.ReadOnly = true;
             this.TxtInstanCenFor.Size = new System.Drawing.Size(362, 20);
             this.TxtInstanCenFor.TabIndex = 70;
             // 
@@ -125,6 +127,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.TxtCanHueMod.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtCanHueMod.Location = new System.Drawing.Point(421, 150);
             this.TxtCanHueMod.Name = "TxtCanHueMod";
+            this.TxtCanHueMod.ReadOnly = true;
             this.TxtCanHueMod.Size = new System.Drawing.Size(33, 20);
             this.TxtCanHueMod.TabIndex = 30;
             this.TxtCanHueMod.Text = "0";
@@ -134,6 +137,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.TxtCanHueAgr.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtCanHueAgr.Location = new System.Drawing.Point(421, 121);
             this.TxtCanHueAgr.Name = "TxtCanHueAgr";
+            this.TxtCanHueAgr.ReadOnly = true;
             this.TxtCanHueAgr.Size = new System.Drawing.Size(33, 20);
             this.TxtCanHueAgr.TabIndex = 29;
             this.TxtCanHueAgr.Text = "0";
@@ -143,6 +147,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.TxtCanFotMod.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtCanFotMod.Location = new System.Drawing.Point(421, 92);
             this.TxtCanFotMod.Name = "TxtCanFotMod";
+            this.TxtCanFotMod.ReadOnly = true;
             this.TxtCanFotMod.Size = new System.Drawing.Size(33, 20);
             this.TxtCanFotMod.TabIndex = 28;
             this.TxtCanFotMod.Text = "0";
@@ -152,6 +157,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.TxtCanFotAgr.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtCanFotAgr.Location = new System.Drawing.Point(421, 64);
             this.TxtCanFotAgr.Name = "TxtCanFotAgr";
+            this.TxtCanFotAgr.ReadOnly = true;
             this.TxtCanFotAgr.Size = new System.Drawing.Size(33, 20);
             this.TxtCanFotAgr.TabIndex = 27;
             this.TxtCanFotAgr.Text = "0";
@@ -209,6 +215,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.TxtCanFirMod.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtCanFirMod.Location = new System.Drawing.Point(421, 35);
             this.TxtCanFirMod.Name = "TxtCanFirMod";
+            this.TxtCanFirMod.ReadOnly = true;
             this.TxtCanFirMod.Size = new System.Drawing.Size(33, 20);
             this.TxtCanFirMod.TabIndex = 22;
             this.TxtCanFirMod.Text = "0";
@@ -230,6 +237,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.TxtCanFirAgr.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtCanFirAgr.Location = new System.Drawing.Point(421, 6);
             this.TxtCanFirAgr.Name = "TxtCanFirAgr";
+            this.TxtCanFirAgr.ReadOnly = true;
             this.TxtCanFirAgr.Size = new System.Drawing.Size(33, 20);
             this.TxtCanFirAgr.TabIndex = 17;
             this.TxtCanFirAgr.Text = "0";
@@ -249,7 +257,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // label15
             // 
             this.label15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(75, 269);
+            this.label15.Location = new System.Drawing.Point(64, 269);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(75, 12);
             this.label15.TabIndex = 73;
@@ -261,9 +269,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.BtnBuscarPacientes.BackgroundImage = global::OBBDSIIG.Properties.Resources.icons8_exportar_30;
             this.BtnBuscarPacientes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.BtnBuscarPacientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnBuscarPacientes.Location = new System.Drawing.Point(89, 289);
+            this.BtnBuscarPacientes.Location = new System.Drawing.Point(78, 283);
             this.BtnBuscarPacientes.Name = "BtnBuscarPacientes";
-            this.BtnBuscarPacientes.Size = new System.Drawing.Size(43, 34);
+            this.BtnBuscarPacientes.Size = new System.Drawing.Size(43, 40);
             this.BtnBuscarPacientes.TabIndex = 72;
             this.BtnBuscarPacientes.UseVisualStyleBackColor = true;
             this.BtnBuscarPacientes.Click += new System.EventHandler(this.BtnBuscarPacientes_Click);

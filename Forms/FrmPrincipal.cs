@@ -16,6 +16,7 @@ using OBBDSIIG.Forms;
 using OBBDSIIG.Forms.FrmExportar;
 using OBBDSIIG.Forms.FrmImportar;
 using OBBDSIIG.Forms.FrmIntegrar;
+using OBBDSIIG.Forms.Registro;
 
 namespace OBBDSIIG.Forms
 {
@@ -231,6 +232,99 @@ namespace OBBDSIIG.Forms
 
             FrmIntegrarBiometria frmIntegrarBiometria = new FrmIntegrarBiometria();
             frmIntegrarBiometria.ShowDialog();
+
+        }
+
+        private void medicosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Utils.BaseDeDatosPrincipal = "ACDATOXPSQL";
+
+            Conexion.conexionSQL = "Server=" + Conexion.servidor + "; " +
+                                   "Initial Catalog=" + Utils.BaseDeDatosPrincipal + ";" +
+                                   "User ID= " + Conexion.username + "; " +
+                                   "Password=" + Conexion.password;
+
+            FrmIntegrarMedicos frmIntegrarMedicos = new FrmIntegrarMedicos();
+            frmIntegrarMedicos.ShowDialog();
+        }
+
+        private void pacientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Utils.BaseDeDatosPrincipal = "ACDATOXPSQL";
+
+            Conexion.conexionSQL = "Server=" + Conexion.servidor + "; " +
+                                   "Initial Catalog=" + Utils.BaseDeDatosPrincipal + ";" +
+                                   "User ID= " + Conexion.username + "; " +
+                                   "Password=" + Conexion.password;
+
+            FrmIntegrarPacientes frmIntegrarPacientes = new FrmIntegrarPacientes();
+
+            frmIntegrarPacientes.ShowDialog();
+        }
+
+        private void serviciosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Utils.BaseDeDatosPrincipal = "ACDATOXPSQL";
+
+            Conexion.conexionSQL = "Server=" + Conexion.servidor + "; " +
+                                   "Initial Catalog=" + Utils.BaseDeDatosPrincipal + ";" +
+                                   "User ID= " + Conexion.username + "; " +
+                                   "Password=" + Conexion.password;
+
+
+            FrmIntegrarServicios frmIntegrarServicios = new FrmIntegrarServicios();
+
+            frmIntegrarServicios.ShowDialog();
+
+        }
+
+        private void usuariosToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Utils.BaseDeDatosPrincipal = "ACDATOXPSQL";
+
+            Conexion.conexionSQL = "Server=" + Conexion.servidor + "; " +
+                                   "Initial Catalog=" + Utils.BaseDeDatosPrincipal + ";" +
+                                   "User ID= " + Conexion.username + "; " +
+                                   "Password=" + Conexion.password;
+
+            FrmIntegrarUsuarios frmIntegrarUsuarios = new FrmIntegrarUsuarios();
+
+            frmIntegrarUsuarios.ShowDialog();
+
+        }
+
+        private void entidadesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Utils.BaseDeDatosPrincipal = "ACDATOXPSQL";
+
+            Conexion.conexionSQL = "Server=" + Conexion.servidor + "; " +
+                                   "Initial Catalog=" + Utils.BaseDeDatosPrincipal + ";" +
+                                   "User ID= " + Conexion.username + "; " +
+                                   "Password=" + Conexion.password;
+
+
+            FrmIntegrarEntidades frmIntegrarEntidades = new FrmIntegrarEntidades();
+
+            frmIntegrarEntidades.ShowDialog();
+
+        }
+
+        private void registroEmpresaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Utils.BaseDeDatosPrincipal = "ACDATOXPSQL";
+
+            Conexion.conexionSQL = "Server=" + Conexion.servidor + "; " +
+                                   "Initial Catalog=" + Utils.BaseDeDatosPrincipal + ";" +
+                                   "User ID= " + Conexion.username + "; " +
+                                   "Password=" + Conexion.password;
+
+
+            FrmIntegrarEntidades frmIntegrarEntidades = new FrmIntegrarEntidades();
+
+            Empresa empresa = new Empresa();
+
+            empresa.ShowDialog();
+
 
         }
     }

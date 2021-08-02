@@ -41,7 +41,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     LblCodEntiFac.Text = Utils.codUnicoEmpresa; // '*********************** Se agrega a partir del 13 de octubre de 2020 *********************************
 
                     TxtInstanCenFor.Text = Utils.InstanCenFor;
-
+                    TxtPrefiPorFor.Text = Utils.PrefiPorFor;
+                    TxtPrefiCenFor.Text = Utils.PrefiCenFor;
                     TxtInstanPortaFor.Text = Utils.InstanPortaFor;
 
                 }
@@ -173,7 +174,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                 string PfiCen = TxtPrefiCenFor.Text;
                 string PfiPor = TxtPrefiPorFor.Text;
 
-
+                Utils.Titulo01 = "Control para integrar servicios";
                 Utils.Informa = "¿Usted desea iniciar el proceso de integración" + "\r";
                 Utils.Informa += "de los servicios en la instancia del" + "\r";
                 Utils.Informa += "servidor central a la instancia del portatil.?" + "\r";
@@ -181,6 +182,16 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                 if (res == DialogResult.Yes)
                 {
+
+
+                    TxtCanServiFor.Text = "0";
+                    TxtCanServiForm.Text = "0";
+                    TxtCanServiExis.Text = "0";
+                    TxtCantiProFar.Text = "0";
+                    TxtProFarAgrega.Text = "0";
+                    TxtCanProforVal.Text = "0";
+
+
                     string Sqlservi, SqlServiCentra, SqlProFarPor = "", SqlProFarCen = "", CodServi = "";
                     int ContiPro;
                     ConectarCentral();
@@ -205,6 +216,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                         }
                         else
                         {
+                            ConectarPortatil();
                             while (TabServi.Read())
                             {
                                 //Revisamos si el código interno de la entidad existe
@@ -280,12 +292,12 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "ConceMedica," +
                                         "CuenConta," +
                                         "MaxPorAten," +
-                                        "CodConPyP " +
+                                        "CodConPyP" +
                                         ")" +
                                         "VALUES" +
                                         "(" +
                                         "'" + TabServi["CodInterno"].ToString() + "'," +
-                                        "'" + TabServi["NomServicio"].ToString() + "'," +
+                                        "'" + TabServi["NomServicio"].ToString().Replace("'", "") + "'," +
                                         "'" + TabServi["CodiMedMin"].ToString() + "'," +
                                         "'" + TabServi["GrupoServi"].ToString() + "'," +
                                         "'" + TabServi["TipoServi"].ToString() + "'," +
@@ -357,7 +369,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                     else
                                     {
                                         Utils.SqlDatos = $"UPDATE [ACDATOXPSQL].[dbo].[Datos catalogo de servicios] SET " +
-                                        "NomServicio ='" + TabServi["NomServicio"].ToString() + "', " +
+                                        "NomServicio ='" + TabServi["NomServicio"].ToString().Replace("'","") + "', " +
                                         "CodiMedMin ='" + TabServi["CodiMedMin"].ToString() + "', " +
                                         "GrupoServi ='" + TabServi["GrupoServi"].ToString() + "', " +
                                         "TipoServi ='" + TabServi["TipoServi"].ToString() + "', " +
@@ -408,7 +420,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "ConceMedica ='" + TabServi["ConceMedica"].ToString() + "', " +
                                         "CuenConta ='" + TabServi["CuenConta"].ToString() + "', " +
                                         "MaxPorAten ='" + TabServi["MaxPorAten"].ToString() + "', " +
-                                        "CodConPyP = '" + TabServi["CodConPyP "].ToString() + "' " +
+                                        "CodConPyP = '" + TabServi["CodConPyP"].ToString() + "' " +
                                         "WHERE (CodInterno = '" + CodServi + "') ";
 
                                         Boolean ActControl = Conexion.SQLUpdate(Utils.SqlDatos);
@@ -460,6 +472,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                         }
                         else
                         {
+                            ConectarPortatil();
                             while (TabProFarCen.Read())
                             {
                                 TolProFarCenCount += 1;

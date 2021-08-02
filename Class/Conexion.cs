@@ -37,6 +37,22 @@ namespace OBBDSIIG.Class
 
 
 
+        public static string ValidarHoraNula(string Hora, bool Opcion = true)
+        {
+            string ValidarHora = null;
+
+            if(Opcion)
+            {
+                ValidarHora = string.IsNullOrWhiteSpace(Hora) ? "null" + "," : "CONVERT(DATETIME,'" + Convert.ToDateTime(Hora).ToString("hh:mm:ss") + "',8), ";
+            }
+            else
+            {
+                ValidarHora = string.IsNullOrWhiteSpace(Hora) ? "null" + "," : "CONVERT(DATETIME,'" + Convert.ToDateTime(Hora).ToString("hh:mm:ss") + "',8) ";
+            } 
+
+            return ValidarHora;
+
+        }
 
         public static SqlDataReader SQLDataReader(string sqlString, List<SqlParameter> parameters = null)
         {
@@ -105,6 +121,7 @@ namespace OBBDSIIG.Class
                 }
 
                 return true;
+
             }
             catch (Exception ex)
             {
@@ -142,6 +159,7 @@ namespace OBBDSIIG.Class
 
                     sqlConnection.Open();
                     command.ExecuteNonQuery();
+
                 }
 
                 return true;
@@ -174,7 +192,7 @@ namespace OBBDSIIG.Class
                     if (parameters != null)
                     {
                         foreach (var parameter in parameters)
-                        {
+                        {   
                             command.Parameters.Add(parameter);
                         }
                     }

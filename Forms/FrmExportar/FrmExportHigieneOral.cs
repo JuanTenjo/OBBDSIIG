@@ -213,8 +213,8 @@ namespace OBBDSIIG.Forms.FrmExportar
                     MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                string FecIniPro = Convert.ToString(DateInicial.Value.ToString("yyy-MM-dd"));
-                string FecFinPro = Convert.ToString(DateFinal.Value.ToString("yyy-MM-dd"));
+                string FecIniPro = Convert.ToString(DateInicial.Value.ToString("yyyy-MM-dd"));
+                string FecFinPro = Convert.ToString(DateFinal.Value.ToString("yyyy-MM-dd"));
 
                 string PfiCen = TxtPrefiCenFor.Text;
                 string PfiPor = TxtPrefiPorFor.Text;
@@ -222,7 +222,7 @@ namespace OBBDSIIG.Forms.FrmExportar
 
                 Utils.Informa = "¿Usted desea iniciar el proceso de exportación" + "\r";
                 Utils.Informa += "todas las higienes oral en la instancia del" + "\r";
-                Utils.Informa += "portatil a la instancia del servidor central.?" + "\r";
+                Utils.Informa += "portatil a la instancia del servidor central?" + "\r";
                 Utils.Informa += "Fecha Inicial: " + FecIniPro + "\r";
                 Utils.Informa += "Fecha Final: " + FecFinPro;
                 var res = MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -230,6 +230,10 @@ namespace OBBDSIIG.Forms.FrmExportar
 
                 if (res == DialogResult.Yes)
                 {
+
+                    TxtCanPlacaFor.Text = "0";
+                    TxtCanPlacaFormExis.Text = "0";
+
                     SqlPlaca = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos registro control placa] " +
                     "WHERE ([Datos registro control placa].PrefiPlaca = N'" + PfiPor + "') AND " +
                     "([Datos registro control placa].ActivoCtl = 0 ) AND " +
@@ -261,7 +265,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                 CodBusHistPlaca = null;
                                 CodBusPlaca = null;
                                 CodBusHistPlaca = TabControlPlaca["HistoriaPaci"].ToString();
-                                CodBusPlaca = TabControlPlaca["HistoriaPaci"].ToString();
+                                CodBusPlaca = TabControlPlaca["ConsecutivoCtrl"].ToString();
 
 
 
@@ -366,7 +370,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                         "'" + TabControlPlaca["ConsecutivoCtrl"].ToString() + "'," +
                                         "'" + TabControlPlaca["HistoriaPaci"].ToString() + "'," +
                                         $"{ValidarFechaNula(TabControlPlaca["FechaRealiza"].ToString())}" +
-                                        $"CONVERT(DATETIME,'" + TabControlPlaca["HoraRealiza"].ToString() + "',8)," +
+                                        $"{Conexion.ValidarHoraNula(TabControlPlaca["HoraRealiza"].ToString())}" +
                                         "'" + TabControlPlaca["ValorEdad"].ToString() + "'," +
                                         "'" + TabControlPlaca["UnidadEdad"].ToString() + "'," +
                                         "'" + TabControlPlaca["Sellantes"].ToString() + "'," +
@@ -444,13 +448,20 @@ namespace OBBDSIIG.Forms.FrmExportar
 
 
                                         Boolean RegisControlPlaca = Conexion.SqlInsert(Utils.SqlDatos);
+
+                                        if (RegisControlPlaca)
+                                        {
+                                            int con = Convert.ToInt32(TxtCanPlacaFor.Text) + 1;
+                                            TxtCanPlacaFor.Text = con.ToString();
+                                        }
+
                                     }
                                     else
                                     {
                                         //Modifique los datos
                                         Utils.SqlDatos = $"UPDATE [DACONEXTSQL].[dbo].[Datos registro control placa] SET " +
                                         $"FechaRealiza = {ValidarFechaNula(TabControlPlaca["FechaRealiza"].ToString())} " +
-                                        "HoraRealiza = '" + Convert.ToDateTime(TabControlPlaca["HoraRealiza"]).ToString("hh:ss:mm") + "'," +
+                                        $"HoraRealiza = {Conexion.ValidarHoraNula(TabControlPlaca["HoraRealiza"].ToString())}" +
                                         "ValorEdad = '" + TabControlPlaca["ValorEdad"].ToString() + "', " +
                                         "UnidadEdad = '" + TabControlPlaca["UnidadEdad"].ToString() + "', " +
                                         "Sellantes = '" + TabControlPlaca["Sellantes"].ToString() + "', " +

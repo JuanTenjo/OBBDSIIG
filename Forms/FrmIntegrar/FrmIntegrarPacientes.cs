@@ -42,9 +42,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     LblCodEntiFac.Text = Utils.codUnicoEmpresa; // '*********************** Se agrega a partir del 13 de octubre de 2020 *********************************
 
                     TxtInstanCenFor.Text = Utils.InstanCenFor;
-                    TxtPrefiCenFor.Text = Utils.PrefiCenFor;
+                    
                     TxtInstanPortaFor.Text = Utils.InstanPortaFor;
                     TxtPrefiPorFor.Text = Utils.PrefiPorFor;
+                    TxtPrefiCenFor.Text = Utils.PrefiCenFor;
                 }
 
             }
@@ -180,7 +181,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                 string PfiCen = TxtPrefiCenFor.Text;
                 string PfiPor = TxtPrefiPorFor.Text;
 
-
+                Utils.Titulo01 = "Control para integrar pacientes";
                 Utils.Informa = "¿Usted desea iniciar el proceso de integración" + "\r";
                 Utils.Informa += "de los pacientes en la instancia del" + "\r";
                 Utils.Informa += "servidor central a la instancia del portatil.?" + "\r";
@@ -188,6 +189,11 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                 if (res == DialogResult.Yes)
                 {
+                    TxtCanPaciFor.Text = "0";
+                    TxtCanPaciForm.Text = "0";
+                    TxtPaciExis.Text = "0";
+
+
                     SqlPacien = "SELECT * FROM [ACDATOXPSQL].[dbo].[Datos del Paciente] ";
 
 
@@ -211,8 +217,19 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                         }
                         else
                         {
+
+                            byte[] bytes;
+                            byte[] bytes2;
+                            List<SqlParameter> parameters = new List<SqlParameter>();
+                            string Parametro1 = "null";
+                            string Parametro2 = "null";
+
+
                             while (TabPacien.Read())
                             {
+                                Parametro1 = "null";
+                                Parametro2 = "null";
+                                parameters.Clear();
                                 //Tomamos datos del SERVIDOR central
                                 CodPacien = TabPacien["HistorPaci"].ToString();
                                 TDCen = TabPacien["TipoIden"].ToString();
@@ -254,6 +271,36 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                                             if(TabPacienCentra1.HasRows == false)
                                             {
+
+                                                if (string.IsNullOrWhiteSpace(TabPacien["Huella1"].ToString()) || TabPacien["Huella1"].ToString() == null)
+                                                {
+                                                    bytes = (byte[])(null);
+                                                    Parametro1 = "null";
+                                                }
+                                                else
+                                                {
+                                                    bytes = (byte[])(TabPacien["Huella1"]);
+                                                    Parametro1 = "@Huella1";
+
+                                                    parameters.Add(new SqlParameter("@Huella1", SqlDbType.VarBinary) { Value = bytes });
+
+                                                }
+
+
+                                                if (string.IsNullOrWhiteSpace(TabPacien["Huella2"].ToString()) || TabPacien["Huella2"].ToString() == null)
+                                                {
+                                                    bytes2 = (byte[])(null);
+                                                    Parametro2 = "null";
+                                                }
+                                                else
+                                                {
+                                                    bytes2 = (byte[])(TabPacien["Huella2"]);
+                                                    Parametro2 = "@Huella2";
+
+                                                    parameters.Add(new SqlParameter("@Huella2", SqlDbType.VarBinary) { Value = bytes2 });
+
+                                                }
+
                                                 //Agregue los datos del paciente NUEVO en el equipo de BRIGADA
                                                 Utils.SqlDatos = "INSERT INTO [ACDATOXPSQL].[dbo].[Datos del Paciente] " +
                                                 "(" +
@@ -375,7 +422,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                                 "'" + TabPacien["Apellido1"].ToString() + "'," +
                                                 "'" + TabPacien["Apellido2"].ToString() + "'," +
                                                 $"{ValidarFechaNula(TabPacien["FechaNaci"].ToString())}" +
-                                                "CONVERT(DATETIME,'" + TabPacien["HoraNaci"].ToString() + "',8)," +
+                                                $"{Conexion.ValidarHoraNula(TabPacien["HoraNaci"].ToString())}" +
                                                 "'" + TabPacien["LugarNace"].ToString() + "'," +
                                                 "'" + TabPacien["SemGesta"].ToString() + "'," +
                                                 "'" + TabPacien["CodPaisNace"].ToString() + "'," +
@@ -389,7 +436,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                                 "'" + TabPacien["TelResi"].ToString() + "'," +
                                                 "'" + TabPacien["TelCelular"].ToString() + "'," +
                                                 "'" + TabPacien["ZonaResiden"].ToString() + "'," +
-                                                    $"{ValidarFechaNula(TabPacien["FechaApertura"].ToString())}" +
+                                                $"{ValidarFechaNula(TabPacien["FechaApertura"].ToString())}" +
                                                 "'" + TabPacien["Observaciones"].ToString() + "'," +
                                                 "'" + TabPacien["Sexo"].ToString() + "'," +
                                                 "'" + TabPacien["TipoUsar"].ToString() + "'," +
@@ -434,22 +481,22 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                                 "'" + TabPacien["MunicipioRemite"].ToString() + "'," +
                                                 "'" + TabPacien["IPSRemite"].ToString() + "'," +
                                                 "'" + TabPacien["RemiNumero"].ToString() + "'," +
-                                                    $"{ValidarFechaNula(TabPacien["FechaRemision"].ToString())}" +
-                                                    $"{ValidarFechaNula(TabPacien["FechaVence"].ToString())}" +
+                                                $"{ValidarFechaNula(TabPacien["FechaRemision"].ToString())}" +
+                                                $"{ValidarFechaNula(TabPacien["FechaVence"].ToString())}" +
                                                 "'" + TabPacien["CubreRemision"].ToString() + "'," +
                                                 "'" + TabPacien["EspecialRemite"].ToString() + "'," +
                                                 "'" + TabPacien["DxRemite"].ToString() + "'," +
                                                 "'" + TabPacien["CoMediAten"].ToString() + "'," +
                                                 "'" + TabPacien["MotivoConsul"].ToString() + "'," +
-                                                    $"{ValidarFechaNula(TabPacien["FechaEntrada"].ToString())}" +
-                                                "CONVERT(DATETIME,'" + TabPacien["HoraEntrada"].ToString() + "',8)," +
+                                                $"{ValidarFechaNula(TabPacien["FechaEntrada"].ToString())}" +
+                                                $"{Conexion.ValidarHoraNula(TabPacien["HoraEntrada"].ToString())}" +
                                                 $"{ValidarFechaNula(TabPacien["FecUltima"].ToString())}" +
                                                 "'" + TabPacien["ArchivoViene"].ToString() + "'," +
                                                 "'" + TabPacien["Muerto"].ToString() + "'," +
                                                 "'" + TabPacien["PreInscripcion"].ToString() + "'," +
                                                 "'" + TabPacien["CoberSalud"].ToString() + "'," +
-                                                "'" + TabPacien["Huella1"].ToString() + "'," +
-                                                "'" + TabPacien["Huella2"].ToString() + "'," +
+                                                "" + Parametro1 + "," +
+                                                "" + Parametro2 + "," +
                                                 "'" + TabPacien["Huella"].ToString() + "'," +
                                                 "'" + TabPacien["NomEmeal"].ToString() + "'," +
                                                 "'" + TabPacien["NivEducUs"].ToString() + "'," +
@@ -476,7 +523,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                                 ")";
 
 
-                                                Boolean Regis = Conexion.SqlInsert(Utils.SqlDatos);
+                                                Boolean Regis = Conexion.SqlInsert(Utils.SqlDatos, parameters);
 
                                                 if (Regis)
                                                 {
@@ -496,6 +543,38 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                                     {
                                                         if (TabPacienCentra["Sexo"].ToString() == TabPacien["Sexo"].ToString())
                                                         {
+
+
+
+                                                            if (string.IsNullOrWhiteSpace(TabPacien["Huella1"].ToString()) || TabPacien["Huella1"].ToString() == null)
+                                                            {
+                                                                bytes = (byte[])(null);
+                                                                Parametro1 = "null";
+                                                            }
+                                                            else
+                                                            {
+                                                                bytes = (byte[])(TabPacien["Huella1"]);
+                                                                Parametro1 = "@Huella1";
+
+                                                                parameters.Add(new SqlParameter("@Huella1", SqlDbType.VarBinary) { Value = bytes });
+
+                                                            }
+
+
+                                                            if (string.IsNullOrWhiteSpace(TabPacien["Huella2"].ToString()) || TabPacien["Huella2"].ToString() == null)
+                                                            {
+                                                                bytes2 = (byte[])(null);
+                                                                Parametro2 = "null";
+                                                            }
+                                                            else
+                                                            {
+                                                                bytes2 = (byte[])(TabPacien["Huella2"]);
+                                                                Parametro2 = "@Huella2";
+
+                                                                parameters.Add(new SqlParameter("@Huella2", SqlDbType.VarBinary) { Value = bytes2 });
+
+                                                            }
+
                                                             //Modifique los datos
                                                             Utils.SqlDatos = $"UPDATE [ACDATOXPSQL].[dbo].[Datos del Paciente] SET " +
                                                             "HistorPaci  = '" + TabPacien["HistorPaci"].ToString() + "', " +
@@ -506,7 +585,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                                             "Apellido1  = '" + TabPacien["Apellido1"].ToString() + "', " +
                                                             "Apellido2  = '" + TabPacien["Apellido2"].ToString() + "', " +
                                                             $"FechaNaci = {ValidarFechaNula(TabPacien["FechaNaci"].ToString())}" +
-                                                            "HoraNaci = CONVERT(DATETIME,'" + TabPacien["HoraNaci"].ToString() + "',8)," +
+                                                            $"HoraNaci = {Conexion.ValidarHoraNula(TabPacien["HoraNaci"].ToString())}" +
                                                             "LugarNace  = '" + TabPacien["LugarNace"].ToString() + "', " +
                                                             "SemGesta  = '" + TabPacien["SemGesta"].ToString() + "', " +
                                                             "CodPaisNace  = '" + TabPacien["CodPaisNace"].ToString() + "', " +
@@ -573,14 +652,14 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                                             "CoMediAten  = '" + TabPacien["CoMediAten"].ToString() + "', " +
                                                             "MotivoConsul  = '" + TabPacien["MotivoConsul"].ToString() + "', " +
                                                             $"FechaEntrada = {ValidarFechaNula(TabPacien["FechaEntrada"].ToString())}" +
-                                                            "HoraEntrada = CONVERT(DATETIME,'" + TabPacien["HoraEntrada"].ToString() + "',8)," +
+                                                            $"HoraEntrada = {Conexion.ValidarHoraNula(TabPacien["HoraEntrada"].ToString())}" +
                                                             $"FecUltima = {ValidarFechaNula(TabPacien["FecUltima"].ToString())}" +
                                                             "ArchivoViene  = '" + TabPacien["ArchivoViene"].ToString() + "', " +
                                                             "Muerto  = '" + TabPacien["Muerto"].ToString() + "', " +
                                                             "PreInscripcion  = '" + TabPacien["PreInscripcion"].ToString() + "', " +
                                                             "CoberSalud  = '" + TabPacien["CoberSalud"].ToString() + "', " +
-                                                            "Huella1  = '" + TabPacien["Huella1"].ToString() + "', " +
-                                                            "Huella2  = '" + TabPacien["Huella2"].ToString() + "', " +
+                                                            "Huella1 = " + Parametro1 + ", " +
+                                                            "Huella2 = " + Parametro2 + ", " +
                                                             "Huella  = '" + TabPacien["Huella"].ToString() + "', " +
                                                             "NomEmeal  = '" + TabPacien["NomEmeal"].ToString() + "', " +
                                                             "NivEducUs  = '" + TabPacien["NivEducUs"].ToString() + "', " +
@@ -606,7 +685,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                                             "PaciSolUrgen = '" + TabPacien["PaciSolUrgen"].ToString() + "' " +
                                                             "WHERE (HistorPaci = '" + CodPacien + "') ";
 
-                                                            Boolean ActControl = Conexion.SQLUpdate(Utils.SqlDatos);
+                                                            Boolean ActControl = Conexion.SQLUpdate(Utils.SqlDatos,parameters);
 
                                                             if (ActControl)
                                                             {
@@ -801,6 +880,38 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                     {
                                         //Modifique los datos del paciente en el equipo de BRIGADA
 
+
+
+
+                                        if (string.IsNullOrWhiteSpace(TabPacien["Huella1"].ToString()) || TabPacien["Huella1"].ToString() == null)
+                                        {
+                                            bytes = (byte[])(null);
+                                            Parametro1 = "null";
+                                        }
+                                        else
+                                        {
+                                            bytes = (byte[])(TabPacien["Huella1"]);
+                                            Parametro1 = "@Huella1";
+
+                                            parameters.Add(new SqlParameter("@Huella1", SqlDbType.VarBinary) { Value = bytes });
+
+                                        }
+
+
+                                        if (string.IsNullOrWhiteSpace(TabPacien["Huella2"].ToString()) || TabPacien["Huella2"].ToString() == null)
+                                        {
+                                            bytes2 = (byte[])(null);
+                                            Parametro2 = "null";
+                                        }
+                                        else
+                                        {
+                                            bytes2 = (byte[])(TabPacien["Huella2"]);
+                                            Parametro2 = "@Huella2";
+
+                                            parameters.Add(new SqlParameter("@Huella2", SqlDbType.VarBinary) { Value = bytes2 });
+
+                                        }
+
                                         Utils.SqlDatos = $"UPDATE [ACDATOXPSQL].[dbo].[Datos del Paciente] SET " +                                                    
                                                         "TipoIden  = '" + TabPacien["TipoIden"].ToString() + "', " +
                                                         "NumIden  = '" + TabPacien["NumIden"].ToString() + "', " +
@@ -809,7 +920,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                                         "Apellido1  = '" + TabPacien["Apellido1"].ToString() + "', " +
                                                         "Apellido2  = '" + TabPacien["Apellido2"].ToString() + "', " +
                                                         $"FechaNaci = {ValidarFechaNula(TabPacien["FechaNaci"].ToString())}" +
-                                                        "HoraNaci = CONVERT(DATETIME,'" + TabPacien["HoraNaci"].ToString() + "',8)," +
+                                                        $"HoraNaci = {Conexion.ValidarHoraNula(TabPacien["HoraNaci"].ToString())}" +
                                                         "LugarNace  = '" + TabPacien["LugarNace"].ToString() + "', " +
                                                         "SemGesta  = '" + TabPacien["SemGesta"].ToString() + "', " +
                                                         "CodPaisNace  = '" + TabPacien["CodPaisNace"].ToString() + "', " +
@@ -876,14 +987,14 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                                         "CoMediAten  = '" + TabPacien["CoMediAten"].ToString() + "', " +
                                                         "MotivoConsul  = '" + TabPacien["MotivoConsul"].ToString() + "', " +
                                                         $"FechaEntrada = {ValidarFechaNula(TabPacien["FechaEntrada"].ToString())}" +
-                                                        "HoraEntrada = CONVERT(DATETIME,'" + TabPacien["HoraEntrada"].ToString() + "',8)," +
+                                                        $"HoraEntrada = {Conexion.ValidarHoraNula(TabPacien["HoraEntrada"].ToString())}" +
                                                         $"FecUltima = {ValidarFechaNula(TabPacien["FecUltima"].ToString())}" +
                                                         "ArchivoViene  = '" + TabPacien["ArchivoViene"].ToString() + "', " +
                                                         "Muerto  = '" + TabPacien["Muerto"].ToString() + "', " +
                                                         "PreInscripcion  = '" + TabPacien["PreInscripcion"].ToString() + "', " +
                                                         "CoberSalud  = '" + TabPacien["CoberSalud"].ToString() + "', " +
-                                                        "Huella1  = '" + TabPacien["Huella1"].ToString() + "', " +
-                                                        "Huella2  = '" + TabPacien["Huella2"].ToString() + "', " +
+                                                        "Huella1 = " + Parametro1 + ", " +
+                                                        "Huella2 = " + Parametro2 + ", " +
                                                         "Huella  = '" + TabPacien["Huella"].ToString() + "', " +
                                                         "NomEmeal  = '" + TabPacien["NomEmeal"].ToString() + "', " +
                                                         "NivEducUs  = '" + TabPacien["NivEducUs"].ToString() + "', " +
@@ -909,7 +1020,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                                         "PaciSolUrgen = '" + TabPacien["PaciSolUrgen"].ToString() + "' " +
                                                         "WHERE (HistorPaci = '" + CodPacien + "')";
 
-                                        Boolean ActControl = Conexion.SQLUpdate(Utils.SqlDatos);
+                                        Boolean ActControl = Conexion.SQLUpdate(Utils.SqlDatos, parameters);
 
                                         if (ActControl)
                                         {
@@ -965,6 +1076,14 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                 SqlDataReader TabBiometHueCen, TabBiometHue;
 
+
+
+                byte[] bytes;
+                byte[] bytes2;
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                string Parametro1 = "null";
+                string Parametro2 = "null";
+
                 using (SqlConnection connection3 = new SqlConnection(Conexion.conexionSQL))
                 {
                     SqlCommand command3 = new SqlCommand(SqlBiometHueCen, connection3);
@@ -978,6 +1097,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     }
                     else
                     {
+                        TabBiometHueCen.Read();
                         ConectarPortatil();
                         //Revisamos si el numero de historia del paciente existe en el equipo de BRIGADA
                         SqlBiometHue = "SELECT [Datos huella digital].* ";
@@ -991,8 +1111,43 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                             command.Connection.Open();
                             TabBiometHue = command.ExecuteReader();
 
+
+
                             if (TabBiometHue.HasRows == false)
                             {
+
+
+                                if (string.IsNullOrWhiteSpace(TabBiometHueCen["huella_tpt"].ToString()) || TabBiometHueCen["huella_tpt"].ToString() == null)
+                                {
+                                    bytes = (byte[])(null);
+                                    Parametro1 = "null";
+                                }
+                                else
+                                {
+
+                                    bytes = (byte[])(TabBiometHueCen["huella_tpt"]);
+                                    Parametro1 = "@huella_tpt";
+
+                                    parameters.Add(new SqlParameter("@huella_tpt", SqlDbType.VarBinary) { Value = bytes });
+
+                                }
+
+                                if (string.IsNullOrWhiteSpace(TabBiometHueCen["Huella_img"].ToString()) || TabBiometHueCen["Huella_img"].ToString() == null)
+                                {
+                                    bytes2 = (byte[])(null);
+                                    Parametro2 = "null";
+                                }
+                                else
+                                {
+
+                                    bytes2 = (byte[])(TabBiometHueCen["Huella_img"]);
+                                    Parametro2 = "@Huella_img";
+
+                                    parameters.Add(new SqlParameter("@Huella_img", SqlDbType.Image) { Value = bytes2 });
+
+                                }
+
+
                                 Utils.SqlDatos = "INSERT INTO [BDBIOMETSQL].[dbo].[Datos huella digital]" +
                                 "(" +
                                 "HistorPaci," +
@@ -1005,16 +1160,16 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                 ")" +
                                 "VALUES" +
                                 "(" +
-                                "'" + TabBiometHue["HistorPaci"].ToString() + "'," +
-                                "'" + TabBiometHue["huella_tpt"].ToString() + "'," +
-                                "'" + TabBiometHue["Huella_img"].ToString() + "'," +
-                                "'" + TabBiometHue["CodiRegis"].ToString() + "'," +
-                                $"{ValidarFechaNula(TabBiometHue["FecRegis"].ToString())}" +
-                                 $"{ValidarFechaNula(TabBiometHue["FecModi"].ToString())}" +
-                                "'" + TabBiometHue["CodModi"].ToString() + "'" +
+                                "'" + TabBiometHueCen["HistorPaci"].ToString() + "'," +
+                                "" + Parametro1 + "," +
+                                "" + Parametro2 + "," +
+                                "'" + TabBiometHueCen["CodiRegis"].ToString() + "'," +
+                                $"{ValidarFechaNula(TabBiometHueCen["FecRegis"].ToString())}" +
+                                 $"{ValidarFechaNula(TabBiometHueCen["FecModi"].ToString())}" +
+                                "'" + TabBiometHueCen["CodModi"].ToString() + "'" +
                                 ")";
 
-                                Boolean Regis = Conexion.SqlInsert(Utils.SqlDatos);
+                                Boolean Regis = Conexion.SqlInsert(Utils.SqlDatos,parameters);
                             }
                             else
                             {
@@ -1022,15 +1177,46 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                 if (Convert.ToDateTime(TabBiometHueCen["FecRegis"]) > Convert.ToDateTime(TabBiometHue["FecRegis"]))
                                 {
 
+                                    if (string.IsNullOrWhiteSpace(TabBiometHueCen["huella_tpt"].ToString()) || TabBiometHueCen["huella_tpt"].ToString() == null)
+                                    {
+                                        bytes = (byte[])(null);
+                                        Parametro1 = "null";
+                                    }
+                                    else
+                                    {
+
+                                        bytes = (byte[])(TabBiometHueCen["huella_tpt"]);
+                                        Parametro1 = "@huella_tpt";
+
+                                        parameters.Add(new SqlParameter("@huella_tpt", SqlDbType.VarBinary) { Value = bytes });
+
+                                    }
+
+                                    if (string.IsNullOrWhiteSpace(TabBiometHueCen["Huella_img"].ToString()) || TabBiometHueCen["Huella_img"].ToString() == null)
+                                    {
+                                        bytes2 = (byte[])(null);
+                                        Parametro2 = "null";
+                                    }
+                                    else
+                                    {
+
+                                        bytes2 = (byte[])(TabBiometHueCen["Huella_img"]);
+                                        Parametro2 = "@Huella_img";
+
+                                        parameters.Add(new SqlParameter("@Huella_img", SqlDbType.Image) { Value = bytes2 });
+
+                                    }
+
+
                                     //Modifique los datos
                                     Utils.SqlDatos = $"UPDATE [BDBIOMETSQL].[dbo].[Datos huella digital] SET " +
-                                    "huella_tpt = '" + TabBiometHueCen["huella_tpt"].ToString() + "', " +
-                                    "Huella_img = '" + TabBiometHueCen["Huella_img"].ToString() + "', " +
+                                    "huella_tpt = " + Parametro1 + ", " +
+                                    "Huella_img = " + Parametro2 + ", " +
                                     $"FecModi = {ValidarFechaNula(TabBiometHueCen["FecModi"].ToString())} " +
                                     "CodModi = '" + TabBiometHueCen["CodModi"].ToString() + "' " +
                                     "WHERE (HistorPaci = N'" + CodHisPacHue + "') ";
 
-                                    Boolean ActControl = Conexion.SQLUpdate(Utils.SqlDatos);
+                                    Boolean ActControl = Conexion.SQLUpdate(Utils.SqlDatos,parameters);
                                 }
                             }
 
@@ -1071,6 +1257,11 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                 SqlBiometFotCen += "FROM [BDBIOMETSQL].[dbo].[Datos foto digital] ";
                 SqlBiometFotCen += "WHERE (HistorPaci = N'" + CodHisPacFot + "')";
 
+                byte[] bytes;
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                string Parametro1 = "null";
+
+
                 using (SqlConnection connection3 = new SqlConnection(Conexion.conexionSQL))
                 {
                     SqlCommand command3 = new SqlCommand(SqlBiometFotCen, connection3);
@@ -1084,6 +1275,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     }
                     else
                     {
+                        TabBiometFotCen.Read();
                         ConectarPortatil();
                         //Revisamos si el numero de historia del paciente existe en el equipo de BRIGADA
                         SqlBiometFot = "SELECT [Datos foto digital].* ";
@@ -1097,8 +1289,26 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                             command.Connection.Open();
                             TabBiometFot = command.ExecuteReader();
 
-                            if(TabBiometFot.HasRows == false)
+
+  
+                            if (TabBiometFot.HasRows == false)
                             {
+
+                                if (string.IsNullOrWhiteSpace(TabBiometFotCen["Foto"].ToString()) || TabBiometFotCen["Foto"].ToString() == null)
+                                {
+                                    bytes = (byte[])(null);
+                                    Parametro1 = "null";
+                                }
+                                else
+                                {
+
+                                    bytes = (byte[])(TabBiometFotCen["Foto"]);
+                                    Parametro1 = "@Foto";
+
+                                    parameters.Add(new SqlParameter("@Foto", SqlDbType.VarBinary) { Value = bytes });
+
+                                }
+
                                 Utils.SqlDatos = "INSERT INTO [BDBIOMETSQL].[dbo].[Datos foto digital]" +
                                 "(" +
                                 "HistorPaci," +
@@ -1111,14 +1321,14 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                 "VALUES" +
                                 "(" +
                                 "'" + TabBiometFotCen["HistorPaci"].ToString() + "'," +
-                                "'" + TabBiometFotCen["Foto"].ToString() + "'," +
+                                "" + Parametro1 + "," +
                                 "'" + TabBiometFotCen["CodiRegis"].ToString() + "'," +
                                 $"{ValidarFechaNula(TabBiometFotCen["FecRegis"].ToString())}" +
                                  $"{ValidarFechaNula(TabBiometFotCen["FecModi"].ToString())}" +
                                 "'" + TabBiometFotCen["CodModi"].ToString() + "'" +
                                 ")";
 
-                                Boolean Regis = Conexion.SqlInsert(Utils.SqlDatos);
+                                Boolean Regis = Conexion.SqlInsert(Utils.SqlDatos,parameters);
                             }
                             else
                             {
@@ -1126,14 +1336,30 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                 if (Convert.ToDateTime(TabBiometFotCen["FecRegis"]) > Convert.ToDateTime(TabBiometFot["FecRegis"]))
                                 {
 
+                                    if (string.IsNullOrWhiteSpace(TabBiometFotCen["Foto"].ToString()) || TabBiometFotCen["Foto"].ToString() == null)
+                                    {
+                                        bytes = (byte[])(null);
+                                        Parametro1 = "null";
+                                    }
+                                    else
+                                    {
+
+                                        bytes = (byte[])(TabBiometFotCen["Foto"]);
+                                        Parametro1 = "@Foto";
+
+                                        parameters.Add(new SqlParameter("@Foto", SqlDbType.VarBinary) { Value = bytes });
+
+                                    }
+
+
                                     //Modifique los datos
                                     Utils.SqlDatos = $"UPDATE [BDBIOMETSQL].[dbo].[Datos foto digital] SET " +
-                                    "Foto = '" + TabBiometFotCen["Firma"].ToString() + "', " +
+                                    "Foto = " + Parametro1 + ", " +
                                     $"FecModi = {ValidarFechaNula(TabBiometFotCen["FecModi"].ToString())} " +
                                     "CodModi = '" + TabBiometFotCen["CodModi"].ToString() + "' " +
                                     "WHERE (HistorPaci = N'" + CodHisPacFot + "') ";
 
-                                    Boolean ActControl = Conexion.SQLUpdate(Utils.SqlDatos);
+                                    Boolean ActControl = Conexion.SQLUpdate(Utils.SqlDatos,parameters);
                                 }
                             }
 
@@ -1171,6 +1397,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                 SqlDataReader TabBiometFirCen, TabBiometFir;
 
+                byte[] bytes;
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                string Parametro1 = "null";
+
                 using (SqlConnection connection3 = new SqlConnection(Conexion.conexionSQL))
                 {
                     SqlCommand command3 = new SqlCommand(SqlBiometFirCen, connection3);
@@ -1183,6 +1413,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     }
                     else
                     {
+
                         TabBiometFirCen.Read();
                         //Revisamos si el numero de historia del paciente existe en el equipo de BRIGADA
                         ConectarPortatil();
@@ -1199,7 +1430,22 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                             if (TabBiometFir.HasRows == false)
                             {
 
-                                    Utils.SqlDatos = "INSERT INTO [BDBIOMETSQL].[dbo].[Datos firma digital]" +
+                                if (string.IsNullOrWhiteSpace(TabBiometFirCen["Firma"].ToString()) || TabBiometFirCen["Firma"].ToString() == null)
+                                {
+                                    bytes = (byte[])(null);
+                                    Parametro1 = "null";
+                                }
+                                else
+                                {
+
+                                    bytes = (byte[])(TabBiometFirCen["Firma"]);
+                                    Parametro1 = "@Firma";
+
+                                    parameters.Add(new SqlParameter("@Firma", SqlDbType.VarBinary) { Value = bytes });
+
+                                }
+
+                                Utils.SqlDatos = "INSERT INTO [BDBIOMETSQL].[dbo].[Datos firma digital]" +
                                     "(" +
                                     "HistorPaci," +
                                     "Firma," +
@@ -1211,14 +1457,14 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                     "VALUES" +
                                     "(" +
                                     "'" + TabBiometFirCen["HistorPaci"].ToString() + "'," +
-                                    "'" + TabBiometFirCen["Firma"].ToString() + "'," +
+                                    "" + Parametro1 + "," +
                                     "'" + TabBiometFirCen["CodiRegis"].ToString() + "'," +
                                     $"{ValidarFechaNula(TabBiometFirCen["FecRegis"].ToString())}" +
                                      $"{ValidarFechaNula(TabBiometFirCen["FecModi"].ToString())}" +
                                     "'" + TabBiometFirCen["CodModi"].ToString() + "'" +
                                     ")";
 
-                                    Boolean Regis = Conexion.SqlInsert(Utils.SqlDatos);
+                                    Boolean Regis = Conexion.SqlInsert(Utils.SqlDatos,parameters);
 
                             }
                             else
@@ -1227,14 +1473,29 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                 if (Convert.ToDateTime(TabBiometFirCen["FecRegis"]) > Convert.ToDateTime(TabBiometFir["FecRegis"]))
                                 {
 
+                                    if (string.IsNullOrWhiteSpace(TabBiometFirCen["Firma"].ToString()) || TabBiometFirCen["Firma"].ToString() == null)
+                                    {
+                                        bytes = (byte[])(null);
+                                        Parametro1 = "null";
+                                    }
+                                    else
+                                    {
+
+                                        bytes = (byte[])(TabBiometFirCen["Firma"]);
+                                        Parametro1 = "@Firma";
+
+                                        parameters.Add(new SqlParameter("@Firma", SqlDbType.Image) { Value = bytes });
+
+                                    }
+
                                     //Modifique los datos
                                     Utils.SqlDatos = $"UPDATE [BDBIOMETSQL].[dbo].[Datos firma digital] SET " +
-                                    "Firma = '" + TabBiometFirCen["Firma"].ToString() + "', " +
+                                    "Firma = " + Parametro1 + ", " +
                                     $"FecModi = {ValidarFechaNula(TabBiometFirCen["FecModi"].ToString())} " +
                                     "CodModi = '" + TabBiometFirCen["CodModi"].ToString() + "' " +
                                     "WHERE (HistorPaci = N'" + CodHisPac + "') ";
 
-                                    Boolean ActControl = Conexion.SQLUpdate(Utils.SqlDatos);
+                                    Boolean ActControl = Conexion.SQLUpdate(Utils.SqlDatos,parameters);
                                 }
 
                             }

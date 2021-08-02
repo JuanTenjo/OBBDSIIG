@@ -216,8 +216,8 @@ namespace OBBDSIIG.Forms.FrmImportar
                     MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                string FecIniPro = Convert.ToString(DateInicial.Value.ToString("yyy-MM-dd"));
-                string FecFinPro = Convert.ToString(DateFinal.Value.ToString("yyy-MM-dd"));
+                string FecIniPro = Convert.ToString(DateInicial.Value.ToString("yyyy-MM-dd"));
+                string FecFinPro = Convert.ToString(DateFinal.Value.ToString("yyyy-MM-dd"));
 
                 string PfiCen = TxtPrefiCenFor.Text;
                 string PfiPor = TxtPrefiPorFor.Text;
@@ -233,6 +233,11 @@ namespace OBBDSIIG.Forms.FrmImportar
 
                 if (res == DialogResult.Yes)
                 {
+
+
+                    TxtCanPlacaFor.Text = "0";
+                    TxtCanPlacaFormExis.Text = "0";
+
                     SqlPlaca = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos registro control placa] " +
                     "WHERE ([Datos registro control placa].ActivoCtl = 0 ) AND " +
                     "([Datos registro control placa].FechaRealiza >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) AND " +
@@ -368,7 +373,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                                         "'" + TabControlPlaca["ConsecutivoCtrl"].ToString() + "'," +
                                         "'" + TabControlPlaca["HistoriaPaci"].ToString() + "'," +
                                         $"{ValidarFechaNula(TabControlPlaca["FechaRealiza"].ToString())}" +
-                                        $"CONVERT(DATETIME,'" + TabControlPlaca["HoraRealiza"].ToString() + "',8)," +
+                                        $"{Conexion.ValidarHoraNula(TabControlPlaca["HoraRealiza"].ToString())}" +
                                         "'" + TabControlPlaca["ValorEdad"].ToString() + "'," +
                                         "'" + TabControlPlaca["UnidadEdad"].ToString() + "'," +
                                         "'" + TabControlPlaca["Sellantes"].ToString() + "'," +
@@ -446,13 +451,21 @@ namespace OBBDSIIG.Forms.FrmImportar
 
 
                                         Boolean RegisControlPlaca = Conexion.SqlInsert(Utils.SqlDatos);
+
+                                        if (RegisControlPlaca)
+                                        {
+                                            int con = Convert.ToInt32(TxtCanPlacaFor.Text) + 1;
+                                            TxtCanPlacaFor.Text = con.ToString();
+
+                                        }
+
                                     }
                                     else
                                     {
                                         //Modifique los datos
                                         Utils.SqlDatos = $"UPDATE [DACONEXTSQL].[dbo].[Datos registro control placa] SET " +
                                         $"FechaRealiza = {ValidarFechaNula(TabControlPlaca["FechaRealiza"].ToString())} " +
-                                        "HoraRealiza = '" + Convert.ToDateTime(TabControlPlaca["HoraRealiza"]).ToString("hh:ss:mm") + "'," +
+                                        $"HoraRealiza = {Conexion.ValidarHoraNula(TabControlPlaca["HoraRealiza"].ToString())}" +
                                         "ValorEdad = '" + TabControlPlaca["ValorEdad"].ToString() + "', " +
                                         "UnidadEdad = '" + TabControlPlaca["UnidadEdad"].ToString() + "', " +
                                         "Sellantes = '" + TabControlPlaca["Sellantes"].ToString() + "', " +

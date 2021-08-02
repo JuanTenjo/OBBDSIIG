@@ -73,12 +73,12 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // LblCodEntiFac
             // 
             this.LblCodEntiFac.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblCodEntiFac.Location = new System.Drawing.Point(37, 12);
+            this.LblCodEntiFac.Location = new System.Drawing.Point(38, 14);
             this.LblCodEntiFac.Name = "LblCodEntiFac";
-            this.LblCodEntiFac.Size = new System.Drawing.Size(38, 13);
+            this.LblCodEntiFac.Size = new System.Drawing.Size(59, 13);
             this.LblCodEntiFac.TabIndex = 31;
             this.LblCodEntiFac.Text = "CodEntiFac";
-            this.LblCodEntiFac.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LblCodEntiFac.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.LblCodEntiFac.Visible = false;
             // 
             // lblNivelPermitido
@@ -95,9 +95,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // lblNombreUser
             // 
             this.lblNombreUser.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombreUser.Location = new System.Drawing.Point(91, 9);
+            this.lblNombreUser.Location = new System.Drawing.Point(103, 10);
             this.lblNombreUser.Name = "lblNombreUser";
-            this.lblNombreUser.Size = new System.Drawing.Size(291, 18);
+            this.lblNombreUser.Size = new System.Drawing.Size(268, 18);
             this.lblNombreUser.TabIndex = 11;
             this.lblNombreUser.Text = "NombreUser";
             this.lblNombreUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -114,7 +114,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // label16
             // 
             this.label16.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(0, 12);
+            this.label16.Location = new System.Drawing.Point(0, 14);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(31, 13);
             this.label16.TabIndex = 8;
@@ -165,6 +165,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.TxtCanUsuExis.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtCanUsuExis.Location = new System.Drawing.Point(268, 65);
             this.TxtCanUsuExis.Name = "TxtCanUsuExis";
+            this.TxtCanUsuExis.ReadOnly = true;
             this.TxtCanUsuExis.Size = new System.Drawing.Size(65, 20);
             this.TxtCanUsuExis.TabIndex = 24;
             this.TxtCanUsuExis.Text = "0";
@@ -175,6 +176,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.TxtCanUsuForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtCanUsuForm.Location = new System.Drawing.Point(268, 41);
             this.TxtCanUsuForm.Name = "TxtCanUsuForm";
+            this.TxtCanUsuForm.ReadOnly = true;
             this.TxtCanUsuForm.Size = new System.Drawing.Size(65, 20);
             this.TxtCanUsuForm.TabIndex = 23;
             this.TxtCanUsuForm.Text = "0";
@@ -185,6 +187,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.TxtCanUsuFor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtCanUsuFor.Location = new System.Drawing.Point(268, 18);
             this.TxtCanUsuFor.Name = "TxtCanUsuFor";
+            this.TxtCanUsuFor.ReadOnly = true;
             this.TxtCanUsuFor.Size = new System.Drawing.Size(65, 20);
             this.TxtCanUsuFor.TabIndex = 22;
             this.TxtCanUsuFor.Text = "0";
@@ -231,6 +234,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.TxtPrefiPorFor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtPrefiPorFor.Location = new System.Drawing.Point(435, 32);
             this.TxtPrefiPorFor.Name = "TxtPrefiPorFor";
+            this.TxtPrefiPorFor.ReadOnly = true;
             this.TxtPrefiPorFor.Size = new System.Drawing.Size(59, 20);
             this.TxtPrefiPorFor.TabIndex = 90;
             // 
@@ -239,6 +243,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.TxtPrefiCenFor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtPrefiCenFor.Location = new System.Drawing.Point(435, 10);
             this.TxtPrefiCenFor.Name = "TxtPrefiCenFor";
+            this.TxtPrefiCenFor.ReadOnly = true;
             this.TxtPrefiCenFor.Size = new System.Drawing.Size(59, 20);
             this.TxtPrefiCenFor.TabIndex = 89;
             // 
@@ -270,6 +275,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // 
             this.TxtInstanPortaFor.Location = new System.Drawing.Point(139, 33);
             this.TxtInstanPortaFor.Name = "TxtInstanPortaFor";
+            this.TxtInstanPortaFor.ReadOnly = true;
             this.TxtInstanPortaFor.Size = new System.Drawing.Size(235, 20);
             this.TxtInstanPortaFor.TabIndex = 86;
             // 
@@ -277,6 +283,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // 
             this.TxtInstanCenFor.Location = new System.Drawing.Point(139, 11);
             this.TxtInstanCenFor.Name = "TxtInstanCenFor";
+            this.TxtInstanCenFor.ReadOnly = true;
             this.TxtInstanCenFor.Size = new System.Drawing.Size(235, 20);
             this.TxtInstanCenFor.TabIndex = 85;
             // 

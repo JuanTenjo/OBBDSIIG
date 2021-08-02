@@ -178,7 +178,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                 string PfiCen = TxtPrefiCenFor.Text;
                 string PfiPor = TxtPrefiPorFor.Text;
 
-
+                Utils.Titulo01 = "Control para integrar datos" + "\r";
                 Utils.Informa = "¿Usted desea iniciar el proceso de integración" + "\r";
                 Utils.Informa += "de las entidades en la instancia del" + "\r";
                 Utils.Informa += "servidor central a la instancia del portatil.?" + "\r";
@@ -186,6 +186,11 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                 if (res == DialogResult.Yes)
                 {
+
+                    TxtCanAmdTerFor.Text = "0";
+                    TxtCanEmpForm.Text = "0";
+                    TxtCanEmpTerExis.Text = "0";
+
                     SqlEmpTer = "SELECT CarAdmin, CodiMinSalud, PerEmpre, NomAdmin, ProgrAmin, TipoDocu, NumDocu, ManualTari, TarifAplica, DirecAdmin, TelePrinci, TeleFax, CiudAdmin, DptoAdmin, " +
                     "PaisAdmin, Contacto, NumCel, Contrato, MontoContrato, SaldoMonto, IniciaContrato, FinContrato, CuenContaDeuda, CodRuPres, CodTipoPaciente, TipoEmpre, " +
                     "CentroCuenta, RegimenAdmin, NomPlan, NaturalJuridica, HabilEmp, ActiReali, CoCoPago, PaNivel1, PaNivel2, PaNivel3, CodiRegis, FecRegis, CodiModi, FecModi, " +

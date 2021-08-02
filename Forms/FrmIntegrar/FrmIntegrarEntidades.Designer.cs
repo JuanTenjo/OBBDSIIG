@@ -165,6 +165,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.TxtCanEmpTerExis.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtCanEmpTerExis.Location = new System.Drawing.Point(268, 65);
             this.TxtCanEmpTerExis.Name = "TxtCanEmpTerExis";
+            this.TxtCanEmpTerExis.ReadOnly = true;
             this.TxtCanEmpTerExis.Size = new System.Drawing.Size(65, 20);
             this.TxtCanEmpTerExis.TabIndex = 24;
             this.TxtCanEmpTerExis.Text = "0";
@@ -175,6 +176,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.TxtCanEmpForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtCanEmpForm.Location = new System.Drawing.Point(268, 41);
             this.TxtCanEmpForm.Name = "TxtCanEmpForm";
+            this.TxtCanEmpForm.ReadOnly = true;
             this.TxtCanEmpForm.Size = new System.Drawing.Size(65, 20);
             this.TxtCanEmpForm.TabIndex = 23;
             this.TxtCanEmpForm.Text = "0";
@@ -185,6 +187,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.TxtCanAmdTerFor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtCanAmdTerFor.Location = new System.Drawing.Point(268, 18);
             this.TxtCanAmdTerFor.Name = "TxtCanAmdTerFor";
+            this.TxtCanAmdTerFor.ReadOnly = true;
             this.TxtCanAmdTerFor.Size = new System.Drawing.Size(65, 20);
             this.TxtCanAmdTerFor.TabIndex = 22;
             this.TxtCanAmdTerFor.Text = "0";
@@ -231,6 +234,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.TxtPrefiPorFor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtPrefiPorFor.Location = new System.Drawing.Point(435, 32);
             this.TxtPrefiPorFor.Name = "TxtPrefiPorFor";
+            this.TxtPrefiPorFor.ReadOnly = true;
             this.TxtPrefiPorFor.Size = new System.Drawing.Size(59, 20);
             this.TxtPrefiPorFor.TabIndex = 53;
             // 
@@ -239,6 +243,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.TxtPrefiCenFor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtPrefiCenFor.Location = new System.Drawing.Point(435, 10);
             this.TxtPrefiCenFor.Name = "TxtPrefiCenFor";
+            this.TxtPrefiCenFor.ReadOnly = true;
             this.TxtPrefiCenFor.Size = new System.Drawing.Size(59, 20);
             this.TxtPrefiCenFor.TabIndex = 52;
             // 
@@ -270,6 +275,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // 
             this.TxtInstanPortaFor.Location = new System.Drawing.Point(139, 33);
             this.TxtInstanPortaFor.Name = "TxtInstanPortaFor";
+            this.TxtInstanPortaFor.ReadOnly = true;
             this.TxtInstanPortaFor.Size = new System.Drawing.Size(235, 20);
             this.TxtInstanPortaFor.TabIndex = 49;
             // 
@@ -277,6 +283,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // 
             this.TxtInstanCenFor.Location = new System.Drawing.Point(139, 11);
             this.TxtInstanCenFor.Name = "TxtInstanCenFor";
+            this.TxtInstanCenFor.ReadOnly = true;
             this.TxtInstanCenFor.Size = new System.Drawing.Size(235, 20);
             this.TxtInstanCenFor.TabIndex = 48;
             // 

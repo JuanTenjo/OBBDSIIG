@@ -185,6 +185,13 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                 if (res == DialogResult.Yes) {
 
+
+                    TxtCanUsuFor.Text = "0";
+                    TxtCanUsuForm.Text = "0";
+                    TxtCanUsuExis.Text = "0";
+
+
+
                     // partir del 02 de marzo de 2021, HERNANDO adiciona que primero se deben validar los aplicativos
 
                     string SqlApliDisCen, CodApliDis, SqlApliDisPor;
@@ -402,7 +409,6 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                             "'" + TabUsu["NivelPermiso"].ToString() + "'," +
                                             "'" + TabUsu["Vigente"].ToString() + "'," +
                                             "'" + TabUsu["CodiRegis"].ToString() + "'," +
-                                            "'" + TabUsu["FecRegis"].ToString() + "'," +
                                             $"{ValidarFechaNula(TabUsu["FecRegis"].ToString())}" +
                                             $"{ValidarFechaNula(TabUsu["FecModi"].ToString())}" +
                                             "'" + TabUsu["CodiModi"].ToString() + "' " +
@@ -584,8 +590,113 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     }//'Final de ContiPro = 1
 
 
+                    SqlDataReader TabPerUsuaCen, TabPerUsuaPor;
+
+                    string SqlPerUsuaCen, MenUsua, SqlPerUsuaPor;
+                    if (ContiPro == 1)
+                    {
+                        //Proceda a copiar los permisos por usuarios
+
+                        ConectarCentral();
+
+                        SqlPerUsuaCen = "SELECT CodUsua, CodAplicati, CodMenu, PerEspe, ObsPerEspe, CodRegis, FecRegis, CodModi, FecModi ";
+                        SqlPerUsuaCen = SqlPerUsuaCen + "FROM [DATUSIIGXPSQL].[dbo].[Datos permisos usuarios]";
+
+                        using (SqlConnection connection2 = new SqlConnection(Conexion.conexionSQL))
+                        {
+                            SqlCommand command2 = new SqlCommand(SqlPerUsuaCen, connection2);
+                            command2.Connection.Open();
+                            TabPerUsuaCen = command2.ExecuteReader();
+
+                            if(TabPerUsuaCen.HasRows == false)
+                            {
+                                //NO se tiene definido los permisos por usuarios en la sede central
+                            }
+                            else
+                            {
+                                ConectarPortatil();
+                                while (TabPerUsuaCen.Read())
+                                {
+                                    CodApliDis = TabPerUsuaCen["CodAplicati"].ToString();
+                                    CodUsu = TabPerUsuaCen["CodUsua"].ToString();
+                                    MenUsua = TabPerUsuaCen["CodMenu"].ToString();
+
+                                    SqlPerUsuaPor = "SELECT CodUsua, CodAplicati, CodMenu, PerEspe, ObsPerEspe, CodRegis, FecRegis, CodModi, FecModi ";
+                                    SqlPerUsuaPor = SqlPerUsuaPor + "FROM [DATUSIIGXPSQL].[dbo].[Datos permisos usuarios] ";
+                                    SqlPerUsuaPor = SqlPerUsuaPor + "WHERE  (CodUsua = N'" + CodUsu + "') AND ";
+                                    SqlPerUsuaPor = SqlPerUsuaPor + "(CodAplicati = N'" + CodApliDis + "') AND ";
+                                    SqlPerUsuaPor = SqlPerUsuaPor + "(CodMenu = N'" + MenUsua + "')";
+
+                                    using (SqlConnection connection = new SqlConnection(Conexion.conexionSQL))
+                                    {
+                                        SqlCommand command = new SqlCommand(SqlPerUsuaCen, connection);
+                                        command.Connection.Open();
+                                        TabPerUsuaPor = command.ExecuteReader();
+
+                                        if(TabPerUsuaPor.HasRows == false)
+                                        {
+                                            //Agrega el permiso del usuarios
+                                            Utils.SqlDatos = "INSERT INTO [DATUSIIGXPSQL].[dbo].[Datos permisos usuarios]" +
+                                            "(" +
+                                            "CodUsua," +
+                                            "CodAplicati," +
+                                            "CodMenu," +
+                                            "PerEspe," +
+                                            "ObsPerEspe," +
+                                            "CodRegis," +
+                                            "FecRegis," +
+                                            "FecModi," +
+                                            "CodModi" +
+                                            ")" +
+                                            "VALUES" +
+                                            "(" +
+                                            "'" + TabPerUsuaCen["CodUsua"].ToString() + "'," +
+                                            "'" + TabPerUsuaCen["CodAplicati"].ToString() + "'," +
+                                            "'" + TabPerUsuaCen["CodMenu"].ToString() + "'," +
+                                            "'" + TabPerUsuaCen["PerEspe"].ToString() + "'," +
+                                            "'" + TabPerUsuaCen["ObsPerEspe"].ToString() + "'," +
+                                            "'" + TabPerUsuaCen["CodRegis"].ToString() + "'," +
+                                            $"{ValidarFechaNula(TabPerUsuaCen["FecRegis"].ToString())}" +
+                                            $"{ValidarFechaNula(TabPerUsuaCen["FecModi"].ToString())}" +
+                                            "'" + TabPerUsuaCen["CodModi"].ToString() + "'" +
+                                            ")";
+
+                                            Boolean Regis = Conexion.SqlInsert(Utils.SqlDatos);
+                                        }
+                                        else
+                                        {
+                                            //Modifica el permiso
+
+                                            Utils.SqlDatos = $"UPDATE [DATUSIIGXPSQL].[dbo].[Datos permisos usuarios] SET " +
+                                            "PerEspe = '" + TabPerUsuaCen["PerEspe"].ToString() + "', " +
+                                            "ObsPerEspe = '" + TabPerUsuaCen["ObsPerEspe"].ToString() + "', " +
+                                            "CodRegis = '" + TabPerUsuaCen["CodRegis"].ToString() + "', " +
+                                            $"FecRegis = {ValidarFechaNula(TabPerUsuaCen["FecRegis"].ToString())} " +
+                                            $"FecModi = {ValidarFechaNula(TabPerUsuaCen["FecModi"].ToString())} " +
+                                            "CodModi = '" + TabPerUsuaCen["CodModi"].ToString() + "' " +
+                                            "WHERE (CodUsua = N'" + CodUsu + "') and (CodAplicati = N'" + CodApliDis + "') AND (CodMenu = N'" + MenUsua + "')  ";
+
+                                            Boolean ActControl = Conexion.SQLUpdate(Utils.SqlDatos);
+
+                                        }
+                                    }
+
+                                    TabPerUsuaPor.Close();
+                                }//While
+
+                            }
+                        }
+
+                        TabPerUsuaCen.Close();
+                    }
 
 
+                    if(ContiPro == 1)
+                    {
+                        Utils.Titulo01 = "Control de integracion de Usuarios";
+                        Utils.Informa = "El proceso ha terminado satisfactoriamente";
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
 
                 }
             }
