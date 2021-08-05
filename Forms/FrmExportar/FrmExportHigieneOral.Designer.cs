@@ -57,6 +57,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.TxtInstanCenFor = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.ProgresBar = new System.Windows.Forms.ProgressBar();
             this.groupBox6.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -69,7 +70,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.groupBox6.Controls.Add(this.lblNombreUser);
             this.groupBox6.Controls.Add(this.lblCodigoUser);
             this.groupBox6.Controls.Add(this.label16);
-            this.groupBox6.Location = new System.Drawing.Point(197, 203);
+            this.groupBox6.Location = new System.Drawing.Point(182, 238);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(267, 54);
             this.groupBox6.TabIndex = 58;
@@ -129,7 +130,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             // label15
             // 
             this.label15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(64, 206);
+            this.label15.Location = new System.Drawing.Point(49, 238);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(75, 12);
             this.label15.TabIndex = 57;
@@ -141,7 +142,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.BtnBuscarPacientes.BackgroundImage = global::OBBDSIIG.Properties.Resources.icons8_exportar_30;
             this.BtnBuscarPacientes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.BtnBuscarPacientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnBuscarPacientes.Location = new System.Drawing.Point(78, 226);
+            this.BtnBuscarPacientes.Location = new System.Drawing.Point(63, 258);
             this.BtnBuscarPacientes.Name = "BtnBuscarPacientes";
             this.BtnBuscarPacientes.Size = new System.Drawing.Size(43, 34);
             this.BtnBuscarPacientes.TabIndex = 56;
@@ -360,11 +361,19 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.label1.Text = "Instancia central:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // ProgresBar
+            // 
+            this.ProgresBar.Location = new System.Drawing.Point(15, 208);
+            this.ProgresBar.Name = "ProgresBar";
+            this.ProgresBar.Size = new System.Drawing.Size(454, 23);
+            this.ProgresBar.TabIndex = 59;
+            // 
             // FrmExportHigieneOral
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(485, 264);
+            this.ClientSize = new System.Drawing.Size(485, 297);
+            this.Controls.Add(this.ProgresBar);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.BtnBuscarPacientes);
@@ -423,5 +432,6 @@ namespace OBBDSIIG.Forms.FrmExportar
         private System.Windows.Forms.TextBox TxtInstanCenFor;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ProgressBar ProgresBar;
     }
 }

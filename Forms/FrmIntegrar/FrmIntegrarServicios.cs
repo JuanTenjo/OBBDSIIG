@@ -196,6 +196,36 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     int ContiPro;
                     ConectarCentral();
 
+
+                    string SqlserviCount = "SELECT count(*) as TotalRegis FROM [ACDATOXPSQL].[dbo].[Datos catalogo de servicios] ";
+
+                    int Total = 0;
+
+                    SqlDataReader reader = Conexion.SQLDataReader(SqlserviCount);
+
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+
+                        Total = Convert.ToInt32(reader["TotalRegis"]);
+
+                        if (Total != 0)
+                        {
+                            ProgressBar.Minimum = 1;
+                            ProgressBar.Maximum = Total;
+                        }
+
+
+                    }
+                    else
+                    {
+                        ProgressBar.Minimum = 0;
+                        ProgressBar.Maximum = 1;
+                        ProgressBar.Value = 0;
+                    }
+
+                    if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
+
                     Sqlservi = "SELECT * FROM [ACDATOXPSQL].[dbo].[Datos catalogo de servicios] ";
                     Sqlservi = Sqlservi + "ORDER BY CodInterno ";
 
@@ -441,16 +471,53 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                                 TabServiCentra.Close();
 
-                            }
+                                ProgressBar.Increment(1);
+                            }//While
 
                         }
                     }
-                    TabServi.Close();
 
+                    TabServi.Close();
+                    ProgressBar.Minimum = 0;
+                    ProgressBar.Maximum = 1;
+                    ProgressBar.Value = 0;
                     // Vamos a actualizar los productos de farmacia.  ******************* lo implementa HERNANDO EL 06 DE MAYO DE 2020 ****
                     //'Se require porque la formulacion medica se basa en esa tabla
 
                     ConectarCentral();
+
+
+
+                    string SqlProFarCenCount = "SELECT count(*) as TotalRegis ";
+                    SqlProFarCenCount = SqlProFarCenCount + "FROM [BDFARMA].[dbo].[Datos productos farmaceuticos] ";
+
+                    Total = 0;
+
+                    reader = Conexion.SQLDataReader(SqlProFarCenCount);
+
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+
+                        Total = Convert.ToInt32(reader["TotalRegis"]);
+
+                        if (Total != 0)
+                        {
+                            ProgressBar.Minimum = 1;
+                            ProgressBar.Maximum = Total;
+                        }
+
+
+                    }
+                    else
+                    {
+                        ProgressBar.Minimum = 0;
+                        ProgressBar.Maximum = 1;
+                        ProgressBar.Value = 0;
+                    }
+
+                    if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
+
 
                     SqlProFarCen = "SELECT [Datos productos farmaceuticos].* ";
                     SqlProFarCen = SqlProFarCen + "FROM [BDFARMA].[dbo].[Datos productos farmaceuticos] ";
@@ -773,8 +840,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                 }
 
                                 TabProFarPor.Close();
-
-                            }
+                                ProgressBar.Increment(1);
+                            }//While
 
                             ContiPro = 2;
                             TxtCantiProFar.Text = TolProFarCenCount.ToString();
@@ -785,7 +852,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                     TabProFarCen.Close();
 
-                    if(ContiPro == 1)
+                    if (ContiPro == 1)
                     {
                         Utils.Informa = "El proceso de agregar o modificar procedimientos y";
                         Utils.Informa += "servicios, ha concluido satisfactoriamente";
@@ -801,6 +868,11 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                             MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
+
+                    ProgressBar.Minimum = 0;
+                    ProgressBar.Maximum = 1;
+                    ProgressBar.Value = 0;
+
                 }
             }
             catch (Exception ex)
@@ -809,6 +881,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                 Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
                 Utils.Informa += "despues de hacer click en integrar " + "\r";
                 Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
+                ProgressBar.Minimum = 0;
+                ProgressBar.Maximum = 1;
+                ProgressBar.Value = 0;
+
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 

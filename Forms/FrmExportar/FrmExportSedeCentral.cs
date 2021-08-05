@@ -390,7 +390,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                 string HiBusCue, CuenBusCue, FacBusCue, TiDGr, NumDgr, SqlPaciCentra, SqlPaciCentraCC, SqlCuenCen;
                 SqlDataReader TabResolFactur;
                 CodConseFacE = "51"; //'*********************** Codigo asignado para la generación de consecutivos de facturas electronicas en este sistema ************************
-
+                SqlDataReader reader;
                 SqlDataReader TabConsumos;
                 string SqlConsumos;
 
@@ -490,6 +490,51 @@ namespace OBBDSIIG.Forms.FrmExportar
                     {
                         //'Genere los consecutivos de las facturas eventos
 
+
+                        ConectarPortatil(); //S e hace para que la siguiente consulta apunte a lainstancia del portatil
+
+
+
+                        int con = 0;
+                        string SqlCuenConsuCount = "SELECT count(*) as totalRegis " +
+                        "FROM [ACDATOXPSQL].[dbo].[Datos de las facturas realizadas] " +
+                        "WHERE ([Datos de las facturas realizadas].PrefiFac = N'" + PfiPor + "') AND" +
+                        "([Datos de las facturas realizadas].ConsoFac = 'False' ) AND " +
+                        "([Datos de las facturas realizadas].FechaFac >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) AND " +
+                        "([Datos de las facturas realizadas].FechaFac <= CONVERT(DATETIME, '" + FecFinPro + "', 102)) AND " +
+                        "([Datos de las facturas realizadas].AnuladaFac = 'False') AND ([Datos de las facturas realizadas].TipoDocTab = N'1') AND " +
+                        "([Datos de las facturas realizadas].CodEstaDian = '00')";
+
+                        reader = Conexion.SQLDataReader(SqlCuenConsuCount);
+
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
+                            con = Convert.ToInt32(reader["totalRegis"]);
+
+                            if(con != 0)
+                            {
+                                progressBar.Minimum = 1;
+                                progressBar.Maximum = con;
+                            }
+                            else
+                            {
+                                progressBar.Minimum = 0;
+                                progressBar.Maximum = 1;
+                                progressBar.Value = 0;
+                            }
+
+                        }
+                        else
+                        {
+                            progressBar.Minimum = 0;
+                            progressBar.Maximum = 1;
+                            progressBar.Value = 0;
+                        }
+
+                        if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
+
+
                         SqlCuenConsu = "SELECT NumFactura, FechaFac, PrefiFac, TipoDocTab, NumFacAntes, PrefiFacElec, FecVenci, NumResol, CodEstaDian, " +
                         "FecCamEsta , HorCamEsta, CodCufe, NomDocValida, ObserGene, AnuladaFac, TexResol " +
                         "FROM [ACDATOXPSQL].[dbo].[Datos de las facturas realizadas] " +
@@ -500,7 +545,6 @@ namespace OBBDSIIG.Forms.FrmExportar
                         "([Datos de las facturas realizadas].AnuladaFac = 'False') AND ([Datos de las facturas realizadas].TipoDocTab = N'1') AND " +
                         "([Datos de las facturas realizadas].CodEstaDian = '00')";
 
-                        ConectarPortatil(); //S e hace para que la siguiente consulta apunte a lainstancia del portatil
 
                         using (SqlConnection connection3 = new SqlConnection(Conexion.conexionSQL))
                         {
@@ -692,12 +736,17 @@ namespace OBBDSIIG.Forms.FrmExportar
 
                                     }//Final de SigoProcFac = 1
 
+                                    progressBar.Increment(1);
 
                                 } //Fin While TabCuenConsu
 
                                 Utils.Informa = "Se han preparado " + CantiFacElec + " facturas ";
                                 Utils.Informa += "para ser enviadas a la DIAN.";
                                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                progressBar.Minimum = 0;
+                                progressBar.Maximum = 1;
+                                progressBar.Value = 0;
 
                             }//Fin if  (TabCuenConsu.HasRows == false)
                             TabCuenConsu.Close();
@@ -715,6 +764,47 @@ namespace OBBDSIIG.Forms.FrmExportar
                     {
                         return;
                     }
+
+
+                    ConectarPortatil();
+
+
+                    int Total = 0;
+
+                    string SqlCuenConsuCon = "SELECT count(*) as TotalRegis " +
+                    "FROM [ACDATOXPSQL].[dbo].[Datos cuentas de consumos] INNER JOIN [Datos de las facturas realizadas] ON " +
+                    " [ACDATOXPSQL].[dbo].[Datos cuentas de consumos].CuenNum = [Datos de las facturas realizadas].NumCuenFac INNER JOIN " +
+                    " [ACDATOXPSQL].[dbo].[Datos del Paciente] ON [Datos cuentas de consumos].HistoNum = [Datos del Paciente].HistorPaci " +
+                    "WHERE ([Datos de las facturas realizadas].PrefiFac = N'" + PfiPor + "') AND" +
+                    "([Datos de las facturas realizadas].ConsoFac = 'False' ) AND " +
+                    "([Datos de las facturas realizadas].FechaFac >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) AND " +
+                    "([Datos de las facturas realizadas].FechaFac <= CONVERT(DATETIME, '" + FecFinPro + "', 102))";
+
+                    reader = Conexion.SQLDataReader(SqlCuenConsuCon);
+
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+
+                        Total = Convert.ToInt32(reader["TotalRegis"]);
+
+                        if (Total != 0)
+                        {
+                            progressBar.Minimum = 1;
+                            progressBar.Maximum = Total;
+                        }
+
+                    }
+                    else
+                    {
+                        progressBar.Minimum = 0;
+                        progressBar.Maximum = 1;
+                        progressBar.Value = 0;
+                    }
+
+                    if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
+
+
 
 
 
@@ -742,8 +832,6 @@ namespace OBBDSIIG.Forms.FrmExportar
                    "([Datos de las facturas realizadas].ConsoFac = 'False' ) AND " +
                    "([Datos de las facturas realizadas].FechaFac >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) AND " +
                    "([Datos de las facturas realizadas].FechaFac <= CONVERT(DATETIME, '" + FecFinPro + "', 102))";
-
-                    ConectarPortatil();
 
                     using (SqlConnection connection = new SqlConnection(Conexion.conexionSQL))
                     {
@@ -1642,12 +1730,19 @@ namespace OBBDSIIG.Forms.FrmExportar
 
                                 }//ContiPRO
 
+
+                                progressBar.Increment(1);
+
                             }//While
 
                             TxtCanFacFor.Text = Convert.ToString(TolFacEx);
 
                             Utils.Informa = "El proceso ha terminado satisfactoriamente" + "\r";
                             MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            progressBar.Minimum = 0;
+                            progressBar.Maximum = 1;
+                            progressBar.Value = 0;
 
                         }//  if(TabCuenConsu.HasRows == false)
 
@@ -1670,6 +1765,9 @@ namespace OBBDSIIG.Forms.FrmExportar
                 Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
                 Utils.Informa += "después de hacer click sobre el botón exportar " + "\r";
                 Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
+                progressBar.Minimum = 0;
+                progressBar.Maximum = 1;
+                progressBar.Value = 0;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }//Fin BOTON

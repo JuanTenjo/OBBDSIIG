@@ -198,6 +198,39 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     int ContiPro = 0,ApliDis;
                     ConectarCentral();
 
+
+
+                    string SqlApliDisCenCount = "SELECT count(*) as TotalRegis  ";
+                    SqlApliDisCenCount = SqlApliDisCenCount + "FROM [DATUSIIGXPSQL].[dbo].[Datos aplicativos disponibles]";
+
+                    int Total = 0;
+
+                    SqlDataReader reader = Conexion.SQLDataReader(SqlApliDisCenCount);
+
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+
+                        Total = Convert.ToInt32(reader["TotalRegis"]);
+
+                        if (Total != 0)
+                        {
+                            ProgressBar.Minimum = 1;
+                            ProgressBar.Maximum = Total;
+                        }
+
+
+                    }
+                    else
+                    {
+                        ProgressBar.Minimum = 0;
+                        ProgressBar.Maximum = 1;
+                        ProgressBar.Value = 0;
+                    }
+
+                    if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
+
+
                     SqlApliDisCen = "SELECT  CodApli, NomAplica, NomObje, RutaApli, NumRefe, Disponible, PuntoNet, ";
                     SqlApliDisCen = SqlApliDisCen + "Grupo, Version, CodRegis, FecRegis, CodModi, FecModi ";
                     SqlApliDisCen = SqlApliDisCen + "FROM [DATUSIIGXPSQL].[dbo].[Datos aplicativos disponibles]";
@@ -303,6 +336,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                 TabApliDisPor.Close();
                                 ApliDis = ApliDis + 1;
 
+                                ProgressBar.Increment(1);
                             }//While
 
                             if(ApliDis > 0)
@@ -318,7 +352,12 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                         }
 
                     }
+
                     TabApliDisCen.Close();
+
+                    ProgressBar.Minimum = 0;
+                    ProgressBar.Maximum = 1;
+                    ProgressBar.Value = 0;
 
                     ApliDis = 0;
                     string SqlUsu, CodUsu = "", SqlUsuCentra = "";
@@ -330,6 +369,36 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                         //Primero copiamos todos los usuarios nuevos y modifcamos loa existentes
 
                         ConectarCentral();
+
+                        string SqlUsuCont = "SELECT count(*) as TotalRegis ";
+                        SqlUsuCont = SqlUsuCont + "FROM  [DATUSIIGXPSQL].[dbo].[Datos usuarios de los aplicativos] ";
+
+                        Total = 0;
+
+                        reader = Conexion.SQLDataReader(SqlUsuCont);
+
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
+
+                            Total = Convert.ToInt32(reader["TotalRegis"]);
+
+                            if (Total != 0)
+                            {
+                                ProgressBar.Minimum = 1;
+                                ProgressBar.Maximum = Total;
+                            }
+
+
+                        }
+                        else
+                        {
+                            ProgressBar.Minimum = 0;
+                            ProgressBar.Maximum = 1;
+                            ProgressBar.Value = 0;
+                        }
+
+                        if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
 
                         SqlUsu = "SELECT [Datos usuarios de los aplicativos].* ";
                         SqlUsu = SqlUsu + "FROM  [DATUSIIGXPSQL].[dbo].[Datos usuarios de los aplicativos] ";
@@ -461,6 +530,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                                     ApliDis = ApliDis + 1;
 
+                                    ProgressBar.Increment(1);
+
                                 }//While
 
                                 TxtCanUsuFor.Text = CanUsuFor.ToString();
@@ -483,6 +554,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                     }//'Final ContiPro = 1
 
+                    ProgressBar.Minimum = 0;
+                    ProgressBar.Maximum = 1;
+                    ProgressBar.Value = 0;
+
                     string SqlAplNueCentra, SqlAplNueCentra1;
                     SqlDataReader TabAplNueCentra, TabAplNueCentra1;
 
@@ -490,6 +565,37 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     {
                         //Proceda a copiar los aplicativos por usuarios
                         ConectarCentral();
+
+                        string SqlAplNueCentraCon = "SELECT count(*) as TotalRegis  ";
+                        SqlAplNueCentraCon += "FROM [DATUSIIGXPSQL].[dbo].[Datos aplicativos por usuario]";
+
+                        Total = 0;
+
+                        reader = Conexion.SQLDataReader(SqlAplNueCentraCon);
+
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
+
+                            Total = Convert.ToInt32(reader["TotalRegis"]);
+
+                            if (Total != 0)
+                            {
+                                ProgressBar.Minimum = 1;
+                                ProgressBar.Maximum = Total;
+                            }
+
+
+                        }
+                        else
+                        {
+                            ProgressBar.Minimum = 0;
+                            ProgressBar.Maximum = 1;
+                            ProgressBar.Value = 0;
+                        }
+
+                        if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
+
 
                         SqlAplNueCentra = "SELECT  CodAplica, CodUsua, CodRegis, FecRegis, CodModi, FecModi ";
                         SqlAplNueCentra += "FROM [DATUSIIGXPSQL].[dbo].[Datos aplicativos por usuario]";
@@ -570,6 +676,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                     TabAplNueCentra1.Close();
                                     ApliDis = ApliDis + 1;
 
+                                    ProgressBar.Increment(1);
+
                                 }
 
                                 if (ApliDis > 0)
@@ -589,6 +697,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                     }//'Final de ContiPro = 1
 
+                    ProgressBar.Minimum = 0;
+                    ProgressBar.Maximum = 1;
+                    ProgressBar.Value = 0;
+
 
                     SqlDataReader TabPerUsuaCen, TabPerUsuaPor;
 
@@ -598,6 +710,38 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                         //Proceda a copiar los permisos por usuarios
 
                         ConectarCentral();
+
+
+                        string SqlPerUsuaCenConunt = "SELECT count(*) as TotalRegis ";
+                        SqlPerUsuaCenConunt = SqlPerUsuaCenConunt + "FROM [DATUSIIGXPSQL].[dbo].[Datos permisos usuarios]";
+
+                        Total = 0;
+
+                        reader = Conexion.SQLDataReader(SqlPerUsuaCenConunt);
+
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
+
+                            Total = Convert.ToInt32(reader["TotalRegis"]);
+
+                            if (Total != 0)
+                            {
+                                ProgressBar.Minimum = 1;
+                                ProgressBar.Maximum = Total;
+                            }
+
+
+                        }
+                        else
+                        {
+                            ProgressBar.Minimum = 0;
+                            ProgressBar.Maximum = 1;
+                            ProgressBar.Value = 0;
+                        }
+
+                        if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
+
 
                         SqlPerUsuaCen = "SELECT CodUsua, CodAplicati, CodMenu, PerEspe, ObsPerEspe, CodRegis, FecRegis, CodModi, FecModi ";
                         SqlPerUsuaCen = SqlPerUsuaCen + "FROM [DATUSIIGXPSQL].[dbo].[Datos permisos usuarios]";
@@ -682,6 +826,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                     }
 
                                     TabPerUsuaPor.Close();
+
+                                    ProgressBar.Increment(1);
+
                                 }//While
 
                             }
@@ -697,6 +844,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                         Utils.Informa = "El proceso ha terminado satisfactoriamente";
                         MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
+
+                    ProgressBar.Minimum = 0;
+                    ProgressBar.Maximum = 1;
+                    ProgressBar.Value = 0;
 
                 }
             }

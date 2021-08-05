@@ -258,6 +258,8 @@ namespace OBBDSIIG.Forms.FrmImportar
 
                     string FechaHoy = Convert.ToString(DateTime.Now.ToString("yyyy-MM-dd"));
 
+                    ConectarCentral();
+
 
                     SqlCuenConsu = "SELECT [Datos cuentas de consumos].*, " +
                     "[Datos de las facturas realizadas].*, [Datos del Paciente].*, " +
@@ -281,7 +283,42 @@ namespace OBBDSIIG.Forms.FrmImportar
                    "WHERE [Datos de las facturas realizadas].FechaFac >= CONVERT(DATETIME, '" + FecIniPro + "', 102) AND " +
                    "[Datos de las facturas realizadas].FechaFac <= CONVERT(DATETIME, '" + FecFinPro + "', 102)";
 
-                    ConectarCentral();
+
+                    string SqlCuenConsuCon = "SELECT count(*) as TotalRegis  " +
+                   "FROM  [ACDATOXPSQL].[dbo].[Datos cuentas de consumos] INNER JOIN [ACDATOXPSQL].[dbo].[Datos de las facturas realizadas] ON " +
+                   " [ACDATOXPSQL].[dbo].[Datos cuentas de consumos].CuenNum = [ACDATOXPSQL].[dbo].[Datos de las facturas realizadas].NumCuenFac INNER JOIN " +
+                   " [ACDATOXPSQL].[dbo].[Datos del Paciente] ON [Datos cuentas de consumos].HistoNum = [Datos del Paciente].HistorPaci " +
+                   "WHERE [Datos de las facturas realizadas].FechaFac >= CONVERT(DATETIME, '" + FecIniPro + "', 102) AND " +
+                   "[Datos de las facturas realizadas].FechaFac <= CONVERT(DATETIME, '" + FecFinPro + "', 102)";
+
+
+                    SqlDataReader reader = Conexion.SQLDataReader(SqlCuenConsuCon);
+                    int Total = 0;
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+
+                        Total = Convert.ToInt32(reader["TotalRegis"]);
+
+                        if (Total != 0)
+                        {
+                            progressBar.Minimum = 1;
+                            progressBar.Maximum = Total;
+                        }
+
+                    }
+                    else
+                    {
+                        progressBar.Minimum = 0;
+                        progressBar.Maximum = 1;
+                        progressBar.Value = 0;
+                    }
+
+                    if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
+
+
+
+                  
 
                     using (SqlConnection connection = new SqlConnection(Conexion.conexionSQL))
                     {
@@ -1162,13 +1199,17 @@ namespace OBBDSIIG.Forms.FrmImportar
                                     TabCuenCen.Close();
 
                                 }//ContiPRO
-
+                                progressBar.Increment(1);
                             }//While
 
                             TxtCanFacFor.Text = Convert.ToString(TolFacEx);
 
                             Utils.Informa = "El proceso ha terminado satisfactoriamente" + "\r";
                             MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            progressBar.Minimum = 0;
+                            progressBar.Maximum = 1;
+                            progressBar.Value = 0;
 
                         }//  if(TabCuenConsu.HasRows == false)
 
@@ -1191,6 +1232,9 @@ namespace OBBDSIIG.Forms.FrmImportar
                 Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
                 Utils.Informa += "después de hacer click sobre el botón exportar " + "\r";
                 Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
+                progressBar.Minimum = 0;
+                progressBar.Maximum = 1;
+                progressBar.Value = 0;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

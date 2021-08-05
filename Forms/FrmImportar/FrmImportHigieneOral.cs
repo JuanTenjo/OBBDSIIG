@@ -238,12 +238,48 @@ namespace OBBDSIIG.Forms.FrmImportar
                     TxtCanPlacaFor.Text = "0";
                     TxtCanPlacaFormExis.Text = "0";
 
+
+                    ConectarCentral();
+
+
+                    string SqlPlacaCount = "SELECT count(*) as TotalRegis FROM [DACONEXTSQL].[dbo].[Datos registro control placa] " +
+                    "WHERE ([Datos registro control placa].PrefiPlaca = N'" + PfiPor + "') AND " +
+                    "([Datos registro control placa].ActivoCtl = 0 ) AND " +
+                    "([Datos registro control placa].FechaRealiza >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) AND " +
+                    "([Datos registro control placa].FechaRealiza <= CONVERT(DATETIME, '" + FecFinPro + "', 102))";
+
+                    int Total = 0;
+
+                    SqlDataReader reader = Conexion.SQLDataReader(SqlPlacaCount);
+
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+
+                        Total = Convert.ToInt32(reader["TotalRegis"]);
+
+                        if (Total != 0)
+                        {
+                            ProgresBar.Minimum = 1;
+                            ProgresBar.Maximum = Total;
+                        }
+
+
+                    }
+                    else
+                    {
+                        ProgresBar.Minimum = 0;
+                        ProgresBar.Maximum = 1;
+                        ProgresBar.Value = 0;
+                    }
+
+                    if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
+
+
                     SqlPlaca = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos registro control placa] " +
                     "WHERE ([Datos registro control placa].ActivoCtl = 0 ) AND " +
                     "([Datos registro control placa].FechaRealiza >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) AND " +
                     "([Datos registro control placa].FechaRealiza <= CONVERT(DATETIME, '" + FecFinPro + "', 102))";
-
-                    ConectarCentral();
 
                     SqlDataReader TabControlPlaca;
 
@@ -556,10 +592,16 @@ namespace OBBDSIIG.Forms.FrmImportar
 
                                 }//USing
 
+                                ProgresBar.Increment(1);
+
                             }//While
 
                             Utils.Informa = "El proceso ha terminado satisfactoriamente";
                             MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            ProgresBar.Minimum = 0;
+                            ProgresBar.Maximum = 1;
+                            ProgresBar.Value = 0;
 
                         }// if (TabControlPlaca.HasRows == false)
 
@@ -572,6 +614,9 @@ namespace OBBDSIIG.Forms.FrmImportar
                 Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
                 Utils.Informa += "después de hacer click sobre el botón exportar" + "\r";
                 Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
+                ProgresBar.Minimum = 0;
+                ProgresBar.Maximum = 1;
+                ProgresBar.Value = 0;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

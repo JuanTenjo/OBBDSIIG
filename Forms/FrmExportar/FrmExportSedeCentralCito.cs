@@ -303,6 +303,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                     TxtCanCitoFor.Text = "0";
                     TxtCanCitoFormExis.Text = "0";
 
+                    ConectarPortatil();
 
                     SqlCito = "SELECT * FROM [BDSITOI].[dbo].[Datos basicos citologia] ";
                     SqlCito += "WHERE ([Datos basicos citologia].PrefiCito = N'" + PfiPor + "') AND";
@@ -311,7 +312,38 @@ namespace OBBDSIIG.Forms.FrmExportar
                     SqlCito += "([Datos basicos citologia].FecRadi <= CONVERT(DATETIME, '" + FecFinPro + "', 102))";
 
 
-                    ConectarPortatil();
+                    string SqlCitoCount = "SELECT count(*) as TotalRegis FROM [BDSITOI].[dbo].[Datos basicos citologia] ";
+                    SqlCitoCount += "WHERE ([Datos basicos citologia].PrefiCito = N'" + PfiPor + "') AND";
+                    SqlCitoCount += "([Datos basicos citologia].CierreToma = 'True' ) AND ";
+                    SqlCitoCount += "([Datos basicos citologia].FecRadi >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) AND";
+                    SqlCitoCount += "([Datos basicos citologia].FecRadi <= CONVERT(DATETIME, '" + FecFinPro + "', 102))";
+
+                    SqlDataReader reader = Conexion.SQLDataReader(SqlCitoCount);
+                    int Total = 0;
+
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+
+                        Total = Convert.ToInt32(reader["TotalRegis"]);
+
+                        if (Total != 0)
+                        {
+                            ProgressBar.Minimum = 1;
+                            ProgressBar.Maximum = Total;
+                        }
+
+
+                    }
+                    else
+                    {
+                        ProgressBar.Minimum = 0;
+                        ProgressBar.Maximum = 1;
+                        ProgressBar.Value = 0;
+                    }
+
+                    if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
+
 
                     SqlDataReader TabCitologia;
 
@@ -687,11 +719,18 @@ namespace OBBDSIIG.Forms.FrmExportar
       
 
                                 }//Using TabHi
+
+                                ProgressBar.Increment(1);
+
                             }//Fin While
 
 
                             Utils.Informa = "El proceso ha terminado satisfactoriamente";
                             MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            ProgressBar.Minimum = 0;
+                            ProgressBar.Maximum = 1;
+                            ProgressBar.Value = 0;
 
 
                         }//if(TabCitologia.HasRows == false)
@@ -706,6 +745,9 @@ namespace OBBDSIIG.Forms.FrmExportar
                 Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
                 Utils.Informa += "después de hacer click sobre el botón exportar" + "\r";
                 Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
+                ProgressBar.Minimum = 0;
+                ProgressBar.Maximum = 1;
+                ProgressBar.Value = 0;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

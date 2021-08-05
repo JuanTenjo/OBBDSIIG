@@ -132,7 +132,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             {
                 string UsaRegis = "", SqlBiometFi = "", CodHisFir, CodBusPlaca, SqlBiometFirCen;
 
-
+                SqlDataReader reader;
 
                 DateTime Fecha2 = DateTime.Now;
                 string Fecha = Fecha2.ToString("yyyy-MM-dd");
@@ -185,12 +185,42 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                     //'Consultamos los datos de las firmas en el equipo BRIGADA
 
+
+                    ConectarPortatil();
+
+                    string SqlBiometFiCount = "SELECT count(*) as TotalRegis ";
+                    SqlBiometFiCount = SqlBiometFiCount + "FROM [BDBIOMETSQL].[dbo].[Datos firma digital] ";
+                    int Total = 0;
+
+                    reader = Conexion.SQLDataReader(SqlBiometFiCount);
+
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+
+                        Total = Convert.ToInt32(reader["TotalRegis"]);
+
+                        if (Total != 0)
+                        {
+                            ProgressBar.Minimum = 1;
+                            ProgressBar.Maximum = Total;
+                        }
+
+
+                    }
+                    else
+                    {
+                        ProgressBar.Minimum = 0;
+                        ProgressBar.Maximum = 1;
+                        ProgressBar.Value = 0;
+                    }
+
+                    if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
+
+
                     SqlBiometFi = "SELECT [Datos firma digital].* ";
                     SqlBiometFi = SqlBiometFi + "FROM [BDBIOMETSQL].[dbo].[Datos firma digital] ";
                     SqlBiometFi = SqlBiometFi + "ORDER BY HistorPaci";
-
-
-                    ConectarPortatil();
 
                     SqlDataReader TabBiometFi;
 
@@ -347,7 +377,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                    
 
                                 }//USing
-                             
+
+                                ProgressBar.Increment(1);
+
                             }//While
                             TabBiometFi.Close();
    
@@ -355,13 +387,55 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                             TxtCanFotAgr.Text = "0";
                             TxtCanFotMod.Text = "0";
 
+                            ProgressBar.Minimum = 0;
+                            ProgressBar.Maximum = 1;
+                            ProgressBar.Value = 0;
+
+
+
+                            ConectarPortatil();
+
                             //Consultamos los datos de las firmas en el equipo BRIGADA
                             string SqlBiometFotCen, CodHisFot;
+
+
+
+                            string SqlBiometFoCount = "SELECT count(*) as TotalRegis  ";
+                            SqlBiometFoCount = SqlBiometFoCount + "FROM [BDBIOMETSQL].[dbo].[Datos foto digital] ";
+
+                            Total = 0;
+
+                            reader = Conexion.SQLDataReader(SqlBiometFoCount);
+
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+
+                                Total = Convert.ToInt32(reader["TotalRegis"]);
+
+                                if (Total != 0)
+                                {
+                                    ProgressBar.Minimum = 1;
+                                    ProgressBar.Maximum = Total;
+                                }
+
+
+                            }
+                            else
+                            {
+                                ProgressBar.Minimum = 0;
+                                ProgressBar.Maximum = 1;
+                                ProgressBar.Value = 0;
+                            }
+
+                            if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
+
+
                             string SqlBiometFo = "SELECT [Datos foto digital].* ";
                             SqlBiometFo = SqlBiometFo + "FROM [BDBIOMETSQL].[dbo].[Datos foto digital] ";
                             SqlBiometFo = SqlBiometFo + "ORDER BY HistorPaci";
 
-                            ConectarPortatil();
+
 
                             SqlDataReader TabBiometFo;
                             SqlDataReader TabBiometFoCentra;
@@ -498,17 +572,55 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                             }                          
                                         }
                                         TabBiometFoCentra.Close();
-                                    }
+                                        ProgressBar.Increment(1);
+                                    }//Whiile
                                 }
                             }
 
                             TabBiometFo.Close();
 
-
+                            
+                            ProgressBar.Minimum = 0;
+                            ProgressBar.Maximum = 1;
+                            ProgressBar.Value = 0;
                             TxtCanHueAgr.Text = "0";
                             TxtCanHueMod.Text = "0";
 
                             //Consultamos los datos de las firmas en el equipo BRIGADA
+                            ConectarPortatil();
+
+
+                            string SqlBiometHuCount = "SELECT count(*) as TotalRegis  ";
+                            SqlBiometHuCount = SqlBiometHuCount + "FROM [BDBIOMETSQL].[dbo].[Datos huella digital] ";
+                            Total = 0;
+
+
+                            reader = Conexion.SQLDataReader(SqlBiometHuCount);
+
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+
+                                Total = Convert.ToInt32(reader["TotalRegis"]);
+
+                                if (Total != 0)
+                                {
+                                    ProgressBar.Minimum = 1;
+                                    ProgressBar.Maximum = Total;
+                                }
+
+
+                            }
+                            else
+                            {
+                                ProgressBar.Minimum = 0;
+                                ProgressBar.Maximum = 1;
+                                ProgressBar.Value = 0;
+                            }
+
+                            if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
+
+
 
                             string SqlBiometHu = "SELECT [Datos huella digital].* ";
                             SqlBiometHu = SqlBiometHu + "FROM [BDBIOMETSQL].[dbo].[Datos huella digital] ";
@@ -516,7 +628,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                             string CodHisHue, SqlBiometHueCen;
 
-                            ConectarPortatil();
+                            
 
                             SqlDataReader TabBiometHu, TabBiometHuCentra;
 
@@ -686,6 +798,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                             TabBiometHuCentra.Close();
 
                                         }//USing
+
+                                        ProgressBar.Increment(1);
                                     }//Whilw
 
                                 }//(TabBiometHu.HasRows == false)
@@ -694,8 +808,12 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                             }//Using
 
-                                Utils.Informa = "El proceso ha terminado satisfactoriamente";
-                                MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            Utils.Informa = "El proceso ha terminado satisfactoriamente";
+                            MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            ProgressBar.Minimum = 0;
+                            ProgressBar.Maximum = 1;
+                            ProgressBar.Value = 0;
 
 
                         }// if (TabBiometFi.HasRows == false)
@@ -711,6 +829,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                 Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
                 Utils.Informa += "después de hacer click sobre el botón integrar" + "\r";
                 Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
+                ProgressBar.Minimum = 0;
+                ProgressBar.Maximum = 1;
+                ProgressBar.Value = 0;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

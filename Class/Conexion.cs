@@ -109,9 +109,6 @@ namespace OBBDSIIG.Class
                         }
                     }
 
-                    //var dataContext = new MyDataBaseDataContext();
-                    //dataContext.DataBase.CommandTimeout = 300; // Timeout en hardcode :( 
-
                     sqlConnection.Open();
 
                     command.CommandTimeout = 300;

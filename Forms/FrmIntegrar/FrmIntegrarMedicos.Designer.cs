@@ -53,6 +53,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.BtnBuscarPacientes = new System.Windows.Forms.Button();
+            this.ProgressBar = new System.Windows.Forms.ProgressBar();
             this.groupBox6.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -64,7 +65,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.groupBox6.Controls.Add(this.lblNombreUser);
             this.groupBox6.Controls.Add(this.lblCodigoUser);
             this.groupBox6.Controls.Add(this.label16);
-            this.groupBox6.Location = new System.Drawing.Point(15, 162);
+            this.groupBox6.Location = new System.Drawing.Point(12, 188);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(479, 34);
             this.groupBox6.TabIndex = 70;
@@ -311,11 +312,19 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.BtnBuscarPacientes.UseVisualStyleBackColor = true;
             this.BtnBuscarPacientes.Click += new System.EventHandler(this.BtnBuscarPacientes_Click);
             // 
+            // ProgressBar
+            // 
+            this.ProgressBar.Location = new System.Drawing.Point(12, 159);
+            this.ProgressBar.Name = "ProgressBar";
+            this.ProgressBar.Size = new System.Drawing.Size(482, 23);
+            this.ProgressBar.TabIndex = 72;
+            // 
             // FrmIntegrarMedicos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(512, 207);
+            this.ClientSize = new System.Drawing.Size(501, 244);
+            this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.BtnBuscarPacientes);
@@ -368,5 +377,6 @@ namespace OBBDSIIG.Forms.FrmIntegrar
         private System.Windows.Forms.TextBox TxtInstanCenFor;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ProgressBar ProgressBar;
     }
 }

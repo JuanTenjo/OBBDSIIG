@@ -55,6 +55,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.lblNombreUser = new System.Windows.Forms.Label();
             this.lblCodigoUser = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
+            this.ProgressBar = new System.Windows.Forms.ProgressBar();
             this.groupBox1.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.SuspendLayout();
@@ -257,7 +258,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // label15
             // 
             this.label15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(64, 269);
+            this.label15.Location = new System.Drawing.Point(48, 301);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(75, 12);
             this.label15.TabIndex = 73;
@@ -269,7 +270,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.BtnBuscarPacientes.BackgroundImage = global::OBBDSIIG.Properties.Resources.icons8_exportar_30;
             this.BtnBuscarPacientes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.BtnBuscarPacientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnBuscarPacientes.Location = new System.Drawing.Point(78, 283);
+            this.BtnBuscarPacientes.Location = new System.Drawing.Point(62, 315);
             this.BtnBuscarPacientes.Name = "BtnBuscarPacientes";
             this.BtnBuscarPacientes.Size = new System.Drawing.Size(43, 40);
             this.BtnBuscarPacientes.TabIndex = 72;
@@ -283,7 +284,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.groupBox6.Controls.Add(this.lblNombreUser);
             this.groupBox6.Controls.Add(this.lblCodigoUser);
             this.groupBox6.Controls.Add(this.label16);
-            this.groupBox6.Location = new System.Drawing.Point(205, 274);
+            this.groupBox6.Location = new System.Drawing.Point(189, 306);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(273, 54);
             this.groupBox6.TabIndex = 77;
@@ -340,11 +341,19 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label16.Text = "ID:";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // ProgressBar
+            // 
+            this.ProgressBar.Location = new System.Drawing.Point(7, 268);
+            this.ProgressBar.Name = "ProgressBar";
+            this.ProgressBar.Size = new System.Drawing.Size(465, 23);
+            this.ProgressBar.TabIndex = 78;
+            // 
             // FrmIntegrarBiometria
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(481, 340);
+            this.ClientSize = new System.Drawing.Size(481, 366);
+            this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.groupBox1);
@@ -394,5 +403,6 @@ namespace OBBDSIIG.Forms.FrmIntegrar
         private System.Windows.Forms.Label lblNombreUser;
         private System.Windows.Forms.Label lblCodigoUser;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.ProgressBar ProgressBar;
     }
 }

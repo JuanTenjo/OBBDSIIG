@@ -61,6 +61,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.BtnRegistrarData = new System.Windows.Forms.Button();
+            this.BarraExportHistorias = new System.Windows.Forms.ProgressBar();
             this.groupBox6.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -74,7 +75,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.groupBox6.Controls.Add(this.lblNombreUser);
             this.groupBox6.Controls.Add(this.lblCodigoUser);
             this.groupBox6.Controls.Add(this.label16);
-            this.groupBox6.Location = new System.Drawing.Point(190, 242);
+            this.groupBox6.Location = new System.Drawing.Point(185, 271);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(273, 54);
             this.groupBox6.TabIndex = 58;
@@ -146,7 +147,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             // label15
             // 
             this.label15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(15, 237);
+            this.label15.Location = new System.Drawing.Point(12, 268);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(75, 12);
             this.label15.TabIndex = 57;
@@ -158,7 +159,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.BtnBuscarPacientes.BackgroundImage = global::OBBDSIIG.Properties.Resources.icons8_exportar_30;
             this.BtnBuscarPacientes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.BtnBuscarPacientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnBuscarPacientes.Location = new System.Drawing.Point(29, 257);
+            this.BtnBuscarPacientes.Location = new System.Drawing.Point(24, 286);
             this.BtnBuscarPacientes.Name = "BtnBuscarPacientes";
             this.BtnBuscarPacientes.Size = new System.Drawing.Size(43, 34);
             this.BtnBuscarPacientes.TabIndex = 56;
@@ -403,19 +404,28 @@ namespace OBBDSIIG.Forms.FrmExportar
             // 
             // BtnRegistrarData
             // 
-            this.BtnRegistrarData.Location = new System.Drawing.Point(100, 246);
+            this.BtnRegistrarData.Location = new System.Drawing.Point(95, 275);
             this.BtnRegistrarData.Name = "BtnRegistrarData";
             this.BtnRegistrarData.Size = new System.Drawing.Size(75, 46);
             this.BtnRegistrarData.TabIndex = 59;
             this.BtnRegistrarData.Text = "REGISTRA TRATA";
             this.BtnRegistrarData.UseVisualStyleBackColor = true;
             this.BtnRegistrarData.Visible = false;
+            this.BtnRegistrarData.Click += new System.EventHandler(this.BtnRegistrarData_Click);
+            // 
+            // BarraExportHistorias
+            // 
+            this.BarraExportHistorias.Location = new System.Drawing.Point(15, 238);
+            this.BarraExportHistorias.Name = "BarraExportHistorias";
+            this.BarraExportHistorias.Size = new System.Drawing.Size(454, 23);
+            this.BarraExportHistorias.TabIndex = 60;
             // 
             // FrmExportSedeCentralHistorias
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(480, 305);
+            this.ClientSize = new System.Drawing.Size(480, 330);
+            this.Controls.Add(this.BarraExportHistorias);
             this.Controls.Add(this.BtnRegistrarData);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.label15);
@@ -479,5 +489,6 @@ namespace OBBDSIIG.Forms.FrmExportar
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button BtnRegistrarData;
+        private System.Windows.Forms.ProgressBar BarraExportHistorias;
     }
 }

@@ -68,6 +68,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.label16 = new System.Windows.Forms.Label();
             this.LblDiasVenFac = new System.Windows.Forms.Label();
             this.BtnBuscarPacientes = new System.Windows.Forms.Button();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -408,7 +409,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             // label15
             // 
             this.label15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(91, 206);
+            this.label15.Location = new System.Drawing.Point(68, 240);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(75, 12);
             this.label15.TabIndex = 17;
@@ -422,7 +423,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.groupBox6.Controls.Add(this.lblNombreUser);
             this.groupBox6.Controls.Add(this.lblCodigoUser);
             this.groupBox6.Controls.Add(this.label16);
-            this.groupBox6.Location = new System.Drawing.Point(323, 206);
+            this.groupBox6.Location = new System.Drawing.Point(316, 241);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(267, 54);
             this.groupBox6.TabIndex = 19;
@@ -482,7 +483,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             // LblDiasVenFac
             // 
             this.LblDiasVenFac.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblDiasVenFac.Location = new System.Drawing.Point(225, 212);
+            this.LblDiasVenFac.Location = new System.Drawing.Point(218, 247);
             this.LblDiasVenFac.Name = "LblDiasVenFac";
             this.LblDiasVenFac.Size = new System.Drawing.Size(83, 18);
             this.LblDiasVenFac.TabIndex = 32;
@@ -496,19 +497,27 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.BtnBuscarPacientes.BackgroundImage = global::OBBDSIIG.Properties.Resources.icons8_exportar_30;
             this.BtnBuscarPacientes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.BtnBuscarPacientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnBuscarPacientes.Location = new System.Drawing.Point(102, 222);
+            this.BtnBuscarPacientes.Location = new System.Drawing.Point(80, 256);
             this.BtnBuscarPacientes.Name = "BtnBuscarPacientes";
             this.BtnBuscarPacientes.Size = new System.Drawing.Size(43, 34);
             this.BtnBuscarPacientes.TabIndex = 16;
             this.BtnBuscarPacientes.UseVisualStyleBackColor = true;
             this.BtnBuscarPacientes.Click += new System.EventHandler(this.BtnBuscarPacientes_Click);
             // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(10, 210);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(580, 23);
+            this.progressBar.TabIndex = 33;
+            // 
             // FrmExportSedeCentral
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(596, 264);
+            this.ClientSize = new System.Drawing.Size(596, 307);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.LblDiasVenFac);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.label15);
@@ -581,5 +590,6 @@ namespace OBBDSIIG.Forms.FrmExportar
         private System.Windows.Forms.DateTimePicker DateFecIniFacElec;
         private System.Windows.Forms.Label LblDiasVenFac;
         private System.Windows.Forms.TextBox TxtFacElec;
+        private System.Windows.Forms.ProgressBar progressBar;
     }
 }

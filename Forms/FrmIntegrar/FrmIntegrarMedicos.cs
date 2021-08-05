@@ -192,12 +192,45 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     TxtCanMediExis.Text = "0";
 
 
+
+                    ConectarCentral();
+
+                    string SqlMediCount = "SELECT count(*) as TotalRegis ";
+                    SqlMediCount += "FROM [GEOGRAXPSQL].[dbo].[Datos de los medicos]";
+
+                    int Total = 0;
+
+                    SqlDataReader reader = Conexion.SQLDataReader(SqlMediCount);
+
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+
+                        Total = Convert.ToInt32(reader["TotalRegis"]);
+
+                        if (Total != 0)
+                        {
+                            ProgressBar.Minimum = 1;
+                            ProgressBar.Maximum = Total;
+                        }
+
+
+                    }
+                    else
+                    {
+                        ProgressBar.Minimum = 0;
+                        ProgressBar.Maximum = 1;
+                        ProgressBar.Value = 0;
+                    }
+
+                    if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
+
+
+
                     SqlMedi = "SELECT CodiMedico, CodEspecial, TipoDocum, NumDocum, NomMedico, Apellido1Medico, Apellido2Medico, FecNaciMedi, SexoMedico, ";
                     SqlMedi += "CargoMedico, DirecMedico, TeleResiden, TeleConsul, TeleCelular, RegisProfes, LicenOcupa, TrabajaPor, ActiMedico, ";
                     SqlMedi += "HaceConsul, FirmaD, FotoMedico, CodiRegis, FecRegis, CodiModi, FecModi, Nom2Medico ";
                     SqlMedi += "FROM [GEOGRAXPSQL].[dbo].[Datos de los medicos]";
-
-                    ConectarCentral();
 
                     SqlDataReader TabMedi;
 
@@ -431,10 +464,15 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                                 }//USing
                                 TabMediCentra.Close();
+
+                                ProgressBar.Increment(1);
                             }//While
 
                             Utils.Informa = "El proceso ha terminado satisfactoriamente";
                             MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            ProgressBar.Minimum = 0;
+                            ProgressBar.Maximum = 1;
+                            ProgressBar.Value = 0;
                         }
 
                         TabMedi.Close();
@@ -449,6 +487,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                 Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
                 Utils.Informa += "despues de dar click en integrar" + "\r";
                 Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
+                ProgressBar.Minimum = 0;
+                ProgressBar.Maximum = 1;
+                ProgressBar.Value = 0;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

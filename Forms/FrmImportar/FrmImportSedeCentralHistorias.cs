@@ -3383,13 +3383,50 @@ namespace OBBDSIIG.Forms.FrmImportar
                     TxtCanhisFormExis.Text = "0";
 
 
+                    ConectarCentral();
+
+
+
                     SqlHistoCli = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos atencion de la consulta] ";
                     SqlHistoCli += "WHERE ([Datos atencion de la consulta].PrefiHis = N'" + PfiPor + "') AND";
                     SqlHistoCli += "([Datos atencion de la consulta].Activa = 'False' ) AND ";
                     SqlHistoCli += "([Datos atencion de la consulta].FecAtenc >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) AND";
                     SqlHistoCli += "([Datos atencion de la consulta].FecAtenc <= CONVERT(DATETIME, '" + FecFinPro + "', 102))";
 
-                    ConectarCentral();
+
+                    string SqlHistoCliCount = "SELECT count(*) as totalAten FROM [DACONEXTSQL].[dbo].[Datos atencion de la consulta] ";
+                    SqlHistoCliCount += "WHERE ([Datos atencion de la consulta].PrefiHis = N'" + PfiPor + "') AND";
+                    SqlHistoCliCount += "([Datos atencion de la consulta].Activa = 'False' ) AND ";
+                    SqlHistoCliCount += "([Datos atencion de la consulta].FecAtenc >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) AND";
+                    SqlHistoCliCount += "([Datos atencion de la consulta].FecAtenc <= CONVERT(DATETIME, '" + FecFinPro + "', 102))";
+
+
+                    SqlDataReader reader = Conexion.SQLDataReader(SqlHistoCliCount);
+
+                    int totalAten = 0;
+
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        totalAten = Convert.ToInt32(reader["totalAten"]);
+
+                        if (totalAten != 0)
+                        {
+
+                            BarraExportHistorias.Minimum = 1;
+                            BarraExportHistorias.Maximum = totalAten;
+                        }
+
+
+                    }
+                    else
+                    {
+                        BarraExportHistorias.Minimum = 0;
+                        BarraExportHistorias.Maximum = 1;
+                        BarraExportHistorias.Value = 0;
+                    }
+
+                    if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
 
                     SqlDataReader TabHistoCli;
 
@@ -3878,6 +3915,10 @@ namespace OBBDSIIG.Forms.FrmImportar
                                     TabHistorCen.Close();
 
                                 }//using
+
+
+                                BarraExportHistorias.Increment(1);
+
                             }//While
 
 
@@ -3888,6 +3929,9 @@ namespace OBBDSIIG.Forms.FrmImportar
 
                     Utils.Informa = "El proceso ha terminado satisfactoriamente " + "\r";
                     MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    BarraExportHistorias.Minimum = 0;
+                    BarraExportHistorias.Maximum = 1;
+                    BarraExportHistorias.Value = 0;
 
 
                 }//´Pregunta
@@ -3898,6 +3942,9 @@ namespace OBBDSIIG.Forms.FrmImportar
                 Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
                 Utils.Informa += "después de hacer click sobre el botón importar" + "\r";
                 Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
+                BarraExportHistorias.Minimum = 0;
+                BarraExportHistorias.Maximum = 1;
+                BarraExportHistorias.Value = 0;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

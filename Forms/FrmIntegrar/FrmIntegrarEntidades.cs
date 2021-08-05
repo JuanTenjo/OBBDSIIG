@@ -191,14 +191,47 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     TxtCanEmpForm.Text = "0";
                     TxtCanEmpTerExis.Text = "0";
 
+
+
+                    ConectarCentral();
+
+                    string SqlEmpTerCount = "SELECT count(*) as TotalRegis " + 
+                    "FROM [ACDATOXPSQL].[dbo].[Datos empresas y terceros]";
+
+                    int Total = 0;
+
+                    SqlDataReader reader = Conexion.SQLDataReader(SqlEmpTerCount);
+
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+
+                        Total = Convert.ToInt32(reader["TotalRegis"]);
+
+                        if (Total != 0)
+                        {
+                            ProgressBar.Minimum = 1;
+                            ProgressBar.Maximum = Total;
+                        }
+
+
+                    }
+                    else
+                    {
+                        ProgressBar.Minimum = 0;
+                        ProgressBar.Maximum = 1;
+                        ProgressBar.Value = 0;
+                    }
+
+                    if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
+
+
                     SqlEmpTer = "SELECT CarAdmin, CodiMinSalud, PerEmpre, NomAdmin, ProgrAmin, TipoDocu, NumDocu, ManualTari, TarifAplica, DirecAdmin, TelePrinci, TeleFax, CiudAdmin, DptoAdmin, " +
                     "PaisAdmin, Contacto, NumCel, Contrato, MontoContrato, SaldoMonto, IniciaContrato, FinContrato, CuenContaDeuda, CodRuPres, CodTipoPaciente, TipoEmpre, " +
                     "CentroCuenta, RegimenAdmin, NomPlan, NaturalJuridica, HabilEmp, ActiReali, CoCoPago, PaNivel1, PaNivel2, PaNivel3, CodiRegis, FecRegis, CodiModi, FecModi, " +
                     "TopeFacUs, CueContDeudaRad, AbonoSinAolica, AtenConOrdFac, SucuDoc, DigTribu, " +
                     "CodPresVig01, CodPresVig02, DisContIngre, CContaDisIng, DirElectro, PagWebPro, ValNumAuto, PreForFac " +
                     "FROM [ACDATOXPSQL].[dbo].[Datos empresas y terceros]";
-
-                    ConectarCentral();
 
                     SqlDataReader TabEmpTer;
 
@@ -447,10 +480,16 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                     TabEmpTerCentra.Close();
 
                                 }//USing
+
+                                ProgressBar.Increment(1);
                             }//While
 
                             Utils.Informa = "El proceso ha terminado satisfactoriamente";
                             MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            ProgressBar.Minimum = 0;
+                            ProgressBar.Maximum = 1;
+                            ProgressBar.Value = 0;
                         }
 
                         TabEmpTer.Close();
@@ -466,6 +505,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                 Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
                 Utils.Informa += "despues de dar click en integrar" + "\r";
                 Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
+                ProgressBar.Minimum = 0;
+                ProgressBar.Maximum = 1;
+                ProgressBar.Value = 0;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

@@ -194,11 +194,42 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     TxtPaciExis.Text = "0";
 
 
-                    SqlPacien = "SELECT * FROM [ACDATOXPSQL].[dbo].[Datos del Paciente] ";
+                    
 
 
 
                     ConectarCentral();
+
+                    SqlPacien = "SELECT * FROM [ACDATOXPSQL].[dbo].[Datos del Paciente] ";
+
+                    string SqlPacienCon = "SELECT count(*) as TotalRegis FROM [ACDATOXPSQL].[dbo].[Datos del Paciente] ";
+
+                    int Total = 0;
+
+                    SqlDataReader reader = Conexion.SQLDataReader(SqlPacienCon);
+
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+
+                        Total = Convert.ToInt32(reader["TotalRegis"]);
+
+                        if (Total != 0)
+                        {
+                            ProgressBar.Minimum = 1;
+                            ProgressBar.Maximum = Total;
+                        }
+
+
+                    }
+                    else
+                    {
+                        ProgressBar.Minimum = 0;
+                        ProgressBar.Maximum = 1;
+                        ProgressBar.Value = 0;
+                    }
+
+                    if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
 
                     SqlDataReader TabPacien;
 
@@ -1039,10 +1070,16 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                     TabPacienCentra.Close();
 
                                 }//USing
+
+                                ProgressBar.Increment(1);
                             }//While
 
                             Utils.Informa = "El proceso ha terminado satisfactoriamente";
                             MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            ProgressBar.Minimum = 0;
+                            ProgressBar.Maximum = 1;
+                            ProgressBar.Value = 0;
                         }
 
                         TabPacien.Close();
@@ -1058,6 +1095,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                 Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
                 Utils.Informa += "despues de dar click en integrar" + "\r";
                 Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
+                ProgressBar.Minimum = 0;
+                ProgressBar.Maximum = 1;
+                ProgressBar.Value = 0;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
