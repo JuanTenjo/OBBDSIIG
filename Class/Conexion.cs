@@ -18,7 +18,9 @@ namespace OBBDSIIG.Class
         public static string servidor { get; set; }
         public static string servidorCen { get; set; }
         public static string username { get; set; }
+        public static string usernameCen { get; set; }
         public static string password { get; set; }
+        public static string passwordCen { get; set; }
         public static string nativeclient { get; set; }
 
         public static string conexionSQL { get; set; }

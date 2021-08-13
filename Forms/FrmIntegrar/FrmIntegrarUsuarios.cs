@@ -97,8 +97,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                 Conexion.conexionSQL = "Server=" + Conexion.servidorCen + "; " +
                                         "Initial Catalog=" + Utils.BaseDeDatosPrincipal + ";" +
-                                        "User ID= " + Conexion.username + "; " +
-                                        "Password=" + Conexion.password;
+                                        "User ID=" + Conexion.usernameCen + "; " +
+                                        "Password=" + Conexion.passwordCen;
 
             }
             catch (Exception ex)
@@ -328,7 +328,6 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "WHERE (CodApli = N'" + CodApliDis + "') ";
 
                                         Boolean ActControl = Conexion.SQLUpdate(Utils.SqlDatos);
-
 
                                     }
                                 }

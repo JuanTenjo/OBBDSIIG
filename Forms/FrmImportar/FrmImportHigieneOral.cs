@@ -111,8 +111,8 @@ namespace OBBDSIIG.Forms.FrmImportar
 
                 Conexion.conexionSQL = "Server=" + Conexion.servidorCen + "; " +
                                         "Initial Catalog=" + Utils.BaseDeDatosPrincipal + ";" +
-                                        "User ID= " + Conexion.username + "; " +
-                                        "Password=" + Conexion.password;
+                                        "User ID=" + Conexion.usernameCen + "; " +
+                                        "Password=" + Conexion.passwordCen;
 
             }
             catch (Exception ex)

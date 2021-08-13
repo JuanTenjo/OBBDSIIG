@@ -48,9 +48,14 @@ namespace OBBDSIIG.Forms
 
                     Conexion.servidor = dr["NomServi"].ToString();
                     Conexion.servidorCen = dr["InstanCentral"].ToString();
-                    Conexion.username = dr["NomUsar"].ToString();
-                    Conexion.password = dr["PassWusa"].ToString();
 
+                    Conexion.username = dr["NomUsar"].ToString();
+                    Conexion.usernameCen = dr["NomUsaCen"].ToString();
+
+                    Conexion.password = dr["PassWusa"].ToString();
+                    Conexion.passwordCen = dr["PasswordCen"].ToString();
+
+     
 
                     //Conexion.servidor = @"HAROLD-PC\PC";
                     //Conexion.username = "sa";
@@ -58,8 +63,9 @@ namespace OBBDSIIG.Forms
 
                     Conexion.conexionSQL = "Server=" + Conexion.servidor + "; " +
                                            "Initial Catalog=" + Utils.BaseDeDatosPrincipal + ";" +
-                                           "User ID= " + Conexion.username + "; " +
+                                           "User ID=" + Conexion.username + "; " +
                                            "Password=" + Conexion.password;
+
 
 
                     Utils.codUsuario = dr["CodigUsar"].ToString();

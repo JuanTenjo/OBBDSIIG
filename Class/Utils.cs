@@ -48,6 +48,7 @@ namespace OBBDSIIG.Class
 
         //Para portatiles
         public static string InstanCenFor { get; set; }
+
         public static string PrefiCenFor { get; set; }
         public static string PrefiPorFor { get; set; }
 

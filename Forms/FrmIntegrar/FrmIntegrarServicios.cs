@@ -86,8 +86,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                 Conexion.conexionSQL = "Server=" + Conexion.servidorCen + "; " +
                                         "Initial Catalog=" + Utils.BaseDeDatosPrincipal + ";" +
-                                        "User ID= " + Conexion.username + "; " +
-                                        "Password=" + Conexion.password;
+                                        "User ID=" + Conexion.usernameCen + "; " +
+                                        "Password=" + Conexion.passwordCen;
 
             }
             catch (Exception ex)
@@ -135,7 +135,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                 {
                     Utils.Informa = "Lo siento pero mientras no exista";
                     Utils.Informa += "el nombre de la instancia central,";
-                    Utils.Informa += "no se puede empezar a ejecutar el";
+                    Utils.Informa += "no se puede empezar a ejecutar el";   
                     Utils.Informa += "proceso de exportación de datos.";
                     MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -884,7 +884,6 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                 ProgressBar.Minimum = 0;
                 ProgressBar.Maximum = 1;
                 ProgressBar.Value = 0;
-
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
