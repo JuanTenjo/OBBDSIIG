@@ -122,15 +122,6 @@ namespace OBBDSIIG.Forms.FrmExportar
             }
         }
 
-        private string ValidarFechaNula(string Fecha)
-        {
-            string ValidarFecha = null;
-
-            ValidarFecha = string.IsNullOrWhiteSpace(Fecha) ? "null" + "," : "CONVERT(DATETIME,'" + Convert.ToDateTime(Fecha).ToString("yyyy-MM-dd") + "',102),";
-
-            return ValidarFecha;
-
-        }
 
         private void FrmExportHigieneOral_Load(object sender, EventArgs e)
         {
@@ -154,9 +145,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             try
             {
                 string UsaRegis = "", SqlPlaca = "", SqlPlacaCen = "", CodBusHistPlaca, CodBusPlaca;
-
-
-
+                
                 DateTime Fecha2 = DateTime.Now;
                 string Fecha = Fecha2.ToString("yyyy-MM-dd");
 
@@ -404,7 +393,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                         "(" +
                                         "'" + TabControlPlaca["ConsecutivoCtrl"].ToString() + "'," +
                                         "'" + TabControlPlaca["HistoriaPaci"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabControlPlaca["FechaRealiza"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabControlPlaca["FechaRealiza"].ToString())}" +
                                         $"{Conexion.ValidarHoraNula(TabControlPlaca["HoraRealiza"].ToString())}" +
                                         "'" + TabControlPlaca["ValorEdad"].ToString() + "'," +
                                         "'" + TabControlPlaca["UnidadEdad"].ToString() + "'," +
@@ -475,9 +464,9 @@ namespace OBBDSIIG.Forms.FrmExportar
                                         "'" + TabControlPlaca["CodMedi"].ToString() + "'," +
                                         "'" + TabControlPlaca["ActivoCtl"].ToString() + "'," +
                                         "'" + TabControlPlaca["CodRegistra"].ToString() + "'," +
-                                       $"{ValidarFechaNula(TabControlPlaca["FechaRegis"].ToString())}" +
+                                       $"{Conexion.ValidarFechaNula(TabControlPlaca["FechaRegis"].ToString())}" +
                                         "'" + TabControlPlaca["CodModify"].ToString() + "'," +
-                                       $"{ValidarFechaNula(TabControlPlaca["FechaModify"].ToString())}" +
+                                       $"{Conexion.ValidarFechaNula(TabControlPlaca["FechaModify"].ToString())}" +
                                         "'" + TabControlPlaca["PrefiPlaca"].ToString() + "'" +
                                         ")";
 
@@ -495,7 +484,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     {
                                         //Modifique los datos
                                         Utils.SqlDatos = $"UPDATE [DACONEXTSQL].[dbo].[Datos registro control placa] SET " +
-                                        $"FechaRealiza = {ValidarFechaNula(TabControlPlaca["FechaRealiza"].ToString())} " +
+                                        $"FechaRealiza = {Conexion.ValidarFechaNula(TabControlPlaca["FechaRealiza"].ToString())} " +
                                         $"HoraRealiza = {Conexion.ValidarHoraNula(TabControlPlaca["HoraRealiza"].ToString())}" +
                                         "ValorEdad = '" + TabControlPlaca["ValorEdad"].ToString() + "', " +
                                         "UnidadEdad = '" + TabControlPlaca["UnidadEdad"].ToString() + "', " +
@@ -566,9 +555,9 @@ namespace OBBDSIIG.Forms.FrmExportar
                                         "CodMedi = '" + TabControlPlaca["CodMedi"].ToString() + "', " +
                                         "ActivoCtl = '" + TabControlPlaca["ActivoCtl"].ToString() + "', " +
                                         "CodRegistra = '" + TabControlPlaca["CodRegistra"].ToString() + "', " +
-                                        $"FechaRegis = {ValidarFechaNula(TabControlPlaca["FechaRegis"].ToString())} " +
+                                        $"FechaRegis = {Conexion.ValidarFechaNula(TabControlPlaca["FechaRegis"].ToString())} " +
                                         "CodModify = '" + TabControlPlaca["CodModify"].ToString() + "', " +
-                                        $"FechaModify = {ValidarFechaNula(TabControlPlaca["FechaModify"].ToString())} " +
+                                        $"FechaModify = {Conexion.ValidarFechaNula(TabControlPlaca["FechaModify"].ToString())} " +
                                         "PrefiPlaca = '" + TabControlPlaca["PrefiPlaca"].ToString() + "' " +
                                         "WHERE  (ConsecutivoCtrl = '" + CodBusPlaca + "') AND (HistoriaPaci = '" + CodBusHistPlaca + "')";
 

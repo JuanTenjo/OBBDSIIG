@@ -58,17 +58,6 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             }
         } //Carga datos de los usuairos
 
-
-        private string ValidarFechaNula(string Fecha)
-        {
-            string ValidarFecha = null;
-
-            ValidarFecha = string.IsNullOrWhiteSpace(Fecha) ? "null" + "," : "CONVERT(DATETIME,'" + Convert.ToDateTime(Fecha).ToString("yyyy-MM-dd") + "',102),";
-
-            return ValidarFecha;
-
-        }
-
         private void ConectarPortatil()
         {
             try
@@ -357,8 +346,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                          "'" + TabEmpTer["Contrato"].ToString() + "'," +
                                          "'" + TabEmpTer["MontoContrato"].ToString() + "'," +
                                          "'" + TabEmpTer["SaldoMonto"].ToString() + "'," +
-                                         $"{ValidarFechaNula(TabEmpTer["IniciaContrato"].ToString())}" +
-                                         $"{ValidarFechaNula(TabEmpTer["FinContrato"].ToString())}" +
+                                         $"{Conexion.ValidarFechaNula(TabEmpTer["IniciaContrato"].ToString())}" +
+                                         $"{Conexion.ValidarFechaNula(TabEmpTer["FinContrato"].ToString())}" +
                                          "'" + TabEmpTer["CuenContaDeuda"].ToString() + "'," +
                                          "'" + TabEmpTer["CodRuPres"].ToString() + "'," +
                                          "'" + TabEmpTer["CodTipoPaciente"].ToString() + "'," +
@@ -374,9 +363,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                          "'" + TabEmpTer["PaNivel2"].ToString() + "'," +
                                          "'" + TabEmpTer["PaNivel3"].ToString() + "'," +
                                          "'" + TabEmpTer["CodiRegis"].ToString() + "'," +
-                                         $"{ValidarFechaNula(TabEmpTer["FecRegis"].ToString())}" +
+                                         $"{Conexion.ValidarFechaNula(TabEmpTer["FecRegis"].ToString())}" +
                                          "'" + TabEmpTer["CodiModi"].ToString() + "'," +
-                                         $"{ValidarFechaNula(TabEmpTer["FecModi"].ToString())}" +
+                                         $"{Conexion.ValidarFechaNula(TabEmpTer["FecModi"].ToString())}" +
                                          "'" + TabEmpTer["TopeFacUs"].ToString() + "'," +
                                          "'" + TabEmpTer["CueContDeudaRad"].ToString() + "'," +
                                          "'" + TabEmpTer["AbonoSinAolica"].ToString() + "'," +
@@ -430,8 +419,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "Contrato = '" + TabEmpTer["Contrato"].ToString() + "', " +
                                         "MontoContrato = '" + TabEmpTer["MontoContrato"].ToString() + "', " +
                                         "SaldoMonto = '" + TabEmpTer["SaldoMonto"].ToString() + "', " +
-                                        $"IniciaContrato = {ValidarFechaNula(TabEmpTer["IniciaContrato"].ToString())} " +
-                                        $"FinContrato = {ValidarFechaNula(TabEmpTer["FinContrato"].ToString())} " +
+                                        $"IniciaContrato = {Conexion.ValidarFechaNula(TabEmpTer["IniciaContrato"].ToString())} " +
+                                        $"FinContrato = {Conexion.ValidarFechaNula(TabEmpTer["FinContrato"].ToString())} " +
                                         "CuenContaDeuda = '" + TabEmpTer["CuenContaDeuda"].ToString() + "', " +
                                         "CodRuPres = '" + TabEmpTer["CodRuPres"].ToString() + "', " +
                                         "CodTipoPaciente = '" + TabEmpTer["CodTipoPaciente"].ToString() + "', " +
@@ -447,9 +436,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "PaNivel2 = '" + TabEmpTer["PaNivel2"].ToString() + "', " +
                                         "PaNivel3 = '" + TabEmpTer["PaNivel3"].ToString() + "', " +
                                         "CodiRegis = '" + TabEmpTer["CodiRegis"].ToString() + "', " +
-                                        $"FecRegis = {ValidarFechaNula(TabEmpTer["FecRegis"].ToString())} " +
+                                        $"FecRegis = {Conexion.ValidarFechaNula(TabEmpTer["FecRegis"].ToString())} " +
                                         "CodiModi = '" + TabEmpTer["CodiModi"].ToString() + "', " +
-                                        $"FecModi = {ValidarFechaNula(TabEmpTer["FecModi"].ToString())} " +
+                                        $"FecModi = {Conexion.ValidarFechaNula(TabEmpTer["FecModi"].ToString())} " +
                                         "TopeFacUs = '" + TabEmpTer["TopeFacUs"].ToString() + "', " +
                                         "CueContDeudaRad = '" + TabEmpTer["CueContDeudaRad"].ToString() + "', " +
                                         "AbonoSinAolica = '" + TabEmpTer["AbonoSinAolica"].ToString() + "', " +

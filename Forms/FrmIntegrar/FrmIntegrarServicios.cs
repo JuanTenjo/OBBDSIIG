@@ -100,16 +100,6 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             }
         }
 
-        private string ValidarFechaNula(string Fecha)
-        {
-            string ValidarFecha = null;
-
-            ValidarFecha = string.IsNullOrWhiteSpace(Fecha) ? "null" + "," : "CONVERT(DATETIME,'" + Convert.ToDateTime(Fecha).ToString("yyyy-MM-dd") + "',102),";
-
-            return ValidarFecha;
-
-        }
-
         private void FrmIntegrarServicios_Load(object sender, EventArgs e)
         {
             try
@@ -368,9 +358,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "'" + TabServi["GrupoLabo"].ToString() + "'," +
                                         "'" + TabServi["VezReal"].ToString() + "'," +
                                         "'" + TabServi["CodiRegis"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabServi["FecRegis"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabServi["FecRegis"].ToString())}" +
                                         "'" + TabServi["CodiModi"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabServi["FecModi"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabServi["FecModi"].ToString())}" +
                                         "'" + TabServi["DirServicio"].ToString() + "'," +
                                         "'" + TabServi["CampVarios"].ToString() + "'," +
                                         "'" + TabServi["UniMedi"].ToString() + "'," +
@@ -440,9 +430,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "GrupoLabo ='" + TabServi["GrupoLabo"].ToString() + "', " +
                                         "VezReal ='" + TabServi["VezReal"].ToString() + "', " +
                                         "CodiRegis ='" + TabServi["CodiRegis"].ToString() + "', " +
-                                        $"FecRegis = {ValidarFechaNula(TabServi["FecRegis"].ToString())} " +
+                                        $"FecRegis = {Conexion.ValidarFechaNula(TabServi["FecRegis"].ToString())} " +
                                         "CodiModi ='" + TabServi["CodiModi"].ToString() + "', " +
-                                        $"FecModi = {ValidarFechaNula(TabServi["FecModi"].ToString())} " +
+                                        $"FecModi = {Conexion.ValidarFechaNula(TabServi["FecModi"].ToString())} " +
                                         "DirServicio ='" + TabServi["DirServicio"].ToString() + "', " +
                                         "CampVarios ='" + TabServi["CampVarios"].ToString() + "', " +
                                         "UniMedi ='" + TabServi["UniMedi"].ToString() + "', " +
@@ -672,7 +662,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "'" + TabProFarCen["CostoUnita"].ToString() + "'," +
                                         "'" + TabProFarCen["Cantactual"].ToString() + "'," +
                                         "'" + TabProFarCen["ValorInvActual"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabProFarCen["FecUltimEntra"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabProFarCen["FecUltimEntra"].ToString())}" +
                                         "'" + TabProFarCen["CantUltimEntra"].ToString() + "'," +
                                         "'" + TabProFarCen["ValUltimEntra"].ToString() + "'," +
                                         "'" + TabProFarCen["PrePLM"].ToString() + "'," +
@@ -722,9 +712,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "'" + TabProFarCen["DiferIntegra"].ToString() + "'," +
                                         "'" + TabProFarCen["ProducEspe"].ToString() + "'," +
                                         "'" + TabProFarCen["CodIngresa"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabProFarCen["FechIngresa"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabProFarCen["FechIngresa"].ToString())}" +
                                         "'" + TabProFarCen["CodModifica"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabProFarCen["FechaModi"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabProFarCen["FechaModi"].ToString())}" +
                                         "'" + TabProFarCen["GrupoTerapeutico"].ToString() + "'," +
                                         "'" + TabProFarCen["MaxDispe"].ToString() + "'," +
                                         "'" + TabProFarCen["TarImpor"].ToString() + "'," +
@@ -768,7 +758,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "CostoUnita ='" + TabProFarCen["CostoUnita"].ToString() + "', " +
                                         "Cantactual ='" + TabProFarCen["Cantactual"].ToString() + "', " +
                                         "ValorInvActual ='" + TabProFarCen["ValorInvActual"].ToString() + "', " +
-                                        $"FecUltimEntra = {ValidarFechaNula(TabProFarCen["FecUltimEntra"].ToString())} " +
+                                        $"FecUltimEntra = {Conexion.ValidarFechaNula(TabProFarCen["FecUltimEntra"].ToString())} " +
                                         "CantUltimEntra ='" + TabProFarCen["CantUltimEntra"].ToString() + "', " +
                                         "ValUltimEntra ='" + TabProFarCen["ValUltimEntra"].ToString() + "', " +
                                         "PrePLM ='" + TabProFarCen["PrePLM"].ToString() + "', " +
@@ -818,9 +808,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "DiferIntegra ='" + TabProFarCen["DiferIntegra"].ToString() + "', " +
                                         "ProducEspe ='" + TabProFarCen["ProducEspe"].ToString() + "', " +
                                         "CodIngresa ='" + TabProFarCen["CodIngresa"].ToString() + "', " +
-                                        $"FechIngresa = {ValidarFechaNula(TabProFarCen["FechIngresa"].ToString())} " +
+                                        $"FechIngresa = {Conexion.ValidarFechaNula(TabProFarCen["FechIngresa"].ToString())} " +
                                         "CodModifica ='" + TabProFarCen["CodModifica"].ToString() + "', " +
-                                        $"FechaModi = {ValidarFechaNula(TabProFarCen["FechaModi"].ToString())} " +
+                                        $"FechaModi = {Conexion.ValidarFechaNula(TabProFarCen["FechaModi"].ToString())} " +
                                         "GrupoTerapeutico ='" + TabProFarCen["GrupoTerapeutico"].ToString() + "', " +
                                         "MaxDispe ='" + TabProFarCen["MaxDispe"].ToString() + "', " +
                                         "TarImpor ='" + TabProFarCen["TarImpor"].ToString() + "', " +
@@ -854,6 +844,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                     if (ContiPro == 1)
                     {
+                        Utils.Titulo01 = "Control de Integrar servicios";
                         Utils.Informa = "El proceso de agregar o modificar procedimientos y";
                         Utils.Informa += "servicios, ha concluido satisfactoriamente";
                         MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -862,6 +853,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     {
                         if (ContiPro == 2)
                         {
+                            Utils.Titulo01 = "Control de Integrar servicios";
                             Utils.Informa = "El proceso de agregar o modificar productos";
                             Utils.Informa += "farmaceúticos, procedimientos y servicios,";
                             Utils.Informa += "ha concluido satisfactoriamente";

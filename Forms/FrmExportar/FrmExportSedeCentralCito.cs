@@ -176,15 +176,6 @@ namespace OBBDSIIG.Forms.FrmExportar
         }
 
 
-        private string ValidarFechaNula(string Fecha)
-        {
-            string ValidarFecha = null;
-
-            ValidarFecha = string.IsNullOrWhiteSpace(Fecha) ? "null" + "," : "CONVERT(DATETIME,'" + Convert.ToDateTime(Fecha).ToString("yyyy-MM-dd") + "',102),";
-
-            return ValidarFecha;
-
-        }
 
         private void FrmExportSedeCentralCito_Load(object sender, EventArgs e)
         {
@@ -497,7 +488,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                         "'" + TabCitologia["PrefiFicha"].ToString() + "'," +
                                         "'" + TabCitologia["CodFiCito"].ToString() + "'," +
                                         "'" + TabCitologia["NumRadi"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabCitologia["FecRadi"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabCitologia["FecRadi"].ToString())}" +
                                         "'" + TabCitologia["PrefiFac"].ToString() + "'," +
                                         "'" + TabCitologia["NumFac"].ToString() + "'," +
                                         "'" + TabCitologia["NumHisto"].ToString() + "'," +
@@ -507,28 +498,28 @@ namespace OBBDSIIG.Forms.FrmExportar
                                         "'" + TabCitologia["CodAPB"].ToString() + "'," +
                                         "'" + TabCitologia["ContraNum"].ToString() + "'," +
                                         "'" + TabCitologia["InsToma"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabCitologia["FecToma"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabCitologia["FecToma"].ToString())}" +
                                         "'" + TabCitologia["CodEsque"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabCitologia["UltiRegla"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabCitologia["UltiRegla"].ToString())}" +
                                         "'" + TabCitologia["NumGesta"].ToString() + "'," +
                                         "'" + TabCitologia["NumPartos"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabCitologia["UltiParto"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabCitologia["UltiParto"].ToString())}" +
                                         "'" + TabCitologia["NumAbor"].ToString() + "'," +
                                         "'" + TabCitologia["EdadRela"].ToString() + "'," +
                                         "'" + TabCitologia["Embarazada"].ToString() + "'," +
-                                       $"{ValidarFechaNula(TabCitologia["UltiCito"].ToString())}" +
+                                       $"{Conexion.ValidarFechaNula(TabCitologia["UltiCito"].ToString())}" +
                                         "'" + TabCitologia["ResCito"].ToString() + "'," +
                                         "'" + TabCitologia["MetoPlani"].ToString() + "'," +
                                         "'" + TabCitologia["CodPro"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabCitologia["FecPro"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabCitologia["FecPro"].ToString())}" +
                                         "'" + TabCitologia["CodAsCue"].ToString() + "'," +
                                         "'" + TabCitologia["TipDocIden"].ToString() + "'," +
                                         "'" + TabCitologia["IdenPerso"].ToString() + "'," +
                                         "'" + TabCitologia["ObserToma"].ToString() + "'," +
                                         "'" + TabCitologia["CierreToma"].ToString() + "'," +
                                         "'" + TabCitologia["CodCierTo"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabCitologia["FeCierTo"].ToString())}" +
-                                        $"{ValidarFechaNula(TabCitologia["FecRecLec1"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabCitologia["FeCierTo"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabCitologia["FecRecLec1"].ToString())}" +
                                         "'" + TabCitologia["NumRadi2"].ToString() + "'," +
                                         "'" + TabCitologia["SatisMues"].ToString() + "'," +
                                         "'" + TabCitologia["DaClIna"].ToString() + "'," +
@@ -569,30 +560,30 @@ namespace OBBDSIIG.Forms.FrmExportar
                                         "'" + TabCitologia["TDLec"].ToString() + "'," +
                                         "'" + TabCitologia["IDPLec"].ToString() + "'," +
                                         "'" + TabCitologia["LecToma"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabCitologia["FecLec"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabCitologia["FecLec"].ToString())}" +
                                         "'" + TabCitologia["VezLec"].ToString() + "'," +
                                         "'" + TabCitologia["CerLec"].ToString() + "'," +
                                         "'" + TabCitologia["CodCerLec"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabCitologia["FecCerLec"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabCitologia["FecCerLec"].ToString())}" +
                                         "'" + TabCitologia["ParaPato"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabCitologia["FecRecLec2"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabCitologia["FecRecLec2"].ToString())}" +
                                         "'" + TabCitologia["NumRadi3"].ToString() + "'," +
                                         "'" + TabCitologia["TDLec2"].ToString() + "'," +
                                         "'" + TabCitologia["IDPLec2"].ToString() + "'," +
                                         "'" + TabCitologia["LecToma2"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabCitologia["FecLec2"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabCitologia["FecLec2"].ToString())}" +
                                         "'" + TabCitologia["CerLec2"].ToString() + "'," +
                                         "'" + TabCitologia["CodCerLec2"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabCitologia["FecCerLec2"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabCitologia["FecCerLec2"].ToString())}" +
                                         "'" + TabCitologia["DiagDefi"].ToString() + "'," +
                                         "'" + TabCitologia["AnulToma"].ToString() + "'," +
                                         "'" + TabCitologia["RazAnulTo"].ToString() + "'," +
                                         "'" + TabCitologia["CodAnul"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabCitologia["FecAnul"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabCitologia["FecAnul"].ToString())}" +
                                         "'" + TabCitologia["ConCiPa"].ToString() + "'," +
                                         "'" + TabCitologia["NoConCiPa"].ToString() + "'," +
                                         "'" + TabCitologia["CodRegis"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabCitologia["FecRegis"].ToString())}" + 
+                                        $"{Conexion.ValidarFechaNula(TabCitologia["FecRegis"].ToString())}" + 
                                         $"{Conexion.ValidarHoraNula(TabCitologia["HorRegis"].ToString())}" +
                                         "'" + TabCitologia["CodIPSLec"].ToString() + "'," +
                                         "'" + TabCitologia["PrefiCito"].ToString() + "')";
@@ -608,7 +599,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     {
                                         Utils.SqlDatos = "UPDATE [BDSITOI].[dbo].[Datos basicos citologia] SET " +
                                                         "NumRadi = '" + TabCitologia["NumRadi"].ToString() + "'," +
-                                                        $"FecRadi = {ValidarFechaNula(TabCitologia["FecRadi"].ToString())} "+ // Utils.SqlDatos += ValidarFechaNula(TabCitologia["FecRadi"].ToString());
+                                                        $"FecRadi = {Conexion.ValidarFechaNula(TabCitologia["FecRadi"].ToString())} "+ // Utils.SqlDatos += Conexion.ValidarFechaNula(TabCitologia["FecRadi"].ToString());
                                                         "PrefiFac = '" + TabCitologia["PrefiFac"].ToString() + "'," + 
                                                         "NumFac = '" + TabCitologia["NumFac"].ToString() + "'," + 
                                                         "NumHisto = '" + TabCitologia["NumHisto"].ToString() + "'," + 
@@ -618,28 +609,28 @@ namespace OBBDSIIG.Forms.FrmExportar
                                                         "CodAPB = '" + TabCitologia["CodAPB"].ToString() + "'," + 
                                                         "ContraNum = '" + TabCitologia["ContraNum"].ToString() + "'," + 
                                                         "InsToma = '" + TabCitologia["InsToma"].ToString() + "'," + 
-                                                        $"FecToma = {ValidarFechaNula(TabCitologia["FecToma"].ToString())} " +
+                                                        $"FecToma = {Conexion.ValidarFechaNula(TabCitologia["FecToma"].ToString())} " +
                                                         "CodEsque = '" + TabCitologia["CodEsque"].ToString() + "'," +
-                                                        $"UltiRegla = {ValidarFechaNula(TabCitologia["UltiRegla"].ToString())} " +
+                                                        $"UltiRegla = {Conexion.ValidarFechaNula(TabCitologia["UltiRegla"].ToString())} " +
                                                         "NumGesta = '" + TabCitologia["NumGesta"].ToString() + "'," + 
                                                         "NumPartos = '" + TabCitologia["NumPartos"].ToString() + "'," + 
-                                                        $"UltiParto = {ValidarFechaNula(TabCitologia["UltiParto"].ToString())} " +
+                                                        $"UltiParto = {Conexion.ValidarFechaNula(TabCitologia["UltiParto"].ToString())} " +
                                                         "NumAbor = '" + TabCitologia["NumAbor"].ToString() + "'," + 
                                                         "EdadRela = '" + TabCitologia["EdadRela"].ToString() + "'," + 
                                                         "Embarazada = '" + TabCitologia["Embarazada"].ToString() + "'," + 
-                                                        $"UltiCito = {ValidarFechaNula(TabCitologia["UltiCito"].ToString())} " +
+                                                        $"UltiCito = {Conexion.ValidarFechaNula(TabCitologia["UltiCito"].ToString())} " +
                                                         "ResCito = '" + TabCitologia["ResCito"].ToString() + "'," + 
                                                         "MetoPlani = '" + TabCitologia["MetoPlani"].ToString() + "'," + 
                                                         "CodPro = '" + TabCitologia["CodPro"].ToString() + "'," +
-                                                        $"FecPro = {ValidarFechaNula(TabCitologia["FecPro"].ToString())} " +
+                                                        $"FecPro = {Conexion.ValidarFechaNula(TabCitologia["FecPro"].ToString())} " +
                                                         "CodAsCue = '" + TabCitologia["CodAsCue"].ToString() + "'," + 
                                                         "TipDocIden = '" + TabCitologia["TipDocIden"].ToString() + "'," + 
                                                         "IdenPerso = '" + TabCitologia["IdenPerso"].ToString() + "'," + 
                                                         "ObserToma = '" + TabCitologia["ObserToma"].ToString() + "'," + 
                                                         "CierreToma = '" + TabCitologia["CierreToma"].ToString() + "'," + 
                                                         "CodCierTo = '" + TabCitologia["CodCierTo"].ToString() + "'," +
-                                                        $"FeCierTo = {ValidarFechaNula(TabCitologia["FeCierTo"].ToString())} " +
-                                                        $"FecRecLec1 = {ValidarFechaNula(TabCitologia["FecRecLec1"].ToString())} " +
+                                                        $"FeCierTo = {Conexion.ValidarFechaNula(TabCitologia["FeCierTo"].ToString())} " +
+                                                        $"FecRecLec1 = {Conexion.ValidarFechaNula(TabCitologia["FecRecLec1"].ToString())} " +
                                                         "NumRadi2 = '" + TabCitologia["NumRadi2"].ToString() + "'," + 
                                                         "SatisMues = '" + TabCitologia["SatisMues"].ToString() + "'," + 
                                                         "DaClIna = '" + TabCitologia["DaClIna"].ToString() + "'," + 
@@ -680,30 +671,30 @@ namespace OBBDSIIG.Forms.FrmExportar
                                                         "TDLec = '" + TabCitologia["TDLec"].ToString() + "'," + 
                                                         "IDPLec = '" + TabCitologia["IDPLec"].ToString() + "'," + 
                                                         "LecToma = '" + TabCitologia["LecToma"].ToString() + "'," +
-                                                        $"FecLec = {ValidarFechaNula(TabCitologia["FecLec"].ToString())} " +
+                                                        $"FecLec = {Conexion.ValidarFechaNula(TabCitologia["FecLec"].ToString())} " +
                                                         "VezLec = '" + TabCitologia["VezLec"].ToString() + "'," + 
                                                         "CerLec = '" + TabCitologia["CerLec"].ToString() + "'," + 
                                                         "CodCerLec = '" + TabCitologia["CodCerLec"].ToString() + "'," +
-                                                        $"FecCerLec = {ValidarFechaNula(TabCitologia["FecCerLec"].ToString())} " +
+                                                        $"FecCerLec = {Conexion.ValidarFechaNula(TabCitologia["FecCerLec"].ToString())} " +
                                                         "ParaPato = '" + TabCitologia["ParaPato"].ToString() + "'," +
-                                                        $"FecRecLec2 = {ValidarFechaNula(TabCitologia["FecRecLec2"].ToString())} " +
+                                                        $"FecRecLec2 = {Conexion.ValidarFechaNula(TabCitologia["FecRecLec2"].ToString())} " +
                                                         "NumRadi3 = '" + TabCitologia["NumRadi3"].ToString() + "'," + 
                                                         "TDLec2 = '" + TabCitologia["TDLec2"].ToString() + "'," + 
                                                         "IDPLec2 = '" + TabCitologia["IDPLec2"].ToString() + "'," + 
                                                         "LecToma2 = '" + TabCitologia["LecToma2"].ToString() + "'," +
-                                                        $"FecLec2 = {ValidarFechaNula(TabCitologia["FecLec2"].ToString())} " +
+                                                        $"FecLec2 = {Conexion.ValidarFechaNula(TabCitologia["FecLec2"].ToString())} " +
                                                         "CerLec2 = '" + TabCitologia["CerLec2"].ToString() + "'," + 
                                                         "CodCerLec2 = '" + TabCitologia["CodCerLec2"].ToString() + "'," +
-                                                        $"FecCerLec2 = {ValidarFechaNula(TabCitologia["FecCerLec2"].ToString())} " +
+                                                        $"FecCerLec2 = {Conexion.ValidarFechaNula(TabCitologia["FecCerLec2"].ToString())} " +
                                                         "DiagDefi = '" + TabCitologia["DiagDefi"].ToString() + "'," + 
                                                         "AnulToma = '" + TabCitologia["AnulToma"].ToString() + "'," + 
                                                         "RazAnulTo = '" + TabCitologia["RazAnulTo"].ToString() + "'," + 
                                                         "CodAnul = '" + TabCitologia["CodAnul"].ToString() + "'," +
-                                                        $"FecAnul = {ValidarFechaNula(TabCitologia["FecAnul"].ToString())} " +
+                                                        $"FecAnul = {Conexion.ValidarFechaNula(TabCitologia["FecAnul"].ToString())} " +
                                                         "ConCiPa = '" + TabCitologia["ConCiPa"].ToString() + "'," + 
                                                         "NoConCiPa = '" + TabCitologia["NoConCiPa"].ToString() + "'," + 
                                                         "CodRegis = '" + TabCitologia["CodRegis"].ToString() + "'," +
-                                                        $"FecRegis = {ValidarFechaNula(TabCitologia["FecRegis"].ToString())} " +
+                                                        $"FecRegis = {Conexion.ValidarFechaNula(TabCitologia["FecRegis"].ToString())} " +
                                                         $"HorRegis = {Conexion.ValidarHoraNula(TabCitologia["HorRegis"].ToString())}" +
                                                         "CodIPSLec = '" + TabCitologia["CodIPSLec"].ToString() + "'," + 
                                                         "PrefiCito = '" + TabCitologia["PrefiCito"].ToString() + "'" +

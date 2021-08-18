@@ -59,15 +59,6 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             }
         } //Carga datos de los usuairos
 
-        private string ValidarFechaNula(string Fecha)
-        {
-            string ValidarFecha = null;
-
-            ValidarFecha = string.IsNullOrWhiteSpace(Fecha) ? "null" + "," : "CONVERT(DATETIME,'" + Convert.ToDateTime(Fecha).ToString("yyyy-MM-dd") + "',102),";
-
-            return ValidarFecha;
-
-        }
 
         private void ConectarPortatil()
         {
@@ -303,8 +294,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "'" + TabApliDisCen["Grupo"].ToString() + "'," +
                                         "'" + TabApliDisCen["version"].ToString() + "'," +
                                         "'" + TabApliDisCen["CodRegis"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabApliDisCen["FecRegis"].ToString())}" +
-                                        $"{ValidarFechaNula(TabApliDisCen["FecModi"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabApliDisCen["FecRegis"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabApliDisCen["FecModi"].ToString())}" +
                                         "'" + TabApliDisCen["CodModi"].ToString() + "' " +
                                         ")";
 
@@ -322,8 +313,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "Grupo = '" + TabApliDisCen["Grupo"].ToString() + "', " +
                                         "version = '" + TabApliDisCen["version"].ToString() + "', " +
                                         "CodRegis = '" + TabApliDisCen["CodRegis"].ToString() + "', " +
-                                       $"FecRegis = {ValidarFechaNula(TabApliDisCen["FecRegis"].ToString())} " +
-                                       $"FecModi = {ValidarFechaNula(TabApliDisCen["FecModi"].ToString())} " +
+                                       $"FecRegis = {Conexion.ValidarFechaNula(TabApliDisCen["FecRegis"].ToString())} " +
+                                       $"FecModi = {Conexion.ValidarFechaNula(TabApliDisCen["FecModi"].ToString())} " +
                                         "CodModi = '" + TabApliDisCen["CodModi"].ToString() + "' " +
                                         "WHERE (CodApli = N'" + CodApliDis + "') ";
 
@@ -476,8 +467,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                             "'" + TabUsu["NivelPermiso"].ToString() + "'," +
                                             "'" + TabUsu["Vigente"].ToString() + "'," +
                                             "'" + TabUsu["CodiRegis"].ToString() + "'," +
-                                            $"{ValidarFechaNula(TabUsu["FecRegis"].ToString())}" +
-                                            $"{ValidarFechaNula(TabUsu["FecModi"].ToString())}" +
+                                            $"{Conexion.ValidarFechaNula(TabUsu["FecRegis"].ToString())}" +
+                                            $"{Conexion.ValidarFechaNula(TabUsu["FecModi"].ToString())}" +
                                             "'" + TabUsu["CodiModi"].ToString() + "' " +
                                             ")";
 
@@ -509,8 +500,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                             "NivelPermiso = '" + TabUsu["NivelPermiso"].ToString() + "', " +
                                             "Vigente = '" + TabUsu["Vigente"].ToString() + "', " +
                                             "CodiRegis = '" + TabUsu["CodiRegis"].ToString() + "', " +
-                                            $"FecRegis = {ValidarFechaNula(TabUsu["FecRegis"].ToString())} " +
-                                            $"FecModi = {ValidarFechaNula(TabUsu["FecModi"].ToString())} " +
+                                            $"FecRegis = {Conexion.ValidarFechaNula(TabUsu["FecRegis"].ToString())} " +
+                                            $"FecModi = {Conexion.ValidarFechaNula(TabUsu["FecModi"].ToString())} " +
                                             "CodiModi = '" + TabUsu["CodiModi"].ToString() + "' " +
                                             "WHERE ([Datos usuarios de los aplicativos].CodigoUsa = '" + CodUsu + "') ";
 
@@ -647,8 +638,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                             "'" + TabAplNueCentra["CodAplica"].ToString() + "'," +
                                             "'" + TabAplNueCentra["CodUsua"].ToString() + "'," +
                                             "'" + TabAplNueCentra["CodRegis"].ToString() + "'," +
-                                            $"{ValidarFechaNula(TabAplNueCentra["FecRegis"].ToString())}" +
-                                             $"{ValidarFechaNula(TabAplNueCentra["FecModi"].ToString())}" +
+                                            $"{Conexion.ValidarFechaNula(TabAplNueCentra["FecRegis"].ToString())}" +
+                                             $"{Conexion.ValidarFechaNula(TabAplNueCentra["FecModi"].ToString())}" +
                                             "'" + TabAplNueCentra["CodModi"].ToString() + "'" +
                                             ")";
 
@@ -661,8 +652,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                                             Utils.SqlDatos = $"UPDATE [DATUSIIGXPSQL].[dbo].[Datos aplicativos por usuario] SET " +
                                             "CodRegis = '" + TabAplNueCentra["CodRegis"].ToString() + "', " +
-                                            $"FecRegis = {ValidarFechaNula(TabAplNueCentra["FecRegis"].ToString())} " +
-                                            $"FecModi = {ValidarFechaNula(TabAplNueCentra["FecModi"].ToString())} " +
+                                            $"FecRegis = {Conexion.ValidarFechaNula(TabAplNueCentra["FecRegis"].ToString())} " +
+                                            $"FecModi = {Conexion.ValidarFechaNula(TabAplNueCentra["FecModi"].ToString())} " +
                                             "CodModi = '" + TabAplNueCentra["CodModi"].ToString() + "' " +
                                             "WHERE CodUsua = '" + CodUsu + "' AND CodAplica = '" + CodApliDis + "' ";
 
@@ -798,8 +789,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                             "'" + TabPerUsuaCen["PerEspe"].ToString() + "'," +
                                             "'" + TabPerUsuaCen["ObsPerEspe"].ToString() + "'," +
                                             "'" + TabPerUsuaCen["CodRegis"].ToString() + "'," +
-                                            $"{ValidarFechaNula(TabPerUsuaCen["FecRegis"].ToString())}" +
-                                            $"{ValidarFechaNula(TabPerUsuaCen["FecModi"].ToString())}" +
+                                            $"{Conexion.ValidarFechaNula(TabPerUsuaCen["FecRegis"].ToString())}" +
+                                            $"{Conexion.ValidarFechaNula(TabPerUsuaCen["FecModi"].ToString())}" +
                                             "'" + TabPerUsuaCen["CodModi"].ToString() + "'" +
                                             ")";
 
@@ -813,8 +804,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                             "PerEspe = '" + TabPerUsuaCen["PerEspe"].ToString() + "', " +
                                             "ObsPerEspe = '" + TabPerUsuaCen["ObsPerEspe"].ToString() + "', " +
                                             "CodRegis = '" + TabPerUsuaCen["CodRegis"].ToString() + "', " +
-                                            $"FecRegis = {ValidarFechaNula(TabPerUsuaCen["FecRegis"].ToString())} " +
-                                            $"FecModi = {ValidarFechaNula(TabPerUsuaCen["FecModi"].ToString())} " +
+                                            $"FecRegis = {Conexion.ValidarFechaNula(TabPerUsuaCen["FecRegis"].ToString())} " +
+                                            $"FecModi = {Conexion.ValidarFechaNula(TabPerUsuaCen["FecModi"].ToString())} " +
                                             "CodModi = '" + TabPerUsuaCen["CodModi"].ToString() + "' " +
                                             "WHERE (CodUsua = N'" + CodUsu + "') and (CodAplicati = N'" + CodApliDis + "') AND (CodMenu = N'" + MenUsua + "')  ";
 

@@ -22,15 +22,6 @@ namespace OBBDSIIG.Forms.FrmExportar
 
         #region Funciones
 
-        private string ValidarFechaNula(string Fecha)
-        {
-            string ValidarFecha = null;
-
-            ValidarFecha = string.IsNullOrWhiteSpace(Fecha) ? "null" + "," : "CONVERT(DATETIME,'" + Convert.ToDateTime(Fecha).ToString("yyyy-MM-dd") + "',102),";
-
-            return ValidarFecha;
-
-        }
 
         private string PrefijoDocumenCentral(string CodDocu)
         {
@@ -393,7 +384,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                 SqlDataReader reader;
                 SqlDataReader TabConsumos;
                 string SqlConsumos;
-
+                DateTime Date = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                 double IteNumCon;
                 string SqlConsuCen;
 
@@ -486,7 +477,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                     string FechaHoy = Convert.ToString(DateTime.Now.ToString("yyyy-MM-dd"));
                     
 
-                    if (DateFecIniFacElec.Value <= DateTime.Now)
+                    if (TxtFacElec.Text == "Si" && DateFecIniFacElec.Value <= DateTime.Now)
                     {
                         //'Genere los consecutivos de las facturas eventos
 
@@ -563,6 +554,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                             {
 
                                 CantiFacElec = 0;
+
                                 while (TabCuenConsu.Read())
                                 {
 
@@ -640,7 +632,9 @@ namespace OBBDSIIG.Forms.FrmExportar
 
                                                         string NumResol = TabResolFactur["NumResol"].ToString();
 
-                                                        if (FecVigen < DateTime.Now.Date) //Revisar aqui
+                                                                 
+
+                                                        if (FecVigen < Date) 
                                                         {
                                                             //'Deshabilitamos la resolución, haber si ya se encuentra una nueva habilitada
 
@@ -740,6 +734,7 @@ namespace OBBDSIIG.Forms.FrmExportar
 
                                 } //Fin While TabCuenConsu
 
+                                Utils.Titulo01 = "Control exportar sede central";
                                 Utils.Informa = "Se han preparado " + CantiFacElec + " facturas ";
                                 Utils.Informa += "para ser enviadas a la DIAN.";
                                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -1051,7 +1046,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                                  "'" + TabCuenConsu["Nombre2"].ToString() + "'," +
                                                  "'" + TabCuenConsu["Apellido1"].ToString() + "'," +
                                                  "'" + TabCuenConsu["Apellido2"].ToString() + "'," +
-                                                 $"{ValidarFechaNula(TabCuenConsu["FechaNaci"].ToString())}" +
+                                                 $"{Conexion.ValidarFechaNula(TabCuenConsu["FechaNaci"].ToString())}" +
                                                  $"{Conexion.ValidarHoraNula(TabCuenConsu["HoraNaci"].ToString())}" +
                                                  "'" + TabCuenConsu["LugarNace"].ToString() + "'," +
                                                  "'" + TabCuenConsu["SemGesta"].ToString() + "'," +
@@ -1065,7 +1060,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                                  "'" + TabCuenConsu["DirecResi"].ToString() + "'," +
                                                  "'" + TabCuenConsu["TelResi"].ToString() + "'," +
                                                  "'" + TabCuenConsu["ZonaResiden"].ToString() + "'," +
-                                                 $"{ValidarFechaNula(TabCuenConsu["FechaApertura"].ToString())}" +
+                                                 $"{Conexion.ValidarFechaNula(TabCuenConsu["FechaApertura"].ToString())}" +
                                                  "'" + TabCuenConsu["Observaciones"].ToString() + "'," +
                                                  "'" + TabCuenConsu["Sexo"].ToString() + "'," +
                                                  "'" + TabCuenConsu["TipoUsar"].ToString() + "'," +
@@ -1109,34 +1104,34 @@ namespace OBBDSIIG.Forms.FrmExportar
                                                  "'" + TabCuenConsu["MunicipioRemite"].ToString() + "'," +
                                                  "'" + TabCuenConsu["IPSRemite"].ToString() + "'," +
                                                  "'" + TabCuenConsu["RemiNumero"].ToString() + "'," +
-                                                 $"{ValidarFechaNula(TabCuenConsu["FechaRemision"].ToString())}" +
-                                                 $"{ValidarFechaNula(TabCuenConsu["FechaVence"].ToString())}" +
+                                                 $"{Conexion.ValidarFechaNula(TabCuenConsu["FechaRemision"].ToString())}" +
+                                                 $"{Conexion.ValidarFechaNula(TabCuenConsu["FechaVence"].ToString())}" +
                                                  "'" + TabCuenConsu["CubreRemision"].ToString() + "'," +
                                                  "'" + TabCuenConsu["EspecialRemite"].ToString() + "'," +
                                                  "'" + TabCuenConsu["DxRemite"].ToString() + "'," +
                                                  "'" + TabCuenConsu["CoMediAten"].ToString() + "'," +
                                                  "'" + TabCuenConsu["MotivoConsul"].ToString() + "'," +
-                                                 $"{ValidarFechaNula(TabCuenConsu["FechaEntrada"].ToString())}" +
+                                                 $"{Conexion.ValidarFechaNula(TabCuenConsu["FechaEntrada"].ToString())}" +
                                                  $"{Conexion.ValidarHoraNula(TabCuenConsu["HoraEntrada"].ToString())}" +
-                                                 $"{ValidarFechaNula(TabCuenConsu["FecUltima"].ToString())}" +
+                                                 $"{Conexion.ValidarFechaNula(TabCuenConsu["FecUltima"].ToString())}" +
                                                  "'" + TabCuenConsu["ArchivoViene"].ToString() + "'," +
                                                  "'" + TabCuenConsu["Muerto"].ToString() + "'," +
                                                  "'" + TabCuenConsu["PreInscripcion"].ToString() + "'," +
                                                  "'" + TabCuenConsu["CoberSalud"].ToString() + "'," +
                                                  "'" + TabCuenConsu["PacienteRegistra"].ToString() + "'," + //Llevan ese Fields
-                                                 $"{ValidarFechaNula(TabCuenConsu["PaciFecRegis"].ToString())}" +
+                                                 $"{Conexion.ValidarFechaNula(TabCuenConsu["PaciFecRegis"].ToString())}" +
                                                  "'" + TabCuenConsu["PacienteModifica"].ToString() + "'," + //Llevan ese Fields
-                                                 $"{ValidarFechaNula(TabCuenConsu["PaciFecModi"].ToString())}" +
+                                                 $"{Conexion.ValidarFechaNula(TabCuenConsu["PaciFecModi"].ToString())}" +
                                                  "'" + TabCuenConsu["NivEducUs"].ToString() + "'," +
                                                  "'" + TabCuenConsu["TelCelular"].ToString() + "'," +
                                                  "'" + TabCuenConsu["NomEmeal"].ToString() + "'," +
                                                  "'" + TabCuenConsu["CodSeSocial"].ToString() + "'," +
                                                  "'" + TabCuenConsu["DebeDere"].ToString() + "'," +
                                                  "'" + TabCuenConsu["UltiPeso"].ToString() + "'," +
-                                                 $"{ValidarFechaNula(TabCuenConsu["FecPeso"].ToString())}" +
+                                                 $"{Conexion.ValidarFechaNula(TabCuenConsu["FecPeso"].ToString())}" +
                                                  "'" + TabCuenConsu["CodRgPes"].ToString() + "'," +
                                                  "'" + TabCuenConsu["UltiTalla"].ToString() + "'," +
-                                                 $"{ValidarFechaNula(TabCuenConsu["FecTalla"].ToString())}" +
+                                                 $"{Conexion.ValidarFechaNula(TabCuenConsu["FecTalla"].ToString())}" +
                                                  "'" + TabCuenConsu["CodRgTal"].ToString() + "'," +
                                                  "'" + TabCuenConsu["Huella"].ToString() + "'," +
                                                 //"CONVERT(varbinary,'" + TabCuenConsu["Huella1"].ToString() + "')," +
@@ -1302,14 +1297,14 @@ namespace OBBDSIIG.Forms.FrmExportar
                                             "'" + TabCuenConsu["HistoNum"].ToString() + "'," +
                                             "'" + TabCuenConsu["CodAdmin"].ToString() + "'," +
                                             "'" + TabCuenConsu["NumContra"].ToString() + "'," +
-                                            $"{ValidarFechaNula(TabCuenConsu["FecApertura"].ToString())}" +
+                                            $"{Conexion.ValidarFechaNula(TabCuenConsu["FecApertura"].ToString())}" +
                                             $"{Conexion.ValidarHoraNula(TabCuenConsu["HorApertura"].ToString())}" +
                                             "'" + TabCuenConsu["CuenActiva"].ToString() + "'," +
-                                            $"{ValidarFechaNula(TabCuenConsu["FechaCierre"].ToString())}" +
+                                            $"{Conexion.ValidarFechaNula(TabCuenConsu["FechaCierre"].ToString())}" +
                                             "'" + TabCuenConsu["VieneRemi"].ToString() + "'," +
                                             "'" + TabCuenConsu["NumRemi"].ToString() + "'," +
-                                            $"{ValidarFechaNula(TabCuenConsu["FecRemi"].ToString())}" +
-                                            $"{ValidarFechaNula(TabCuenConsu["FecVenci"].ToString())}" +
+                                            $"{Conexion.ValidarFechaNula(TabCuenConsu["FecRemi"].ToString())}" +
+                                            $"{Conexion.ValidarFechaNula(TabCuenConsu["FecVenci"].ToString())}" +
                                             "'" + TabCuenConsu["NumAfil"].ToString() + "'," +
                                             "'" + TabCuenConsu["NumPoliza"].ToString() + "'," +
                                             "'" + TabCuenConsu["CubreRemi"].ToString() + "'," +
@@ -1324,7 +1319,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                             "'" + TabCuenConsu["BarrioVereda"].ToString() + "'," +
                                             "'" + TabCuenConsu["ZonaC"].ToString() + "'," +
                                             "'" + TabCuenConsu["Especialidad"].ToString() + "'," +
-                                            $"{ValidarFechaNula(TabCuenConsu["FecEntrada"].ToString())}" +
+                                            $"{Conexion.ValidarFechaNula(TabCuenConsu["FecEntrada"].ToString())}" +
                                             $"{Conexion.ValidarHoraNula(TabCuenConsu["HorEntrada"].ToString())}" +
                                             "'" + TabCuenConsu["TipoCuentaFactura"].ToString() + "'," + // Cambio del 19 de noviembre
                                             "'" + TabCuenConsu["CodiMedico"].ToString() + "'," +
@@ -1337,15 +1332,15 @@ namespace OBBDSIIG.Forms.FrmExportar
                                             "'" + TabCuenConsu["DadoDeAlta"].ToString() + "'," +
                                             "'" + TabCuenConsu["DxSalida"].ToString() + "'," +
                                             "'" + TabCuenConsu["TipoDxPrin"].ToString() + "'," +
-                                            $"{ValidarFechaNula(TabCuenConsu["FecSalida"].ToString())}" +
+                                            $"{Conexion.ValidarFechaNula(TabCuenConsu["FecSalida"].ToString())}" +
                                             $"{Conexion.ValidarHoraNula(TabCuenConsu["HorSalida"].ToString())}" +
                                             "'" + TabCuenConsu["EstaSalida"].ToString() + "'," +
                                             "'" + TabCuenConsu["CodiMediSali"].ToString() + "'," +
                                             "'" + TabCuenConsu["CuenAnulada"].ToString() + "'," +
-                                            $"{ValidarFechaNula(TabCuenConsu["FecAnulada"].ToString())}" +
+                                            $"{Conexion.ValidarFechaNula(TabCuenConsu["FecAnulada"].ToString())}" +
                                             "'" + TabCuenConsu["CodiAnula"].ToString() + "'," +
                                             "'" + TabCuenConsu["CodiSali"].ToString() + "'," +
-                                            $"{ValidarFechaNula(TabCuenConsu["FecSali"].ToString())}" +
+                                            $"{Conexion.ValidarFechaNula(TabCuenConsu["FecSali"].ToString())}" +
                                             "'" + TabCuenConsu["Diasincapacidad"].ToString() + "'," +
                                             "'" + TabCuenConsu["HospiTal"].ToString() + "'," +
                                             "'" + TabCuenConsu["DiasEstancias"].ToString() + "'," +
@@ -1361,16 +1356,16 @@ namespace OBBDSIIG.Forms.FrmExportar
                                             "'" + TabCuenConsu["CuentaMadre"].ToString() + "'," +
                                             "'" + TabCuenConsu["RemiteA"].ToString() + "'," +
                                             "'" + TabCuenConsu["RemiNumA"].ToString() + "'," +
-                                            $"{ValidarFechaNula(TabCuenConsu["FecRemA"].ToString())}" +
+                                            $"{Conexion.ValidarFechaNula(TabCuenConsu["FecRemA"].ToString())}" +
                                             "'" + TabCuenConsu["DptoRemA"].ToString() + "'," +
                                             "'" + TabCuenConsu["CiudRemA"].ToString() + "'," +
                                             "'" + TabCuenConsu["IPSRemA"].ToString() + "'," +
                                             "'" + TabCuenConsu["CodEspecA"].ToString() + "'," +
                                             "'" + TabCuenConsu["IPSAten"].ToString() + "'," +
                                             "'" + TabCuenConsu["CuentaRegistra"].ToString() + "'," +
-                                            $"{ValidarFechaNula(TabCuenConsu["CuenFecRegis"].ToString())}" +
+                                            $"{Conexion.ValidarFechaNula(TabCuenConsu["CuenFecRegis"].ToString())}" +
                                             "'" + TabCuenConsu["CuentaModifica"].ToString() + "'," +
-                                            $"{ValidarFechaNula(TabCuenConsu["CuenFecModi"].ToString())}" +
+                                            $"{Conexion.ValidarFechaNula(TabCuenConsu["CuenFecModi"].ToString())}" +
                                             "'" + TabCuenConsu["NumCitaFac"].ToString() + "'," +
                                             "'" + TabCuenConsu["SoatAcumul"].ToString() + "'," +
                                             "'" + TabCuenConsu["VigenCuenta"].ToString() + "'," +
@@ -1464,7 +1459,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                                     "VALUES" +
                                                     "(" +
                                                     "'" + TabCuenConsu["NumFactura"].ToString() + "'," +
-                                                    $"{ValidarFechaNula(TabCuenConsu["FechaFac"].ToString())}" +
+                                                    $"{Conexion.ValidarFechaNula(TabCuenConsu["FechaFac"].ToString())}" +
                                                     "'" + TabCuenConsu["NumCuenFac"].ToString() + "'," +
                                                     "'" + TabCuenConsu["Cartercero"].ToString() + "'," +
                                                     "'" + TabCuenConsu["NumContra"].ToString() + "'," +
@@ -1474,12 +1469,12 @@ namespace OBBDSIIG.Forms.FrmExportar
                                                     "'" + TabCuenConsu["PorcTercero"].ToString() + "'," +
                                                     "'" + TabCuenConsu["Copago"].ToString() + "'," +
                                                     "'" + TabCuenConsu["CanceCopago"].ToString() + "'," +
-                                                    $"{ValidarFechaNula(TabCuenConsu["FecCanCopa"].ToString())}" +
+                                                    $"{Conexion.ValidarFechaNula(TabCuenConsu["FecCanCopa"].ToString())}" +
                                                     "'" + TabCuenConsu["PagoFac"].ToString() + "'," +
-                                                    $"{ValidarFechaNula(TabCuenConsu["FecCanFac"].ToString())}" +
+                                                    $"{Conexion.ValidarFechaNula(TabCuenConsu["FecCanFac"].ToString())}" +
                                                     "'" + TabCuenConsu["PagoConDepos"].ToString() + "'," +
                                                     "'" + TabCuenConsu["AnuladaFac"].ToString() + "'," +
-                                                    $"{ValidarFechaNula(TabCuenConsu["FecAnulada"].ToString())}" +
+                                                    $"{Conexion.ValidarFechaNula(TabCuenConsu["FecAnulada"].ToString())}" +
                                                     "'" + TabCuenConsu["CodiAnul"].ToString() + "'," +
                                                     "'" + TabCuenConsu["DesAnulo"].ToString() + "'," +
                                                     "'" + TabCuenConsu["NotaDebito"].ToString() + "'," +
@@ -1495,10 +1490,10 @@ namespace OBBDSIIG.Forms.FrmExportar
                                                     "'" + TabCuenConsu["TexResol"].ToString() + "'," +
                                                     "'" + TabCuenConsu["saliocuco"].ToString() + "'," +
                                                     "'" + TabCuenConsu["Cucosale"].ToString() + "'," +
-                                                    $"{ValidarFechaNula(TabCuenConsu["fesale"].ToString())}" +
+                                                    $"{Conexion.ValidarFechaNula(TabCuenConsu["fesale"].ToString())}" +
                                                     "'" + TabCuenConsu["codisale"].ToString() + "'," +
                                                     "'" + TabCuenConsu["Radicada"].ToString() + "'," +
-                                                    $"{ValidarFechaNula(TabCuenConsu["Fecradifa"].ToString())}" +
+                                                    $"{Conexion.ValidarFechaNula(TabCuenConsu["Fecradifa"].ToString())}" +
                                                     "'" + TabCuenConsu["Codradifa"].ToString() + "'," +
                                                     "'" + TabCuenConsu["Codrecifa"].ToString() + "'," +
                                                     $"{Conexion.ValidarHoraNula(TabCuenConsu["HoraReg"].ToString())}" +
@@ -1506,11 +1501,11 @@ namespace OBBDSIIG.Forms.FrmExportar
                                                     "'" + TabCuenConsu["NumPoliza"].ToString() + "'," +
                                                     "'" + TabCuenConsu["CodSele"].ToString() + "'," +
                                                     "'" + TabCuenConsu["RadiEPS"].ToString() + "'," +
-                                                    $"{ValidarFechaNula(TabCuenConsu["FecRadica"].ToString())}" +
+                                                    $"{Conexion.ValidarFechaNula(TabCuenConsu["FecRadica"].ToString())}" +
                                                     "'" + TabCuenConsu["FacturaRegistra"].ToString() + "'," +
-                                                    $"{ValidarFechaNula(TabCuenConsu["FacFecRegis"].ToString())}" +
+                                                    $"{Conexion.ValidarFechaNula(TabCuenConsu["FacFecRegis"].ToString())}" +
                                                     "'" + TabCuenConsu["FacturaModifica"].ToString() + "'," +
-                                                    $"{ValidarFechaNula(TabCuenConsu["FacFecModi"].ToString())}" +
+                                                    $"{Conexion.ValidarFechaNula(TabCuenConsu["FacFecModi"].ToString())}" +
                                                     "'" + TabCuenConsu["ConsoFac"].ToString() + "'," +
                                                     "'" + TabCuenConsu["TolValIVA"].ToString() + "'," +
                                                     "'" + TabCuenConsu["ReteIVA"].ToString() + "'," +
@@ -1634,7 +1629,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                                                         "'" + TabConsumos["SubValorUnita"].ToString() + "'," +
                                                                         "'" + TabConsumos["ValorUnitario"].ToString() + "'," +
                                                                         "'" + TabConsumos["Copagos"].ToString() + "'," +
-                                                                       $"{ValidarFechaNula(TabConsumos["FechaCon"].ToString())}" +
+                                                                       $"{Conexion.ValidarFechaNula(TabConsumos["FechaCon"].ToString())}" +
                                                                         $"{Conexion.ValidarHoraNula(TabCuenConsu["HoraRegistro"].ToString())}" +
                                                                         "'" + TabConsumos["AutoriNum"].ToString() + "'," +
                                                                         "'" + TabConsumos["TipoCirujia"].ToString() + "'," +
@@ -1671,10 +1666,10 @@ namespace OBBDSIIG.Forms.FrmExportar
                                                                         "'" + TabConsumos["DescribePEN"].ToString() + "'," +
                                                                         "'" + IteNumCon + "'," +
                                                                         "'" + TabConsumos["CodiRegis"].ToString() + "'," +
-                                                                        $"{ValidarFechaNula(TabConsumos["FecRegis"].ToString())}" +
+                                                                        $"{Conexion.ValidarFechaNula(TabConsumos["FecRegis"].ToString())}" +
                                                                         $"{Conexion.ValidarHoraNula(TabCuenConsu["Horaregis"].ToString())}" +
                                                                         "'" + TabConsumos["CodModi"].ToString() + "'," +
-                                                                        $"{ValidarFechaNula(TabConsumos["FecModi"].ToString())}" +
+                                                                        $"{Conexion.ValidarFechaNula(TabConsumos["FecModi"].ToString())}" +
                                                                         "'" + TabConsumos["VezAno"].ToString() + "'," +
                                                                       
                                                                         "'" + TabConsumos["ValIVATol"].ToString() + "'" +  //***** CAMPOS AGREGADOS CON BASE DATOS DE SAN AGUSTIN Y GARZON *****

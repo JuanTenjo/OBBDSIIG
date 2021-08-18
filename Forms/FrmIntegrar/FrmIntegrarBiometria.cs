@@ -100,15 +100,6 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             }
         }
 
-        private string ValidarFechaNula(string Fecha)
-        {
-            string ValidarFecha = null;
-
-            ValidarFecha = string.IsNullOrWhiteSpace(Fecha) ? "null" + "," : "CONVERT(DATETIME,'" + Convert.ToDateTime(Fecha).ToString("yyyy-MM-dd") + "',102),";
-
-            return ValidarFecha;
-
-        }
 
         private void FrmIntegrarBiometria_Load(object sender, EventArgs e)
         {
@@ -305,8 +296,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "'" + TabBiometFi["HistorPaci"].ToString() + "'," +
                                         "" + Tipo + "," +
                                         "'" + TabBiometFi["CodiRegis"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabBiometFi["FecRegis"].ToString())}" +
-                                         $"{ValidarFechaNula(TabBiometFi["FecModi"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabBiometFi["FecRegis"].ToString())}" +
+                                         $"{Conexion.ValidarFechaNula(TabBiometFi["FecModi"].ToString())}" +
                                         "'" + TabBiometFi["CodModi"].ToString() + "'" +
                                         ")";
 
@@ -353,7 +344,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                                             Utils.SqlDatos = $"UPDATE [BDBIOMETSQL].[dbo].[Datos firma digital] SET " +
                                             "Firma = " + Tipo + ", " +
-                                            $"FecModi = {ValidarFechaNula(TabBiometFi["FecModi"].ToString())} " +
+                                            $"FecModi = {Conexion.ValidarFechaNula(TabBiometFi["FecModi"].ToString())} " +
                                             "CodModi = '" + TabBiometFi["CodModi"].ToString() + "' " +
                                             "WHERE (HistorPaci = N'" + CodHisFir + "') ";
 
@@ -510,8 +501,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                                 "'" + TabBiometFo["HistorPaci"].ToString() + "'," +
                                                 "" + Tipo + "," +
                                                 "'" + TabBiometFo["CodiRegis"].ToString() + "'," +
-                                                $"{ValidarFechaNula(TabBiometFo["FecRegis"].ToString())}" +
-                                                 $"{ValidarFechaNula(TabBiometFo["FecModi"].ToString())}" +
+                                                $"{Conexion.ValidarFechaNula(TabBiometFo["FecRegis"].ToString())}" +
+                                                 $"{Conexion.ValidarFechaNula(TabBiometFo["FecModi"].ToString())}" +
                                                 "'" + TabBiometFo["CodModi"].ToString() + "'" +
                                                 ")";
 
@@ -556,7 +547,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                                     //Modifique los datos
                                                     Utils.SqlDatos = $"UPDATE [BDBIOMETSQL].[dbo].[Datos foto digital] SET  " +
                                                     "Foto = " + Tipo + ", " +
-                                                    $"FecModi = {ValidarFechaNula(TabBiometFo["FecModi"].ToString())} " +
+                                                    $"FecModi = {Conexion.ValidarFechaNula(TabBiometFo["FecModi"].ToString())} " +
                                                     "CodModi = '" + TabBiometFo["CodModi"].ToString() + "' " +
                                                     "WHERE (HistorPaci = N'" + CodHisFot + "') ";
 
@@ -722,8 +713,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                                 "" + Tipo + "," +
                                                 "" + Tipo2 + "," +
                                                 "'" + TabBiometHu["CodiRegis"].ToString() + "'," +
-                                                $"{ValidarFechaNula(TabBiometHu["FecRegis"].ToString())}" +
-                                                    $"{ValidarFechaNula(TabBiometHu["FecModi"].ToString())}" +
+                                                $"{Conexion.ValidarFechaNula(TabBiometHu["FecRegis"].ToString())}" +
+                                                    $"{Conexion.ValidarFechaNula(TabBiometHu["FecModi"].ToString())}" +
                                                 "'" + TabBiometHu["CodModi"].ToString() + "'" +
                                                 ")";
 
@@ -780,7 +771,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                                     Utils.SqlDatos = $"UPDATE [BDBIOMETSQL].[dbo].[Datos huella digital] SET  " +         
                                                     "huella_tpt = " + Tipo + ", " +
                                                     "Huella_img = " + Tipo2 + ", " +                            
-                                                    $"FecModi = {ValidarFechaNula(TabBiometHu["FecModi"].ToString())} " +
+                                                    $"FecModi = {Conexion.ValidarFechaNula(TabBiometHu["FecModi"].ToString())} " +
                                                     "CodModi = '" + TabBiometHu["CodModi"].ToString() + "' " +
                                                     "WHERE (HistorPaci = N'" + CodHisHue + "') ";
 

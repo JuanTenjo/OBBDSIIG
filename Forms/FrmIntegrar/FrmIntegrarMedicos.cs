@@ -59,17 +59,6 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             }
         } //Carga datos de los usuairos
 
-
-        private string ValidarFechaNula(string Fecha)
-        {
-            string ValidarFecha = null;
-
-            ValidarFecha = string.IsNullOrWhiteSpace(Fecha) ? "null" + "," : "CONVERT(DATETIME,'" + Convert.ToDateTime(Fecha).ToString("yyyy-MM-dd") + "',102),";
-
-            return ValidarFecha;
-
-        }
-
         private void ConectarPortatil()
         {
             try
@@ -349,7 +338,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                          "'" + TabMedi["NomMedico"].ToString() + "'," +
                                          "'" + TabMedi["Apellido1Medico"].ToString() + "'," +
                                          "'" + TabMedi["Apellido2Medico"].ToString() + "'," +
-                                         $"{ValidarFechaNula(TabMedi["FecNaciMedi"].ToString())}" +
+                                         $"{Conexion.ValidarFechaNula(TabMedi["FecNaciMedi"].ToString())}" +
                                          "'" + TabMedi["SexoMedico"].ToString() + "'," +
                                          "'" + TabMedi["CargoMedico"].ToString() + "'," +
                                          "'" + TabMedi["DirecMedico"].ToString() + "'," +
@@ -364,9 +353,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                          "" + Tipo + "," +
                                          "" + Tipo2 + "," +
                                          "'" + TabMedi["CodiRegis"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabMedi["FecRegis"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabMedi["FecRegis"].ToString())}" +
                                          "'" + TabMedi["CodiModi"].ToString() + "'," +
-                                        $"{ValidarFechaNula(TabMedi["FecModi"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabMedi["FecModi"].ToString())}" +
                                          "'" + TabMedi["Nom2Medico"].ToString() + "' " +
                                         ")";
 
@@ -426,7 +415,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "NomMedico ='" + TabMedi["NomMedico"].ToString() + "'," +
                                         "Apellido1Medico ='" + TabMedi["Apellido1Medico"].ToString() + "'," +
                                         "Apellido2Medico ='" + TabMedi["Apellido2Medico"].ToString() + "'," +
-                                        $"FecNaciMedi = {ValidarFechaNula(TabMedi["FecNaciMedi"].ToString())} " +
+                                        $"FecNaciMedi = {Conexion.ValidarFechaNula(TabMedi["FecNaciMedi"].ToString())} " +
                                         "SexoMedico ='" + TabMedi["SexoMedico"].ToString() + "'," +
                                         "CargoMedico ='" + TabMedi["CargoMedico"].ToString() + "'," +
                                         "DirecMedico ='" + TabMedi["DirecMedico"].ToString() + "'," +
@@ -441,9 +430,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "FirmaD = " + Tipo + ", " +
                                         "FotoMedico =" + Tipo2 + "," +
                                         "CodiRegis ='" + TabMedi["CodiRegis"].ToString() + "'," +
-                                        $"FecRegis = {ValidarFechaNula(TabMedi["FecRegis"].ToString())} " +
+                                        $"FecRegis = {Conexion.ValidarFechaNula(TabMedi["FecRegis"].ToString())} " +
                                         "CodiModi ='" + TabMedi["CodiModi"].ToString() + "'," +
-                                        $"FecModi = {ValidarFechaNula(TabMedi["FecModi"].ToString())} " +
+                                        $"FecModi = {Conexion.ValidarFechaNula(TabMedi["FecModi"].ToString())} " +
                                         "Nom2Medico = '" + TabMedi["Nom2Medico"].ToString() + "' " +
                                         "WHERE (CodiMedico = '" + CodMedi + "')";
 

@@ -56,6 +56,39 @@ namespace OBBDSIIG.Class
 
         }
 
+        public static string ValidarFechaNula(string Fecha)
+        {
+            DateTime temp;
+
+            string ValidarFecha = null;
+
+            DateTime fechaActual = DateTime.Now.Date;
+
+            if (DateTime.TryParse(Fecha, out temp))
+            {
+
+                string ValidacionFechas = Fecha.Substring(0, 1);
+
+                if(ValidacionFechas == "0")
+                {
+                    ValidarFecha = string.IsNullOrWhiteSpace(Fecha) ? "null" + "," : "CONVERT(DATETIME,'" + Convert.ToDateTime(fechaActual).ToString("yyyy-MM-dd") + "',102),";
+                    return ValidarFecha;
+                }
+                else
+                {
+                    ValidarFecha = string.IsNullOrWhiteSpace(Fecha) ? "null" + "," : "CONVERT(DATETIME,'" + Convert.ToDateTime(Fecha).ToString("yyyy-MM-dd") + "',102),";
+                    return ValidarFecha;
+                }
+            }
+            else
+            {
+                ValidarFecha = string.IsNullOrWhiteSpace(Fecha) ? "null" + "," : "CONVERT(DATETIME,'" + Convert.ToDateTime(fechaActual).ToString("yyyy-MM-dd") + "',102),";
+
+                return ValidarFecha;
+            }
+
+        }
+
         public static SqlDataReader SQLDataReader(string sqlString, List<SqlParameter> parameters = null)
         {
             try
