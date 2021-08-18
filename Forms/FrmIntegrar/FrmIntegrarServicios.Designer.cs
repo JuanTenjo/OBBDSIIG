@@ -164,40 +164,40 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // TxtCanProforVal
             // 
             this.TxtCanProforVal.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtCanProforVal.Location = new System.Drawing.Point(421, 150);
+            this.TxtCanProforVal.Location = new System.Drawing.Point(400, 150);
             this.TxtCanProforVal.Name = "TxtCanProforVal";
             this.TxtCanProforVal.ReadOnly = true;
-            this.TxtCanProforVal.Size = new System.Drawing.Size(33, 20);
+            this.TxtCanProforVal.Size = new System.Drawing.Size(54, 20);
             this.TxtCanProforVal.TabIndex = 30;
             this.TxtCanProforVal.Text = "0";
             // 
             // TxtProFarAgrega
             // 
             this.TxtProFarAgrega.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtProFarAgrega.Location = new System.Drawing.Point(421, 121);
+            this.TxtProFarAgrega.Location = new System.Drawing.Point(400, 121);
             this.TxtProFarAgrega.Name = "TxtProFarAgrega";
             this.TxtProFarAgrega.ReadOnly = true;
-            this.TxtProFarAgrega.Size = new System.Drawing.Size(33, 20);
+            this.TxtProFarAgrega.Size = new System.Drawing.Size(54, 20);
             this.TxtProFarAgrega.TabIndex = 29;
             this.TxtProFarAgrega.Text = "0";
             // 
             // TxtCantiProFar
             // 
             this.TxtCantiProFar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtCantiProFar.Location = new System.Drawing.Point(421, 92);
+            this.TxtCantiProFar.Location = new System.Drawing.Point(400, 92);
             this.TxtCantiProFar.Name = "TxtCantiProFar";
             this.TxtCantiProFar.ReadOnly = true;
-            this.TxtCantiProFar.Size = new System.Drawing.Size(33, 20);
+            this.TxtCantiProFar.Size = new System.Drawing.Size(54, 20);
             this.TxtCantiProFar.TabIndex = 28;
             this.TxtCantiProFar.Text = "0";
             // 
             // TxtCanServiExis
             // 
             this.TxtCanServiExis.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtCanServiExis.Location = new System.Drawing.Point(421, 64);
+            this.TxtCanServiExis.Location = new System.Drawing.Point(400, 64);
             this.TxtCanServiExis.Name = "TxtCanServiExis";
             this.TxtCanServiExis.ReadOnly = true;
-            this.TxtCanServiExis.Size = new System.Drawing.Size(33, 20);
+            this.TxtCanServiExis.Size = new System.Drawing.Size(54, 20);
             this.TxtCanServiExis.TabIndex = 27;
             this.TxtCanServiExis.Text = "0";
             // 
@@ -208,7 +208,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label8.ForeColor = System.Drawing.Color.White;
             this.label8.Location = new System.Drawing.Point(0, 147);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(415, 23);
+            this.label8.Size = new System.Drawing.Size(394, 23);
             this.label8.TabIndex = 26;
             this.label8.Text = "Productos farmaceúticos validados:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -220,7 +220,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label7.ForeColor = System.Drawing.Color.White;
             this.label7.Location = new System.Drawing.Point(0, 118);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(415, 23);
+            this.label7.Size = new System.Drawing.Size(394, 23);
             this.label7.TabIndex = 25;
             this.label7.Text = "Productos farma. agregadaos al equipo:";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -232,7 +232,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label6.ForeColor = System.Drawing.Color.White;
             this.label6.Location = new System.Drawing.Point(0, 89);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(415, 23);
+            this.label6.Size = new System.Drawing.Size(394, 23);
             this.label6.TabIndex = 24;
             this.label6.Text = "Cantidad de productos farmaceuticos:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -244,7 +244,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(0, 61);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(415, 23);
+            this.label5.Size = new System.Drawing.Size(394, 23);
             this.label5.TabIndex = 23;
             this.label5.Text = "Servicios validados:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -252,10 +252,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // TxtCanServiForm
             // 
             this.TxtCanServiForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtCanServiForm.Location = new System.Drawing.Point(421, 35);
+            this.TxtCanServiForm.Location = new System.Drawing.Point(400, 35);
             this.TxtCanServiForm.Name = "TxtCanServiForm";
             this.TxtCanServiForm.ReadOnly = true;
-            this.TxtCanServiForm.Size = new System.Drawing.Size(33, 20);
+            this.TxtCanServiForm.Size = new System.Drawing.Size(54, 20);
             this.TxtCanServiForm.TabIndex = 22;
             this.TxtCanServiForm.Text = "0";
             // 
@@ -266,7 +266,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label11.ForeColor = System.Drawing.Color.White;
             this.label11.Location = new System.Drawing.Point(0, 33);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(415, 23);
+            this.label11.Size = new System.Drawing.Size(394, 23);
             this.label11.TabIndex = 18;
             this.label11.Text = "Servicios agregados al equipo actual:";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -274,10 +274,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // TxtCanServiFor
             // 
             this.TxtCanServiFor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtCanServiFor.Location = new System.Drawing.Point(421, 6);
+            this.TxtCanServiFor.Location = new System.Drawing.Point(400, 6);
             this.TxtCanServiFor.Name = "TxtCanServiFor";
             this.TxtCanServiFor.ReadOnly = true;
-            this.TxtCanServiFor.Size = new System.Drawing.Size(33, 20);
+            this.TxtCanServiFor.Size = new System.Drawing.Size(54, 20);
             this.TxtCanServiFor.TabIndex = 17;
             this.TxtCanServiFor.Text = "0";
             // 
@@ -288,7 +288,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label10.ForeColor = System.Drawing.Color.White;
             this.label10.Location = new System.Drawing.Point(0, 5);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(415, 23);
+            this.label10.Size = new System.Drawing.Size(394, 23);
             this.label10.TabIndex = 17;
             this.label10.Text = "Cantidad de Registros de Servicios:";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

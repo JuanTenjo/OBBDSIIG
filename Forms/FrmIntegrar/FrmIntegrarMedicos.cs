@@ -282,7 +282,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                             bytes = (byte[])(TabMedi["FirmaD"]);
                                             Tipo = "@FirmaD";
 
-                                            parameters.Add(new SqlParameter("@FirmaD", SqlDbType.Image) { Value = bytes });
+                                            parameters.Add(new SqlParameter("@FirmaD", SqlDbType.VarBinary) { Value = bytes });
 
                                         }
 
@@ -296,7 +296,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                             bytes2 = (byte[])(TabMedi["FotoMedico"]);
                                             Tipo2 = "@FotoMedico";
 
-                                            parameters.Add(new SqlParameter("@FotoMedico", SqlDbType.Image) { Value = bytes2 });
+                                            parameters.Add(new SqlParameter("@FotoMedico", SqlDbType.VarBinary) { Value = bytes2 });
 
                                         }
 
@@ -387,7 +387,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                             bytes = (byte[])(TabMedi["FirmaD"]);
                                             Tipo = "@FirmaD";
 
-                                            parameters.Add(new SqlParameter("@FirmaD", SqlDbType.Image) { Value = bytes });
+                                            parameters.Add(new SqlParameter("@FirmaD", SqlDbType.VarBinary) { Value = bytes });
 
 
                                         }
@@ -403,7 +403,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                             bytes2 = (byte[])(TabMedi["FotoMedico"]);
                                             Tipo2 = "@FotoMedico";
 
-                                            parameters.Add(new SqlParameter("@FotoMedico", SqlDbType.Image) { Value = bytes2 });
+                                            parameters.Add(new SqlParameter("@FotoMedico", SqlDbType.VarBinary) { Value = bytes2 });
 
                                         }
 

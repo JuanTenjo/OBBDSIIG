@@ -1630,7 +1630,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                                                         "'" + TabConsumos["ValorUnitario"].ToString() + "'," +
                                                                         "'" + TabConsumos["Copagos"].ToString() + "'," +
                                                                        $"{Conexion.ValidarFechaNula(TabConsumos["FechaCon"].ToString())}" +
-                                                                        $"{Conexion.ValidarHoraNula(TabCuenConsu["HoraRegistro"].ToString())}" +
+                                                                        $"{Conexion.ValidarHoraNula(TabConsumos["HoraRegistro"].ToString())}" +
                                                                         "'" + TabConsumos["AutoriNum"].ToString() + "'," +
                                                                         "'" + TabConsumos["TipoCirujia"].ToString() + "'," +
                                                                         "'" + TabConsumos["ViaAcceso"].ToString() + "'," +

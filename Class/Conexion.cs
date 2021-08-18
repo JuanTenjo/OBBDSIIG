@@ -59,17 +59,19 @@ namespace OBBDSIIG.Class
         public static string ValidarFechaNula(string Fecha)
         {
             DateTime temp;
-
+       
             string ValidarFecha = null;
+            string fechaActual = DateTime.Now.ToString("yyyy-MM-dd");
+    
 
-            DateTime fechaActual = DateTime.Now.Date;
-
-            if (DateTime.TryParse(Fecha, out temp))
+            if (DateTime.TryParse(Fecha, out temp)) //Valida que no venga null o con texto normal
             {
 
-                string ValidacionFechas = Fecha.Substring(0, 1);
+                Fecha = Convert.ToDateTime(Fecha).ToString("yyyy-MM-dd");
 
-                if(ValidacionFechas == "0")
+                string ValidacionFechas = Fecha.Substring(0,1);
+
+                if (ValidacionFechas == "0")
                 {
                     ValidarFecha = string.IsNullOrWhiteSpace(Fecha) ? "null" + "," : "CONVERT(DATETIME,'" + Convert.ToDateTime(fechaActual).ToString("yyyy-MM-dd") + "',102),";
                     return ValidarFecha;
@@ -79,12 +81,15 @@ namespace OBBDSIIG.Class
                     ValidarFecha = string.IsNullOrWhiteSpace(Fecha) ? "null" + "," : "CONVERT(DATETIME,'" + Convert.ToDateTime(Fecha).ToString("yyyy-MM-dd") + "',102),";
                     return ValidarFecha;
                 }
+
             }
             else
             {
-                ValidarFecha = string.IsNullOrWhiteSpace(Fecha) ? "null" + "," : "CONVERT(DATETIME,'" + Convert.ToDateTime(fechaActual).ToString("yyyy-MM-dd") + "',102),";
+                //Si viene vacio lo deja null, si viene con un string difenrente a una fecha lo deja con la fecha actual
 
+                ValidarFecha = string.IsNullOrWhiteSpace(Fecha) ? "null" + "," : "CONVERT(DATETIME,'" + Convert.ToDateTime(fechaActual).ToString("yyyy-MM-dd") + "',102),";
                 return ValidarFecha;
+
             }
 
         }

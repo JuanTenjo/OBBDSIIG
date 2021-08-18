@@ -121,6 +121,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
             try
             {
+
+
+
                 if (string.IsNullOrWhiteSpace(TxtInstanCenFor.Text) || (TxtInstanCenFor.Text == ""))
                 {
                     Utils.Informa = "Lo siento pero mientras no exista";
@@ -643,7 +646,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "'" + TabProFarCen["CodiMinSa"].ToString() + "'," +
                                         "'" + TabProFarCen["CodiCUN"].ToString() + "'," +
                                         "'" + TabProFarCen["Habilitado"].ToString() + "'," +
-                                        "'" + TabProFarCen["NombreGenerico"].ToString() + "'," +
+                                        "'" + TabProFarCen["NombreGenerico"].ToString().Replace("'","") + "'," +
                                         "'" + TabProFarCen["NomAlterno"].ToString() + "'," +
                                         "'" + TabProFarCen["PrinActivo"].ToString() + "'," +
                                         "'" + TabProFarCen["CodCaProdu"].ToString() + "'," +
