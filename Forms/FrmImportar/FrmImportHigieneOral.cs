@@ -235,8 +235,7 @@ namespace OBBDSIIG.Forms.FrmImportar
 
 
                     string SqlPlacaCount = "SELECT count(*) as TotalRegis FROM [DACONEXTSQL].[dbo].[Datos registro control placa] " +
-                    "WHERE ([Datos registro control placa].PrefiPlaca = N'" + PfiPor + "') AND " +
-                    "([Datos registro control placa].ActivoCtl = 0 ) AND " +
+                    "WHERE ([Datos registro control placa].ActivoCtl = 0 ) AND " +
                     "([Datos registro control placa].FechaRealiza >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) AND " +
                     "([Datos registro control placa].FechaRealiza <= CONVERT(DATETIME, '" + FecFinPro + "', 102))";
 

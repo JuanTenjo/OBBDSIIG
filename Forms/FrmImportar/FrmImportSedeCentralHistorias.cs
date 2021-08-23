@@ -2172,6 +2172,8 @@ namespace OBBDSIIG.Forms.FrmImportar
 
                                 if (TabRegProcedCen.HasRows == false)
                                 {
+
+
                                     Utils.SqlDatos = "INSERT INTO [DACONEXTSQL].[dbo].[Datos registro de procedimientos] " +
                                     "(" +
                                     "CodAten," +
@@ -2183,11 +2185,6 @@ namespace OBBDSIIG.Forms.FrmImportar
                                     "Obser," +
                                     "CodMed," +
                                     "Leido," +
-
-                                    //'********** Campos que no aparecen en la E.S.E de san agustin
-                                    //'"TipoOrdenIMA," +TipoOrdenIMA
-                                    //'**********
-
                                     "LugarAten," +
                                     "POS," +
                                     "Frecuencia," +
@@ -2215,6 +2212,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                                     "'" + TabRegProced["Frecuencia"].ToString() + "'," +
                                     "'" + TabRegProced["Control"].ToString() + "'," +
                                     "'" + TabRegProced["EfectoTerapeutico"].ToString() + "'," +
+                                    "'" + TabRegProced["AternativaPOS"].ToString() + "'," +
                                     "'" + TabRegProced["CopPOSAlternativo"].ToString() + "'," +
                                     "'" + TabRegProced["PorquenoSerealiza"].ToString() + "'," +
                                    $"{Conexion.ValidarFechaNula(TabRegProced["FechaReg"].ToString())}" +
@@ -3206,7 +3204,6 @@ namespace OBBDSIIG.Forms.FrmImportar
             }
         } //Carga datos de los usuairos
 
-
         private void CargarRangoFechas()
         {
             try
@@ -3228,7 +3225,6 @@ namespace OBBDSIIG.Forms.FrmImportar
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         } //Carga las fechas desde la fecha actual y un mes antes. Para los filtros
-
 
         private void ConectarPortatil()
         {
@@ -3272,8 +3268,6 @@ namespace OBBDSIIG.Forms.FrmImportar
             }
         }
 
-
-
         private void FrmImportSedeCentralHistorias_Load(object sender, EventArgs e)
         {
             try
@@ -3295,6 +3289,7 @@ namespace OBBDSIIG.Forms.FrmImportar
         {
             try
             {
+
                 string UsaRegis = "", SqlHistoCli = "", SqlHistCen = "", CodBusAten, SqlAnexPor = "", NumUniAnexa = "", HistoPaci = "", SqlAnexCen = "";
 
                 DateTime Fecha2 = DateTime.Now;
@@ -3379,16 +3374,21 @@ namespace OBBDSIIG.Forms.FrmImportar
 
 
 
+                    //SqlHistoCli = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos atencion de la consulta] ";
+                    //SqlHistoCli += "WHERE ([Datos atencion de la consulta].Activa = 'False' ) AND ";
+                    //SqlHistoCli += "([Datos atencion de la consulta].FecAtenc >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) AND";
+                    //SqlHistoCli += "([Datos atencion de la consulta].FecAtenc <= CONVERT(DATETIME, '" + FecFinPro + "', 102))";
+
+
                     SqlHistoCli = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos atencion de la consulta] ";
-                    SqlHistoCli += "WHERE ([Datos atencion de la consulta].PrefiHis = N'" + PfiPor + "') AND";
+                    SqlHistoCli += "WHERE ([Datos atencion de la consulta].PrefiHis = N'" + PfiCen + "') AND";
                     SqlHistoCli += "([Datos atencion de la consulta].Activa = 'False' ) AND ";
                     SqlHistoCli += "([Datos atencion de la consulta].FecAtenc >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) AND";
                     SqlHistoCli += "([Datos atencion de la consulta].FecAtenc <= CONVERT(DATETIME, '" + FecFinPro + "', 102))";
 
 
                     string SqlHistoCliCount = "SELECT count(*) as totalAten FROM [DACONEXTSQL].[dbo].[Datos atencion de la consulta] ";
-                    SqlHistoCliCount += "WHERE ([Datos atencion de la consulta].PrefiHis = N'" + PfiPor + "') AND";
-                    SqlHistoCliCount += "([Datos atencion de la consulta].Activa = 'False' ) AND ";
+                    SqlHistoCliCount += "WHERE ([Datos atencion de la consulta].PrefiHis = N'" + PfiCen + "') AND ([Datos atencion de la consulta].Activa = 'False' ) AND ";
                     SqlHistoCliCount += "([Datos atencion de la consulta].FecAtenc >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) AND";
                     SqlHistoCliCount += "([Datos atencion de la consulta].FecAtenc <= CONVERT(DATETIME, '" + FecFinPro + "', 102))";
 
@@ -3608,7 +3608,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                                          "'" + TabHistoCli["UnidadEdad"].ToString() + "'," +
                                          "'" + TabHistoCli["ValorEdad"].ToString() + "'," +
                                          "'" + TabHistoCli["EdadMeses"].ToString() + "'," +
-                                         "'" + TabHistoCli["CodMediIngresan"].ToString() + "'," +
+                                         "'" + TabHistoCli["CodMediIngresa"].ToString() + "'," +
                                          "'" + TabHistoCli["CodiMedi"].ToString() + "'," +
                                          "'" + TabHistoCli["CodEspeci"].ToString() + "'," +
                                          "'" + TabHistoCli["CodiMediSalida"].ToString() + "'," +
@@ -3645,7 +3645,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                                          "'" + TabHistoCli["IMC"].ToString() + "'," +
                                          "'" + TabHistoCli["CatIMC"].ToString() + "'," +
                                          "'" + TabHistoCli["PerimetroCefalico"].ToString() + "'," +
-                                         "'" + TabHistoCli["SPO2SPO2"].ToString() + "'," +
+                                         "'" + TabHistoCli["SPO2"].ToString() + "'," +
                                          "'" + TabHistoCli["CabezaCuello"].ToString() + "'," +
                                          "'" + TabHistoCli["Endocrino"].ToString() + "'," +
                                          "'" + TabHistoCli["CardioPulmonar"].ToString() + "'," +
@@ -3702,7 +3702,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                                         //TabHistorCen!ObservaImagen = TabHistoCli!ObservaImagen
                                         //'**********
                                          "'" + TabHistoCli["IngresoEPI"].ToString() + "'," +
-                                         "'" + TabHistoCli["EvolucionEPI, +"].ToString() + "'," +
+                                         "'" + TabHistoCli["EvolucionEPI"].ToString() + "'," +
                                          "'" + TabHistoCli["EgresoEPI"].ToString() + "'," +
                                          "'" + TabHistoCli["CodiMediEpi"].ToString() + "'," +
                                         $"{Conexion.ValidarFechaNula(TabHistoCli["FechaEpi"].ToString())}" +
@@ -3744,7 +3744,6 @@ namespace OBBDSIIG.Forms.FrmImportar
                                         FunDetObsDoc = DetallesdeobservacionespordocumentoIMP(CodBusAten); 
                                         FunDetEscAbre = DetalleescalaabreviadaIMP(CodBusAten);               
                                         FunRegHtaDiabe = RegistroHtaDiabeticosIMP(CodBusAten);
-
                                         FunTratamiento = TratamientosIMP(HistoPaci, CodBusAten);   
                                         FunSegControl = SeguimientodecontrolesIMP(CodBusAten);//AQUI  
                                         FunRemision = RemisionesIMP(CodBusAten);
@@ -3893,7 +3892,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                                         FunRegEvo = RegistrodeevolucionesIMP(CodBusAten);
                                         FunDetObsDoc = DetallesdeobservacionespordocumentoIMP(CodBusAten);
                                         FunDetEscAbre = DetalleescalaabreviadaIMP(CodBusAten);
-                                        FunRegHtaDiabe = RegistroHtaDiabeticosIMP(CodBusAten);
+                                        FunRegHtaDiabe = RegistroHtaDiabeticosIMP(CodBusAten);  
                                         FunTratamiento = TratamientosIMP(HistoPaci, CodBusAten);
                                         FunSegControl = SeguimientodecontrolesIMP(CodBusAten);
                                         FunRemision = RemisionesIMP(CodBusAten);
@@ -3938,6 +3937,12 @@ namespace OBBDSIIG.Forms.FrmImportar
                 BarraExportHistorias.Maximum = 1;
                 BarraExportHistorias.Value = 0;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                BarraExportHistorias.Minimum = 0;
+                BarraExportHistorias.Maximum = 1;
+                BarraExportHistorias.Value = 0;
             }
         }
 

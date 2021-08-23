@@ -122,8 +122,6 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             try
             {
 
-
-
                 if (string.IsNullOrWhiteSpace(TxtInstanCenFor.Text) || (TxtInstanCenFor.Text == ""))
                 {
                     Utils.Informa = "Lo siento pero mientras no exista";
@@ -185,8 +183,211 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     TxtCanProforVal.Text = "0";
 
 
-                    string Sqlservi, SqlServiCentra, SqlProFarPor = "", SqlProFarCen = "", CodServi = "";
+                    string Sqlservi, SqlServiCentra, SqlProFarPor = "", SqlProFarCen = "", CodServi = "", CodCaPro = "";
                     int ContiPro;
+
+
+
+                    ConectarCentral();
+
+                    Utils.SqlDatos = "SELECT * FROM [BDFARMA].[dbo].[Datos casas laboratorios] WHERE HabilCaPro = 1";
+
+                    SqlDataReader CasasLaboratoriosCen, CasasLaboratoriosPor;
+
+                    using (SqlConnection connection = new SqlConnection(Conexion.conexionSQL))
+                    {
+                        SqlCommand command = new SqlCommand(Utils.SqlDatos, connection);
+                        command.Connection.Open();
+                        CasasLaboratoriosCen = command.ExecuteReader();
+
+                        if (CasasLaboratoriosCen.HasRows == false)
+                        {
+                            Utils.Informa = "Lo siento pero no hay datos" + "\r";
+                            Utils.Informa += "para exportar o modificar en , " + "\r";
+                            Utils.Informa += "Datos casas laboratorios " + "\r";
+                            MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+
+                            ConectarPortatil();
+
+                            while (CasasLaboratoriosCen.Read())
+                            {
+                                //Revisamos si el código interno de la entidad existe
+                                CodCaPro = CasasLaboratoriosCen["CodCaPro"].ToString();
+
+
+                                Utils.SqlDatos = "SELECT * FROM [BDFARMA].[dbo].[Datos casas laboratorios] WHERE HabilCaPro = 1 AND CodCaPro = '"+ CodCaPro + "'";
+
+
+                                using (SqlConnection connection2 = new SqlConnection(Conexion.conexionSQL))
+                                {
+                                    SqlCommand command2 = new SqlCommand(Utils.SqlDatos, connection2);
+                                    command2.Connection.Open();
+                                    CasasLaboratoriosPor = command2.ExecuteReader();
+
+                                    if (CasasLaboratoriosPor.HasRows == false)
+                                    {
+                                        //'Agregue
+                                        Utils.SqlDatos = "INSERT INTO [BDFARMA].[dbo].[Datos casas laboratorios] " +
+                                        "(" +
+                                        "CodCaPro," +
+                                        "NomCaPro," +
+                                        "HabilCaPro," +
+                                        "CodRegis," +
+                                        "FecRegis," +
+                                        "FecModi," +
+                                        "CodModi" +
+                                        ")" +
+                                        "VALUES" +
+                                        "(" +
+                                        "'" + CasasLaboratoriosCen["CodCaPro"].ToString() + "'," +
+                                        "'" + CasasLaboratoriosCen["NomCaPro"].ToString() + "'," +
+                                        "'" + CasasLaboratoriosCen["HabilCaPro"].ToString() + "'," +
+                                        "'" + CasasLaboratoriosCen["CodRegis"].ToString() + "'," +
+                                        $"{Conexion.ValidarFechaNula(CasasLaboratoriosCen["FecRegis"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(CasasLaboratoriosCen["FecModi"].ToString())}" +
+                                        "'" + CasasLaboratoriosCen["CodModi"].ToString() + "'" +
+                                        ")";
+
+                                        Boolean Regis = Conexion.SqlInsert(Utils.SqlDatos);
+
+                                        ContiPro = 1;
+
+                                    }
+                                    else
+                                    {
+
+                                        Utils.SqlDatos = $"UPDATE [BDFARMA].[dbo].[Datos casas laboratorios] SET " +
+                                        "NomCaPro ='" + CasasLaboratoriosCen["NomServicio"].ToString().Replace("'", "") + "', " +
+                                        "HabilCaPro ='" + CasasLaboratoriosCen["HabilCaPro"].ToString() + "', " +
+                                        "CodRegis ='" + CasasLaboratoriosCen["CodRegis"].ToString() + "', " +
+                                        $"FecRegis = {Conexion.ValidarFechaNula(CasasLaboratoriosCen["FecRegis"].ToString())} " +
+                                        $"FecModi = {Conexion.ValidarFechaNula(CasasLaboratoriosCen["FecModi"].ToString())} " +
+                                        "CodModi ='" + CasasLaboratoriosCen["CodModi"].ToString() + "'" +
+                                        "WHERE (CodCaPro = '" + CodServi + "') ";
+
+                                        Boolean Act = Conexion.SQLUpdate(Utils.SqlDatos);
+
+
+                                    }
+
+                                }
+
+                                CasasLaboratoriosCen.Close();
+                                CasasLaboratoriosPor.Close();
+
+                            }//While
+
+                        }//Fin  if (CasasLaboratoriosCen.HasRows == false)
+
+                    }//Fin Using
+
+
+
+
+                    ConectarCentral();
+
+                    Utils.SqlDatos = "SELECT * FROM [BDFARMA].[dbo].[Datos forma farmaceutica]";
+
+                    SqlDataReader FormaFamaceuticaCen, FormaFamaceuticaPor;
+
+                    string CodForFar;
+
+                    using (SqlConnection connection = new SqlConnection(Conexion.conexionSQL))
+                    {
+                        SqlCommand command = new SqlCommand(Utils.SqlDatos, connection);
+                        command.Connection.Open();
+                        FormaFamaceuticaCen = command.ExecuteReader();
+
+                        if (FormaFamaceuticaCen.HasRows == false)
+                        {
+                            Utils.Informa = "Lo siento pero no hay datos" + "\r";
+                            Utils.Informa += "para exportar o modificar en , " + "\r";
+                            Utils.Informa += "Datos forma farmaceutica " + "\r";
+                            MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+
+                            ConectarPortatil();
+
+                            while (FormaFamaceuticaCen.Read())
+                            {
+                                //Revisamos si el código interno de la entidad existe
+                                CodForFar = FormaFamaceuticaCen["CodForFar"].ToString();
+
+
+                                Utils.SqlDatos = "SELECT * FROM [BDFARMA].[dbo].[Datos forma farmaceutica] WHERE CodForFar = '"+ CodForFar +"'";
+
+
+                                using (SqlConnection connection2 = new SqlConnection(Conexion.conexionSQL))
+                                {
+                                    SqlCommand command2 = new SqlCommand(Utils.SqlDatos, connection2);
+                                    command2.Connection.Open();
+                                    FormaFamaceuticaPor = command2.ExecuteReader();
+
+                                    if (FormaFamaceuticaPor.HasRows == false)
+                                    {
+                                        //'Agregue
+                                        Utils.SqlDatos = "INSERT INTO [BDFARMA].[dbo].[Datos forma farmaceutica] " +
+                                        "(" +
+                                        "CodForFar," +
+                                        "NomForFar," +
+                                        "ViaAdminis," +
+                                        "CodRegis," +
+                                        "FecRegis," +
+                                        "FecModi," +
+                                        "CodModi" +
+                                        ")" +
+                                        "VALUES" +
+                                        "(" +
+                                        "'" + FormaFamaceuticaCen["CodForFar"].ToString() + "'," +
+                                        "'" + FormaFamaceuticaCen["NomForFar"].ToString() + "'," +
+                                        "'" + FormaFamaceuticaCen["ViaAdminis"].ToString() + "'," +
+                                        "'" + FormaFamaceuticaCen["CodRegis"].ToString() + "'," +
+                                        $"{Conexion.ValidarFechaNula(FormaFamaceuticaCen["FecRegis"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(FormaFamaceuticaCen["FecModi"].ToString())}" +
+                                        "'" + FormaFamaceuticaCen["CodModi"].ToString() + "'" +
+                                        ")";
+
+                                        Boolean Regis = Conexion.SqlInsert(Utils.SqlDatos);
+
+                                        ContiPro = 1;
+
+                                    }
+                                    else
+                                    {
+
+                                        Utils.SqlDatos = $"UPDATE [BDFARMA].[dbo].[Datos forma farmaceutica] SET " +
+                                        "NomForFar ='" + FormaFamaceuticaCen["NomForFar"].ToString().Replace("'", "") + "', " +
+                                        "ViaAdminis ='" + FormaFamaceuticaCen["ViaAdminis"].ToString() + "', " +
+                                        "CodRegis ='" + FormaFamaceuticaCen["CodRegis"].ToString() + "', " +
+                                        $"FecRegis = {Conexion.ValidarFechaNula(FormaFamaceuticaCen["FecRegis"].ToString())} " +
+                                        $"FecModi = {Conexion.ValidarFechaNula(FormaFamaceuticaCen["FecModi"].ToString())} " +
+                                        "CodModi ='" + FormaFamaceuticaCen["CodModi"].ToString() + "'" +
+                                        "WHERE (CodForFar = '" + CodForFar + "') ";
+
+                                        Boolean Act = Conexion.SQLUpdate(Utils.SqlDatos);
+
+
+                                    }
+
+                                }
+
+                                FormaFamaceuticaPor.Close();
+                                FormaFamaceuticaCen.Close();
+
+                            }//While
+
+                        }//Fin  if (CasasLaboratoriosCen.HasRows == false)
+
+                    }//Fin Using
+
+
+
+
                     ConectarCentral();
 
 
@@ -218,6 +419,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     }
 
                     if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
+
+
 
                     Sqlservi = "SELECT * FROM [ACDATOXPSQL].[dbo].[Datos catalogo de servicios] ";
                     Sqlservi = Sqlservi + "ORDER BY CodInterno ";
@@ -478,7 +681,6 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     //'Se require porque la formulacion medica se basa en esa tabla
 
                     ConectarCentral();
-
 
 
                     string SqlProFarCenCount = "SELECT count(*) as TotalRegis ";

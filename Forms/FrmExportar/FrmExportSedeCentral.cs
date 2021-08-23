@@ -1667,7 +1667,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                                                         "'" + IteNumCon + "'," +
                                                                         "'" + TabConsumos["CodiRegis"].ToString() + "'," +
                                                                         $"{Conexion.ValidarFechaNula(TabConsumos["FecRegis"].ToString())}" +
-                                                                        $"{Conexion.ValidarHoraNula(TabCuenConsu["Horaregis"].ToString())}" +
+                                                                        $"{Conexion.ValidarHoraNula(TabConsumos["Horaregis"].ToString())}" +
                                                                         "'" + TabConsumos["CodModi"].ToString() + "'," +
                                                                         $"{Conexion.ValidarFechaNula(TabConsumos["FecModi"].ToString())}" +
                                                                         "'" + TabConsumos["VezAno"].ToString() + "'," +
