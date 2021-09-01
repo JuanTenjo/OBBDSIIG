@@ -258,7 +258,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // label15
             // 
             this.label15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(48, 301);
+            this.label15.Location = new System.Drawing.Point(10, 301);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(75, 12);
             this.label15.TabIndex = 73;
@@ -270,7 +270,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.BtnBuscarPacientes.BackgroundImage = global::OBBDSIIG.Properties.Resources.icons8_exportar_30;
             this.BtnBuscarPacientes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.BtnBuscarPacientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnBuscarPacientes.Location = new System.Drawing.Point(62, 315);
+            this.BtnBuscarPacientes.Location = new System.Drawing.Point(24, 315);
             this.BtnBuscarPacientes.Name = "BtnBuscarPacientes";
             this.BtnBuscarPacientes.Size = new System.Drawing.Size(43, 40);
             this.BtnBuscarPacientes.TabIndex = 72;
@@ -284,16 +284,16 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.groupBox6.Controls.Add(this.lblNombreUser);
             this.groupBox6.Controls.Add(this.lblCodigoUser);
             this.groupBox6.Controls.Add(this.label16);
-            this.groupBox6.Location = new System.Drawing.Point(189, 306);
+            this.groupBox6.Location = new System.Drawing.Point(91, 302);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(273, 54);
+            this.groupBox6.Size = new System.Drawing.Size(381, 53);
             this.groupBox6.TabIndex = 77;
             this.groupBox6.TabStop = false;
             // 
             // LblCodEntiFac
             // 
             this.LblCodEntiFac.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblCodEntiFac.Location = new System.Drawing.Point(205, 9);
+            this.LblCodEntiFac.Location = new System.Drawing.Point(50, 37);
             this.LblCodEntiFac.Name = "LblCodEntiFac";
             this.LblCodEntiFac.Size = new System.Drawing.Size(38, 13);
             this.LblCodEntiFac.TabIndex = 31;
@@ -304,7 +304,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // lblNivelPermitido
             // 
             this.lblNivelPermitido.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNivelPermitido.Location = new System.Drawing.Point(204, 36);
+            this.lblNivelPermitido.Location = new System.Drawing.Point(6, 37);
             this.lblNivelPermitido.Name = "lblNivelPermitido";
             this.lblNivelPermitido.Size = new System.Drawing.Size(38, 13);
             this.lblNivelPermitido.TabIndex = 30;
@@ -314,27 +314,28 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // 
             // lblNombreUser
             // 
-            this.lblNombreUser.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombreUser.Location = new System.Drawing.Point(3, 28);
+            this.lblNombreUser.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNombreUser.Location = new System.Drawing.Point(67, 16);
             this.lblNombreUser.Name = "lblNombreUser";
-            this.lblNombreUser.Size = new System.Drawing.Size(218, 18);
+            this.lblNombreUser.Size = new System.Drawing.Size(314, 18);
             this.lblNombreUser.TabIndex = 11;
             this.lblNombreUser.Text = "NombreUser";
-            this.lblNombreUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblNombreUser.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblCodigoUser
             // 
             this.lblCodigoUser.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCodigoUser.Location = new System.Drawing.Point(31, 9);
+            this.lblCodigoUser.Location = new System.Drawing.Point(28, 18);
             this.lblCodigoUser.Name = "lblCodigoUser";
-            this.lblCodigoUser.Size = new System.Drawing.Size(76, 13);
+            this.lblCodigoUser.Size = new System.Drawing.Size(43, 13);
             this.lblCodigoUser.TabIndex = 9;
+            this.lblCodigoUser.Text = "lblcodiuser";
             this.lblCodigoUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label16
             // 
             this.label16.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(0, 9);
+            this.label16.Location = new System.Drawing.Point(-3, 18);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(31, 13);
             this.label16.TabIndex = 8;
@@ -367,7 +368,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.MaximizeBox = false;
             this.Name = "FrmIntegrarBiometria";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmIntegrarBiometria";
+            this.Text = "Integrar Biometria";
             this.Load += new System.EventHandler(this.FrmIntegrarBiometria_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

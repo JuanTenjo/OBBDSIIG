@@ -111,7 +111,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             {
                 Utils.Titulo01 = "Control de errores de ejecución";
                 Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
-                Utils.Informa += "al cargar el formulario FrmIntegrarEntidades" + "\r";
+                Utils.Informa += "al cargar el formulario principal FrmIntegrarMedicos" + "\r";
                 Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

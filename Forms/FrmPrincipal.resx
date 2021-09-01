@@ -488,7 +488,7 @@
     <value>CenterScreen</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>OBBDSIIG 0.0.1 (08/07/2021) *** SIIGHOS PLUS ***</value>
+    <value>OBBDSIIG 0.0.2 (08/07/2021) *** SIIGHOS PLUS ***</value>
   </data>
   <data name="&gt;&gt;archivoToolStripMenuItem.Name" xml:space="preserve">
     <value>archivoToolStripMenuItem</value>

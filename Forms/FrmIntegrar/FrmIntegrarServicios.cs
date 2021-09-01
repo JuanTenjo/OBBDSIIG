@@ -32,6 +32,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     Utils.Informa += "usuario no es válido para realizar operaciones" + "\r";
                     Utils.Informa += "con las historias clinicas de los usuarios." + "\r";
                     MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
                     return;
                 }
                 else
@@ -190,7 +191,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                     ConectarCentral();
 
-                    Utils.SqlDatos = "SELECT * FROM [BDFARMA].[dbo].[Datos casas laboratorios] WHERE HabilCaPro = 1";
+                    Utils.SqlDatos = "SELECT * FROM [BDFARMA].[dbo].[Datos casas laboratorios]";
 
                     SqlDataReader CasasLaboratoriosCen, CasasLaboratoriosPor;
 
@@ -218,7 +219,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                 CodCaPro = CasasLaboratoriosCen["CodCaPro"].ToString();
 
 
-                                Utils.SqlDatos = "SELECT * FROM [BDFARMA].[dbo].[Datos casas laboratorios] WHERE HabilCaPro = 1 AND CodCaPro = '"+ CodCaPro + "'";
+                                Utils.SqlDatos = "SELECT * FROM [BDFARMA].[dbo].[Datos casas laboratorios] WHERE CodCaPro = '"+ CodCaPro + "'";
 
 
                                 using (SqlConnection connection2 = new SqlConnection(Conexion.conexionSQL))
@@ -260,13 +261,13 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                     {
 
                                         Utils.SqlDatos = $"UPDATE [BDFARMA].[dbo].[Datos casas laboratorios] SET " +
-                                        "NomCaPro ='" + CasasLaboratoriosCen["NomServicio"].ToString().Replace("'", "") + "', " +
+                                        "NomCaPro ='" + CasasLaboratoriosCen["NomCaPro"].ToString().Replace("'", "") + "', " +
                                         "HabilCaPro ='" + CasasLaboratoriosCen["HabilCaPro"].ToString() + "', " +
                                         "CodRegis ='" + CasasLaboratoriosCen["CodRegis"].ToString() + "', " +
                                         $"FecRegis = {Conexion.ValidarFechaNula(CasasLaboratoriosCen["FecRegis"].ToString())} " +
                                         $"FecModi = {Conexion.ValidarFechaNula(CasasLaboratoriosCen["FecModi"].ToString())} " +
                                         "CodModi ='" + CasasLaboratoriosCen["CodModi"].ToString() + "'" +
-                                        "WHERE (CodCaPro = '" + CodServi + "') ";
+                                        "WHERE (CodCaPro = '" + CodCaPro + "') ";
 
                                         Boolean Act = Conexion.SQLUpdate(Utils.SqlDatos);
 
@@ -274,18 +275,17 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                     }
 
                                 }
-
-                                CasasLaboratoriosCen.Close();
+                         
                                 CasasLaboratoriosPor.Close();
 
+
                             }//While
+                            
+                            CasasLaboratoriosCen.Close();
 
                         }//Fin  if (CasasLaboratoriosCen.HasRows == false)
 
                     }//Fin Using
-
-
-
 
                     ConectarCentral();
 
@@ -361,7 +361,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                     {
 
                                         Utils.SqlDatos = $"UPDATE [BDFARMA].[dbo].[Datos forma farmaceutica] SET " +
-                                        "NomForFar ='" + FormaFamaceuticaCen["NomForFar"].ToString().Replace("'", "") + "', " +
+                                        "NomForFar ='" + FormaFamaceuticaCen["NomForFar"].ToString() + "', " +
                                         "ViaAdminis ='" + FormaFamaceuticaCen["ViaAdminis"].ToString() + "', " +
                                         "CodRegis ='" + FormaFamaceuticaCen["CodRegis"].ToString() + "', " +
                                         $"FecRegis = {Conexion.ValidarFechaNula(FormaFamaceuticaCen["FecRegis"].ToString())} " +
@@ -376,20 +376,17 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                                 }
 
-                                FormaFamaceuticaPor.Close();
-                                FormaFamaceuticaCen.Close();
+                                FormaFamaceuticaPor.Close();                 
 
                             }//While
+
+                            FormaFamaceuticaCen.Close();
 
                         }//Fin  if (CasasLaboratoriosCen.HasRows == false)
 
                     }//Fin Using
 
-
-
-
                     ConectarCentral();
-
 
                     string SqlserviCount = "SELECT count(*) as TotalRegis FROM [ACDATOXPSQL].[dbo].[Datos catalogo de servicios] ";
 
