@@ -64,8 +64,6 @@ namespace OBBDSIIG.Forms.FrmImportar
                             SqlRemisCen += "WHERE NumeroAten = N'" + CodAteRem + "' AND RemisionNum = N'" + CodRem + "'";
 
 
-
-
                             using (SqlConnection connection = new SqlConnection(Conexion.conexionSQL))
                             {
                                 SqlCommand command = new SqlCommand(SqlRemisCen, connection);
@@ -91,10 +89,16 @@ namespace OBBDSIIG.Forms.FrmImportar
                                     "NivelRefere," +
                                     "HoraSolicita," +
                                     "HoraConfirma," +
-                                    "Qconfirma," +
-                                    "Conductor," +
-                                    "PlacaAmbu," +
-                                    "ServiRecibe," +
+                                    "Qconfirma,";
+                                    if (string.IsNullOrWhiteSpace(TabRemis["Conductor"].ToString()) == false)
+                                    {
+                                        Utils.SqlDatos += "Conductor,";
+                                    }
+                                    if (string.IsNullOrWhiteSpace(TabRemis["PlacaAmbu"].ToString()) == false)
+                                    {
+                                        Utils.SqlDatos += "PlacaAmbu,";
+                                    }
+                                    Utils.SqlDatos += "ServiRecibe," +
                                     "InstituRefer," +
                                     "CodigoDpto," +
                                     "CodigoCiudad," +
@@ -143,10 +147,18 @@ namespace OBBDSIIG.Forms.FrmImportar
                                     "'" + TabRemis["NivelRefere"].ToString() + "'," +
                                     $"{Conexion.ValidarHoraNula(TabRemis["HoraSolicita"].ToString())}" +
                                     $"{Conexion.ValidarHoraNula(TabRemis["HoraConfirma"].ToString())}" +
-                                    "'" + TabRemis["Qconfirma"].ToString() + "'," +
-                                    "'" + TabRemis["Conductor"].ToString() + "'," +
-                                    "'" + TabRemis["PlacaAmbu"].ToString() + "'," +
-                                    "'" + TabRemis["ServiRecibe"].ToString() + "'," +
+                                    "'" + TabRemis["Qconfirma"].ToString() + "',";
+
+                                    if (string.IsNullOrWhiteSpace(TabRemis["Conductor"].ToString()) == false)
+                                    {
+                                        Utils.SqlDatos += "'" + TabRemis["Conductor"].ToString() + "',";
+                                    }
+                                    if (string.IsNullOrWhiteSpace(TabRemis["PlacaAmbu"].ToString()) == false)
+                                    {
+                                        Utils.SqlDatos += "'" + TabRemis["PlacaAmbu"].ToString() + "',";
+                                    }
+
+                                    Utils.SqlDatos += "'" + TabRemis["ServiRecibe"].ToString() + "'," +
                                     "'" + TabRemis["InstituRefer"].ToString() + "'," +
                                     "'" + TabRemis["CodigoDpto"].ToString() + "'," +
                                     "'" + TabRemis["CodigoCiudad"].ToString() + "'," +
@@ -191,8 +203,6 @@ namespace OBBDSIIG.Forms.FrmImportar
 
                                     Utils.SqlDatos = "UPDATE [DACONEXTSQL].[dbo].[Datos de las remisiones] SET " +
                                     "HistoriaPaci ='" + TabRemis["HistoriaPaci"].ToString() + "'," +
-
-
                                     "RegimenRemis ='" + TabRemis["RegimenRemis"].ToString() + "'," +
                                     "CardinalEmp ='" + TabRemis["CardinalEmp"].ToString() + "'," +
                                     "ServiRemite ='" + TabRemis["ServiRemite"].ToString() + "'," +
@@ -203,10 +213,18 @@ namespace OBBDSIIG.Forms.FrmImportar
                                     "NivelRefere ='" + TabRemis["NivelRefere"].ToString() + "'," +
                                     $"HoraSolicita = {Conexion.ValidarHoraNula(TabRemis["HoraSolicita"].ToString())}" +
                                     $"HoraConfirma = {Conexion.ValidarHoraNula(TabRemis["HoraConfirma"].ToString())}" +
-                                    "Qconfirma ='" + TabRemis["Qconfirma"].ToString() + "'," +
-                                    "Conductor ='" + TabRemis["Conductor"].ToString() + "'," +
-                                    "PlacaAmbu ='" + TabRemis["PlacaAmbu"].ToString() + "'," +
-                                    "ServiRecibe ='" + TabRemis["ServiRecibe"].ToString() + "'," +
+                                    "Qconfirma ='" + TabRemis["Qconfirma"].ToString() + "',";
+
+                                    if (string.IsNullOrWhiteSpace(TabRemis["Conductor"].ToString()) == false)
+                                    {
+                                        Utils.SqlDatos += "Conductor ='" + TabRemis["Conductor"].ToString() + "',";
+                                    }
+                                    if (string.IsNullOrWhiteSpace(TabRemis["PlacaAmbu"].ToString()) == false)
+                                    {
+                                        Utils.SqlDatos += "PlacaAmbu ='" + TabRemis["PlacaAmbu"].ToString() + "',";
+                                    }
+
+                                    Utils.SqlDatos += "ServiRecibe ='" + TabRemis["ServiRecibe"].ToString() + "'," +
                                     "InstituRefer ='" + TabRemis["InstituRefer"].ToString() + "'," +
                                     "CodigoDpto ='" + TabRemis["CodigoDpto"].ToString() + "'," +
                                     "CodigoCiudad ='" + TabRemis["CodigoCiudad"].ToString() + "'," +
@@ -555,7 +573,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                                     "'" + TabSegControl["Abortos"].ToString() + "'," +
                                     "'" + TabSegControl["EspConse"].ToString() + "'," +
                                     "'" + TabSegControl["Vivos"].ToString() + "'," +
-                                    "'" + TabSegControl["Viven, +"].ToString() + "'," +
+                                    "'" + TabSegControl["Viven"].ToString() + "'," +
                                     "'" + TabSegControl["Muertos"].ToString() + "'," +
                                     "'" + TabSegControl["Muertos1Sem"].ToString() + "'," +
                                     "'" + TabSegControl["Muertos1SemDes"].ToString() + "'," +
@@ -921,7 +939,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                                     "'" + TabRegControles["NumAtencion"].ToString() + "'," +
                                     $"{Conexion.ValidarFechaNula(TabRegControles["FechaConsulta"].ToString())}" +
                                     "'" + TabRegControles["SemAmeno"].ToString() + "'," +
-                                    "'" + TabRegControles["Peso"].ToString() + "'," +
+                                    "'" + TabRegControles["Peso"].ToString().Replace(".", "") + "'," +
                                     "'" + TabRegControles["Trimestre"].ToString() + "'," +
                                     "'" + TabRegControles["Sistolica"].ToString() + "'," +
                                     "'" + TabRegControles["Diastolica"].ToString() + "'," +
@@ -945,7 +963,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                                     Utils.SqlDatos = "UPDATE [DACONEXTSQL].[dbo].[Datos registro de controles] SET " +
                                     $"FechaConsulta = {Conexion.ValidarFechaNula(TabRegControles["FechaConsulta"].ToString())}" +
                                     "SemAmeno ='" + TabRegControles["SemAmeno"].ToString() + "'," +
-                                    "Peso ='" + TabRegControles["Peso"].ToString() + "'," +
+                                    "Peso ='" + TabRegControles["Peso"].ToString().Replace(".", "") + "'," +
                                     "Trimestre ='" + TabRegControles["Trimestre"].ToString() + "'," +
                                     "Sistolica ='" + TabRegControles["Sistolica"].ToString() + "'," +
                                     "Diastolica ='" + TabRegControles["Diastolica"].ToString() + "'," +
@@ -3290,6 +3308,7 @@ namespace OBBDSIIG.Forms.FrmImportar
             try
             {
 
+
                 string UsaRegis = "", SqlHistoCli = "", SqlHistCen = "", CodBusAten, SqlAnexPor = "", NumUniAnexa = "", HistoPaci = "", SqlAnexCen = "";
 
                 DateTime Fecha2 = DateTime.Now;
@@ -3419,6 +3438,12 @@ namespace OBBDSIIG.Forms.FrmImportar
                     }
 
                     if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
+
+                    if (backgroundWorker1.IsBusy != true)
+                    {
+                        backgroundWorker1.RunWorkerAsync();
+                    }
+
 
                     SqlDataReader TabHistoCli;
 
@@ -3944,6 +3969,11 @@ namespace OBBDSIIG.Forms.FrmImportar
                 BarraExportHistorias.Maximum = 1;
                 BarraExportHistorias.Value = 0;
             }
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+
         }
 
 

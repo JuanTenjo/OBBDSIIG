@@ -418,7 +418,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.MaximizeBox = false;
             this.Name = "FrmIntegrarServicios";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmIntegrarServicios";
+            this.Text = "Integrar Servicios";
             this.Load += new System.EventHandler(this.FrmIntegrarServicios_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

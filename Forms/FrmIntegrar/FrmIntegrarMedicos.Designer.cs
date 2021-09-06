@@ -49,11 +49,11 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.BtnBuscarPacientes = new System.Windows.Forms.Button();
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.LblCodEntiFac = new System.Windows.Forms.Label();
             this.lblNivelPermitido = new System.Windows.Forms.Label();
             this.lblNombreUser = new System.Windows.Forms.Label();
             this.lblCodigoUser = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.LblCodEntiFac = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.SuspendLayout();
@@ -268,6 +268,17 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.groupBox6.TabIndex = 73;
             this.groupBox6.TabStop = false;
             // 
+            // LblCodEntiFac
+            // 
+            this.LblCodEntiFac.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblCodEntiFac.Location = new System.Drawing.Point(399, 14);
+            this.LblCodEntiFac.Name = "LblCodEntiFac";
+            this.LblCodEntiFac.Size = new System.Drawing.Size(38, 13);
+            this.LblCodEntiFac.TabIndex = 31;
+            this.LblCodEntiFac.Text = "CodEnti";
+            this.LblCodEntiFac.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LblCodEntiFac.Visible = false;
+            // 
             // lblNivelPermitido
             // 
             this.lblNivelPermitido.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -309,17 +320,6 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label16.Text = "ID:";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // LblCodEntiFac
-            // 
-            this.LblCodEntiFac.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblCodEntiFac.Location = new System.Drawing.Point(399, 14);
-            this.LblCodEntiFac.Name = "LblCodEntiFac";
-            this.LblCodEntiFac.Size = new System.Drawing.Size(38, 13);
-            this.LblCodEntiFac.TabIndex = 31;
-            this.LblCodEntiFac.Text = "CodEnti";
-            this.LblCodEntiFac.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.LblCodEntiFac.Visible = false;
-            // 
             // FrmIntegrarMedicos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -343,7 +343,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.MaximizeBox = false;
             this.Name = "FrmIntegrarMedicos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmIntegrarMedicos";
+            this.Text = "Integrar Medicos";
             this.Load += new System.EventHandler(this.FrmIntegrarMedicos_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

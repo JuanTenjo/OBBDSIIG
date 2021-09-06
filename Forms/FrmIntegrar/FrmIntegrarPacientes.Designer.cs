@@ -343,7 +343,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.MaximizeBox = false;
             this.Name = "FrmIntegrarPacientes";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmIntegrarPacientes";
+            this.Text = "Intergrar Pacientes";
             this.Load += new System.EventHandler(this.FrmIntegrarPacientes_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

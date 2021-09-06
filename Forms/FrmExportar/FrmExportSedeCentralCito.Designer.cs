@@ -406,7 +406,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.MinimizeBox = false;
             this.Name = "FrmExportSedeCentralCito";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "FrmExportSedeCentralCito";
+            this.Text = "Exportar Sede Central Citologia";
             this.Load += new System.EventHandler(this.FrmExportSedeCentralCito_Load);
             this.groupBox6.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);

@@ -392,7 +392,7 @@ namespace OBBDSIIG.Forms.FrmImportar
             this.MaximizeBox = false;
             this.Name = "FrmImportHigieneOral";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmImportHigieneOral";
+            this.Text = "Importar Higiene Oral";
             this.Load += new System.EventHandler(this.FrmImportHigieneOral_Load);
             this.groupBox6.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);

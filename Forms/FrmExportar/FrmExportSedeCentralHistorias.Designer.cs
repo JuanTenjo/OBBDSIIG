@@ -445,7 +445,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.MaximizeBox = false;
             this.Name = "FrmExportSedeCentralHistorias";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmExportSedeCentralHistorias";
+            this.Text = "Exportar Sede Central Historias";
             this.Load += new System.EventHandler(this.FrmExportSedeCentralHistorias_Load);
             this.groupBox6.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);

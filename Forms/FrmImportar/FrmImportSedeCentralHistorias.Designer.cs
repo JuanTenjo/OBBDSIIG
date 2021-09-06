@@ -58,6 +58,7 @@ namespace OBBDSIIG.Forms.FrmImportar
             this.label1 = new System.Windows.Forms.Label();
             this.BtnBuscarPacientes = new System.Windows.Forms.Button();
             this.BarraExportHistorias = new System.Windows.Forms.ProgressBar();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.groupBox6.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -362,6 +363,12 @@ namespace OBBDSIIG.Forms.FrmImportar
             this.BarraExportHistorias.Size = new System.Drawing.Size(469, 23);
             this.BarraExportHistorias.TabIndex = 73;
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            // 
             // FrmImportSedeCentralHistorias
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -386,7 +393,7 @@ namespace OBBDSIIG.Forms.FrmImportar
             this.MaximizeBox = false;
             this.Name = "FrmImportSedeCentralHistorias";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmImportSedeCentralHistorias";
+            this.Text = "Importar Sede Central Historias";
             this.Load += new System.EventHandler(this.FrmImportSedeCentralHistorias_Load);
             this.groupBox6.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -427,5 +434,6 @@ namespace OBBDSIIG.Forms.FrmImportar
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ProgressBar BarraExportHistorias;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

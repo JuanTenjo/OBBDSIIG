@@ -245,7 +245,6 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                             string Parametro1 = "null";
                             string Parametro2 = "null";
 
-
                             while (TabPacien.Read())
                             {
                                 Parametro1 = "null";
@@ -604,7 +603,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                                             "HistorPaci  = '" + TabPacien["HistorPaci"].ToString() + "', " +
                                                             "TipoIden  = '" + TabPacien["TipoIden"].ToString() + "', " +
                                                             "NumIden  = '" + TabPacien["NumIden"].ToString() + "', " +
-                                                            "Nombre1  = '" + TabPacien["Nombre1"].ToString().Replace("'","''")+ "', " +
+                                                            "Nombre1  = '" + TabPacien["Nombre1"].ToString().Replace("'","''") + "', " +
                                                             "Nombre2  = '" + TabPacien["Nombre2"].ToString().Replace("'","''") + "', " +
                                                             "Apellido1  = '" + TabPacien["Apellido1"].ToString().Replace("'","''") + "', " +
                                                             "Apellido2  = '" + TabPacien["Apellido2"].ToString().Replace("'","''") + "', " +

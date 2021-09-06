@@ -1,7 +1,7 @@
 ﻿
 namespace OBBDSIIG.Forms.FrmIntegrar
 {
-    partial class FrmIntegrarBiometria
+    partial class FrmIExportarBiometria
     {
         /// <summary>
         /// Required designer variable.
@@ -29,15 +29,11 @@ namespace OBBDSIIG.Forms.FrmIntegrar
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmIntegrarBiometria));
-            this.ProgressBar = new System.Windows.Forms.ProgressBar();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.LblCodEntiFac = new System.Windows.Forms.Label();
-            this.lblNivelPermitido = new System.Windows.Forms.Label();
-            this.lblNombreUser = new System.Windows.Forms.Label();
-            this.lblCodigoUser = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmIExportarBiometria));
+            this.TxtInstanPortaFor = new System.Windows.Forms.TextBox();
+            this.TxtInstanCenFor = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.TxtCanHueMod = new System.Windows.Forms.TextBox();
             this.TxtCanHueAgr = new System.Windows.Forms.TextBox();
@@ -51,96 +47,58 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label11 = new System.Windows.Forms.Label();
             this.TxtCanFirAgr = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.BtnBuscarPacientes = new System.Windows.Forms.Button();
-            this.TxtInstanPortaFor = new System.Windows.Forms.TextBox();
-            this.TxtInstanCenFor = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.groupBox6.SuspendLayout();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.LblCodEntiFac = new System.Windows.Forms.Label();
+            this.lblNivelPermitido = new System.Windows.Forms.Label();
+            this.lblNombreUser = new System.Windows.Forms.Label();
+            this.lblCodigoUser = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.ProgressBar = new System.Windows.Forms.ProgressBar();
             this.groupBox1.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
-            // ProgressBar
+            // TxtInstanPortaFor
             // 
-            this.ProgressBar.Location = new System.Drawing.Point(18, 268);
-            this.ProgressBar.Name = "ProgressBar";
-            this.ProgressBar.Size = new System.Drawing.Size(465, 23);
-            this.ProgressBar.TabIndex = 87;
+            this.TxtInstanPortaFor.Location = new System.Drawing.Point(110, 33);
+            this.TxtInstanPortaFor.Name = "TxtInstanPortaFor";
+            this.TxtInstanPortaFor.ReadOnly = true;
+            this.TxtInstanPortaFor.Size = new System.Drawing.Size(362, 20);
+            this.TxtInstanPortaFor.TabIndex = 71;
             // 
-            // groupBox6
+            // TxtInstanCenFor
             // 
-            this.groupBox6.Controls.Add(this.LblCodEntiFac);
-            this.groupBox6.Controls.Add(this.lblNivelPermitido);
-            this.groupBox6.Controls.Add(this.lblNombreUser);
-            this.groupBox6.Controls.Add(this.lblCodigoUser);
-            this.groupBox6.Controls.Add(this.label16);
-            this.groupBox6.Location = new System.Drawing.Point(102, 302);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(381, 53);
-            this.groupBox6.TabIndex = 86;
-            this.groupBox6.TabStop = false;
+            this.TxtInstanCenFor.Location = new System.Drawing.Point(110, 11);
+            this.TxtInstanCenFor.Name = "TxtInstanCenFor";
+            this.TxtInstanCenFor.ReadOnly = true;
+            this.TxtInstanCenFor.Size = new System.Drawing.Size(362, 20);
+            this.TxtInstanCenFor.TabIndex = 70;
             // 
-            // LblCodEntiFac
+            // label2
             // 
-            this.LblCodEntiFac.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblCodEntiFac.Location = new System.Drawing.Point(50, 37);
-            this.LblCodEntiFac.Name = "LblCodEntiFac";
-            this.LblCodEntiFac.Size = new System.Drawing.Size(38, 13);
-            this.LblCodEntiFac.TabIndex = 31;
-            this.LblCodEntiFac.Text = "CodEntiFac";
-            this.LblCodEntiFac.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.LblCodEntiFac.Visible = false;
+            this.label2.BackColor = System.Drawing.Color.LightSeaGreen;
+            this.label2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(1, 32);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(109, 23);
+            this.label2.TabIndex = 69;
+            this.label2.Text = "Instancia portatil:";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // lblNivelPermitido
+            // label1
             // 
-            this.lblNivelPermitido.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNivelPermitido.Location = new System.Drawing.Point(6, 37);
-            this.lblNivelPermitido.Name = "lblNivelPermitido";
-            this.lblNivelPermitido.Size = new System.Drawing.Size(38, 13);
-            this.lblNivelPermitido.TabIndex = 30;
-            this.lblNivelPermitido.Text = "NivelPermitido";
-            this.lblNivelPermitido.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblNivelPermitido.Visible = false;
-            // 
-            // lblNombreUser
-            // 
-            this.lblNombreUser.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombreUser.Location = new System.Drawing.Point(67, 16);
-            this.lblNombreUser.Name = "lblNombreUser";
-            this.lblNombreUser.Size = new System.Drawing.Size(314, 18);
-            this.lblNombreUser.TabIndex = 11;
-            this.lblNombreUser.Text = "NombreUser";
-            this.lblNombreUser.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblCodigoUser
-            // 
-            this.lblCodigoUser.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCodigoUser.Location = new System.Drawing.Point(28, 18);
-            this.lblCodigoUser.Name = "lblCodigoUser";
-            this.lblCodigoUser.Size = new System.Drawing.Size(43, 13);
-            this.lblCodigoUser.TabIndex = 9;
-            this.lblCodigoUser.Text = "lblcodiuser";
-            this.lblCodigoUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label16
-            // 
-            this.label16.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(-3, 18);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(31, 13);
-            this.label16.TabIndex = 8;
-            this.label16.Text = "ID:";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label15
-            // 
-            this.label15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(21, 300);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(75, 12);
-            this.label15.TabIndex = 84;
-            this.label15.Text = "Integrar";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label1.BackColor = System.Drawing.Color.LightSeaGreen;
+            this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(1, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(109, 23);
+            this.label1.TabIndex = 68;
+            this.label1.Text = "Instancia central:";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // groupBox1
             // 
@@ -159,10 +117,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.groupBox1.Controls.Add(this.TxtCanFirAgr);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox1.Location = new System.Drawing.Point(15, 70);
+            this.groupBox1.Location = new System.Drawing.Point(4, 70);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(468, 192);
-            this.groupBox1.TabIndex = 85;
+            this.groupBox1.TabIndex = 76;
             this.groupBox1.TabStop = false;
             // 
             // TxtCanHueMod
@@ -297,63 +255,105 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label10.Text = "Cantidad de Registros de firmas agregadas:";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // label15
+            // 
+            this.label15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(10, 299);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(75, 12);
+            this.label15.TabIndex = 73;
+            this.label15.Text = "Exportar";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // BtnBuscarPacientes
             // 
             this.BtnBuscarPacientes.BackgroundImage = global::OBBDSIIG.Properties.Resources.icons8_exportar_30;
             this.BtnBuscarPacientes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.BtnBuscarPacientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnBuscarPacientes.Location = new System.Drawing.Point(35, 315);
+            this.BtnBuscarPacientes.Location = new System.Drawing.Point(24, 315);
             this.BtnBuscarPacientes.Name = "BtnBuscarPacientes";
             this.BtnBuscarPacientes.Size = new System.Drawing.Size(43, 40);
-            this.BtnBuscarPacientes.TabIndex = 83;
+            this.BtnBuscarPacientes.TabIndex = 72;
             this.BtnBuscarPacientes.UseVisualStyleBackColor = true;
             this.BtnBuscarPacientes.Click += new System.EventHandler(this.BtnBuscarPacientes_Click);
             // 
-            // TxtInstanPortaFor
+            // groupBox6
             // 
-            this.TxtInstanPortaFor.Location = new System.Drawing.Point(121, 33);
-            this.TxtInstanPortaFor.Name = "TxtInstanPortaFor";
-            this.TxtInstanPortaFor.ReadOnly = true;
-            this.TxtInstanPortaFor.Size = new System.Drawing.Size(362, 20);
-            this.TxtInstanPortaFor.TabIndex = 82;
+            this.groupBox6.Controls.Add(this.LblCodEntiFac);
+            this.groupBox6.Controls.Add(this.lblNivelPermitido);
+            this.groupBox6.Controls.Add(this.lblNombreUser);
+            this.groupBox6.Controls.Add(this.lblCodigoUser);
+            this.groupBox6.Controls.Add(this.label16);
+            this.groupBox6.Location = new System.Drawing.Point(91, 302);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(381, 53);
+            this.groupBox6.TabIndex = 77;
+            this.groupBox6.TabStop = false;
             // 
-            // TxtInstanCenFor
+            // LblCodEntiFac
             // 
-            this.TxtInstanCenFor.Location = new System.Drawing.Point(121, 11);
-            this.TxtInstanCenFor.Name = "TxtInstanCenFor";
-            this.TxtInstanCenFor.ReadOnly = true;
-            this.TxtInstanCenFor.Size = new System.Drawing.Size(362, 20);
-            this.TxtInstanCenFor.TabIndex = 81;
+            this.LblCodEntiFac.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblCodEntiFac.Location = new System.Drawing.Point(50, 37);
+            this.LblCodEntiFac.Name = "LblCodEntiFac";
+            this.LblCodEntiFac.Size = new System.Drawing.Size(38, 13);
+            this.LblCodEntiFac.TabIndex = 31;
+            this.LblCodEntiFac.Text = "CodEntiFac";
+            this.LblCodEntiFac.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.LblCodEntiFac.Visible = false;
             // 
-            // label2
+            // lblNivelPermitido
             // 
-            this.label2.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.label2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(12, 32);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(109, 23);
-            this.label2.TabIndex = 80;
-            this.label2.Text = "Instancia portatil:";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblNivelPermitido.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNivelPermitido.Location = new System.Drawing.Point(6, 37);
+            this.lblNivelPermitido.Name = "lblNivelPermitido";
+            this.lblNivelPermitido.Size = new System.Drawing.Size(38, 13);
+            this.lblNivelPermitido.TabIndex = 30;
+            this.lblNivelPermitido.Text = "NivelPermitido";
+            this.lblNivelPermitido.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblNivelPermitido.Visible = false;
             // 
-            // label1
+            // lblNombreUser
             // 
-            this.label1.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(109, 23);
-            this.label1.TabIndex = 79;
-            this.label1.Text = "Instancia central:";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblNombreUser.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNombreUser.Location = new System.Drawing.Point(67, 16);
+            this.lblNombreUser.Name = "lblNombreUser";
+            this.lblNombreUser.Size = new System.Drawing.Size(314, 18);
+            this.lblNombreUser.TabIndex = 11;
+            this.lblNombreUser.Text = "NombreUser";
+            this.lblNombreUser.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // FrmIntegrarBiometria
+            // lblCodigoUser
+            // 
+            this.lblCodigoUser.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCodigoUser.Location = new System.Drawing.Point(28, 18);
+            this.lblCodigoUser.Name = "lblCodigoUser";
+            this.lblCodigoUser.Size = new System.Drawing.Size(43, 13);
+            this.lblCodigoUser.TabIndex = 9;
+            this.lblCodigoUser.Text = "lblcodiuser";
+            this.lblCodigoUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label16
+            // 
+            this.label16.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(-3, 18);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(31, 13);
+            this.label16.TabIndex = 8;
+            this.label16.Text = "ID:";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ProgressBar
+            // 
+            this.ProgressBar.Location = new System.Drawing.Point(7, 268);
+            this.ProgressBar.Name = "ProgressBar";
+            this.ProgressBar.Size = new System.Drawing.Size(465, 23);
+            this.ProgressBar.TabIndex = 78;
+            // 
+            // FrmIExportarBiometria
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(502, 369);
+            this.ClientSize = new System.Drawing.Size(481, 366);
             this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.label15);
@@ -363,29 +363,26 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.Controls.Add(this.TxtInstanCenFor);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "FrmIntegrarBiometria";
+            this.MaximizeBox = false;
+            this.Name = "FrmIExportarBiometria";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Integrar biometria";
+            this.Text = "Expotar biometria de portatil a central";
             this.Load += new System.EventHandler(this.FrmIntegrarBiometria_Load);
-            this.groupBox6.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ProgressBar ProgressBar;
-        private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.Label LblCodEntiFac;
-        private System.Windows.Forms.Label lblNivelPermitido;
-        private System.Windows.Forms.Label lblNombreUser;
-        private System.Windows.Forms.Label lblCodigoUser;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox TxtInstanPortaFor;
+        private System.Windows.Forms.TextBox TxtInstanCenFor;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox TxtCanHueMod;
         private System.Windows.Forms.TextBox TxtCanHueAgr;
@@ -399,10 +396,14 @@ namespace OBBDSIIG.Forms.FrmIntegrar
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox TxtCanFirAgr;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button BtnBuscarPacientes;
-        private System.Windows.Forms.TextBox TxtInstanPortaFor;
-        private System.Windows.Forms.TextBox TxtInstanCenFor;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Label LblCodEntiFac;
+        private System.Windows.Forms.Label lblNivelPermitido;
+        private System.Windows.Forms.Label lblNombreUser;
+        private System.Windows.Forms.Label lblCodigoUser;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.ProgressBar ProgressBar;
     }
 }

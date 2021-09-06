@@ -540,7 +540,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                          $"{Conexion.ValidarHoraNula(TabHistoCli["HoraOcurre"].ToString())}" +
                                          "'" + TabHistoCli["CausaBase"].ToString() + "'," +
                                          "'" + TabHistoCli["SitOcurre"].ToString() + "'," +
-                                         "'" + TabHistoCli["MotConsul"].ToString().Replace("'", "") + "'," +
+                                         "'" + TabHistoCli["MotConsul"].ToString().Replace("'", "''") + "'," +
                                          "'" + TabHistoCli["HistEnfActual"].ToString() + "'," +
                                          "'" + TabHistoCli["TensionSisto"].ToString() + "'," +
                                          "'" + TabHistoCli["TensionDiasto"].ToString() + "'," +
@@ -757,7 +757,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                         $"HoraOcurre = {Conexion.ValidarHoraNula(TabHistoCli["HoraOcurre"].ToString())}" +
                                         "CausaBase = '" + TabHistoCli["CausaBase"].ToString() + "'," +
                                         "SitOcurre = '" + TabHistoCli["SitOcurre"].ToString() + "'," +
-                                        "MotConsul = '" + TabHistoCli["MotConsul"].ToString().Replace("'", "") + "'," +
+                                        "MotConsul = '" + TabHistoCli["MotConsul"].ToString().Replace("'", "''") + "'," +
                                         "HistEnfActual = '" + TabHistoCli["HistEnfActual"].ToString() + "'," +
                                         "TensionSisto = '" + TabHistoCli["TensionSisto"].ToString() + "'," +
                                         "TensionDiasto = '" + TabHistoCli["TensionDiasto"].ToString() + "'," +
@@ -1178,25 +1178,31 @@ namespace OBBDSIIG.Forms.FrmExportar
                                 {
                                     Utils.SqlDatos = "INSERT INTO [DACONEXTSQL].[dbo].[Datos de las remisiones]  " +
                                     "(" +
-                                    "RemisionNum," + 
-                                    "HistoriaPaci," + 
-                                    "NumeroAten," + 
-                                    "FechaEgreso," + 
+                                    "RemisionNum," +
+                                    "HistoriaPaci," +
+                                    "NumeroAten," +
+                                    "FechaEgreso," +
                                     "HoraEgreso," +
-                                    "RegimenRemis," + 
-                                    "CardinalEmp," + 
-                                    "ServiRemite," + 
-                                    "Esperefere," + 
-                                    "Modalidad," + 
-                                    "MotivoRemi," + 
-                                    "NivelRemite," + 
-                                    "NivelRefere," + 
-                                    "HoraSolicita," + 
-                                    "HoraConfirma," + 
-                                    "Qconfirma," + 
-                                    "Conductor," + 
-                                    "PlacaAmbu," + 
-                                    "ServiRecibe," + 
+                                    "RegimenRemis," +
+                                    "CardinalEmp," +
+                                    "ServiRemite," +
+                                    "Esperefere," +
+                                    "Modalidad," +
+                                    "MotivoRemi," +
+                                    "NivelRemite," +
+                                    "NivelRefere," +
+                                    "HoraSolicita," +
+                                    "HoraConfirma," +
+                                    "Qconfirma,";
+                                    if (string.IsNullOrWhiteSpace(TabRemis["Conductor"].ToString()) == false)
+                                    {
+                                        Utils.SqlDatos += "Conductor,";
+                                    }
+                                    if (string.IsNullOrWhiteSpace(TabRemis["PlacaAmbu"].ToString()) == false)
+                                    {
+                                        Utils.SqlDatos += "PlacaAmbu,";
+                                    }
+                                    Utils.SqlDatos +=  "ServiRecibe," + 
                                     "InstituRefer," + 
                                     "CodigoDpto," + 
                                     "CodigoCiudad," + 
@@ -1245,10 +1251,17 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "'" + TabRemis["NivelRefere"].ToString() + "'," +
                                     $"{Conexion.ValidarHoraNula(TabRemis["HoraSolicita"].ToString())}" +
                                     $"{Conexion.ValidarHoraNula(TabRemis["HoraConfirma"].ToString())}" +
-                                    "'" + TabRemis["Qconfirma"].ToString() + "'," +
-                                    "'" + TabRemis["Conductor"].ToString() + "'," +
-                                    "'" + TabRemis["PlacaAmbu"].ToString() + "'," +
-                                    "'" + TabRemis["ServiRecibe"].ToString() + "'," +
+                                    "'" + TabRemis["Qconfirma"].ToString() + "',";
+
+                                    if (string.IsNullOrWhiteSpace(TabRemis["Conductor"].ToString()) == false)
+                                    {
+                                        Utils.SqlDatos += "'" + TabRemis["Conductor"].ToString() + "',";
+                                    }
+                                    if (string.IsNullOrWhiteSpace(TabRemis["PlacaAmbu"].ToString()) == false)
+                                    {
+                                        Utils.SqlDatos += "'" + TabRemis["PlacaAmbu"].ToString() + "',";
+                                    }
+                                    Utils.SqlDatos += "'" + TabRemis["ServiRecibe"].ToString() + "'," +
                                     "'" + TabRemis["InstituRefer"].ToString() + "'," +
                                     "'" + TabRemis["CodigoDpto"].ToString() + "'," +
                                     "'" + TabRemis["CodigoCiudad"].ToString() + "'," +
@@ -1305,10 +1318,16 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "NivelRefere ='" + TabRemis["NivelRefere"].ToString() + "'," +
                                     $"HoraSolicita = {Conexion.ValidarHoraNula(TabRemis["HoraSolicita"].ToString())}" +
                                     $"HoraConfirma = {Conexion.ValidarHoraNula(TabRemis["HoraConfirma"].ToString())}" +
-                                    "Qconfirma ='" + TabRemis["Qconfirma"].ToString() + "'," +
-                                    "Conductor ='" + TabRemis["Conductor"].ToString() + "'," +
-                                    "PlacaAmbu ='" + TabRemis["PlacaAmbu"].ToString() + "'," +
-                                    "ServiRecibe ='" + TabRemis["ServiRecibe"].ToString() + "'," +
+                                    "Qconfirma ='" + TabRemis["Qconfirma"].ToString() + "',";
+                                    if (string.IsNullOrWhiteSpace(TabRemis["Conductor"].ToString()) == false)
+                                    {
+                                        Utils.SqlDatos += "Conductor ='" + TabRemis["Conductor"].ToString() + "',";
+                                    }
+                                    if (string.IsNullOrWhiteSpace(TabRemis["PlacaAmbu"].ToString()) == false)
+                                    {
+                                        Utils.SqlDatos += "PlacaAmbu ='" + TabRemis["PlacaAmbu"].ToString() + "',";
+                                    }
+                                    Utils.SqlDatos += "ServiRecibe ='" + TabRemis["ServiRecibe"].ToString() + "'," +
                                     "InstituRefer ='" + TabRemis["InstituRefer"].ToString() + "'," +
                                     "CodigoDpto ='" + TabRemis["CodigoDpto"].ToString() + "'," +
                                     "CodigoCiudad ='" + TabRemis["CodigoCiudad"].ToString() + "'," +
@@ -3952,11 +3971,11 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "'" + TabRegEvo["CodAtencion"].ToString() + "'," +
                                     $"{Conexion.ValidarFechaNula(TabRegEvo["FechaEvolucion"].ToString())}" +
                                     $"{Conexion.ValidarHoraNula(TabRegEvo["HoraEvolucion"].ToString())}" +
-                                    "'" + TabRegEvo["NotaEvolucion"].ToString().Replace("'", "") + "'," +
-                                    "'" + TabRegEvo["Subjetivo"].ToString().Replace("'", "") + "'," +
-                                    "'" + TabRegEvo["Objetivo"].ToString().Replace("'", "") + "'," +
-                                    "'" + TabRegEvo["Analisis"].ToString().Replace("'", "") + "'," +
-                                    "'" + TabRegEvo["PlanN"].ToString().Replace("'", "") + "'," +
+                                    "'" + TabRegEvo["NotaEvolucion"].ToString().Replace("'", "''") + "'," +
+                                    "'" + TabRegEvo["Subjetivo"].ToString().Replace("'", "''") + "'," +
+                                    "'" + TabRegEvo["Objetivo"].ToString().Replace("'", "''") + "'," +
+                                    "'" + TabRegEvo["Analisis"].ToString().Replace("'", "''") + "'," +
+                                    "'" + TabRegEvo["PlanN"].ToString().Replace("'", "''") + "'," +
                                     "'" + TabRegEvo["TensionSisto"].ToString() + "'," +
                                     "'" + TabRegEvo["TensionDiasto"].ToString() + "'," +
                                     "'" + TabRegEvo["FrecuCardi"].ToString() + "'," +
@@ -3988,11 +4007,11 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "TipodeIngreso = '" + TabRegEvo["TipodeIngreso"].ToString() + "'," +
                                    $"FechaEvolucion = {Conexion.ValidarFechaNula(TabRegEvo["FechaEvolucion"].ToString())} " +
                                     $"HoraEvolucion = {Conexion.ValidarHoraNula(TabRegEvo["HoraEvolucion"].ToString())}" +
-                                    "NotaEvolucion = '" + TabRegEvo["NotaEvolucion"].ToString().Replace("'","") + " '," +
-                                    "Subjetivo = '" + TabRegEvo["Subjetivo"].ToString().Replace("'", "") + "'," +
-                                    "Objetivo = '" + TabRegEvo["Objetivo"].ToString().Replace("'", "") + "'," +
-                                    "Analisis = '" + TabRegEvo["Analisis"].ToString().Replace("'", "") + "'," +
-                                    "PlanN = '" + TabRegEvo["PlanN"].ToString().Replace("'", "") + "'," +
+                                    "NotaEvolucion = '" + TabRegEvo["NotaEvolucion"].ToString().Replace("'","''") + " '," +
+                                    "Subjetivo = '" + TabRegEvo["Subjetivo"].ToString().Replace("'", "''") + "'," +
+                                    "Objetivo = '" + TabRegEvo["Objetivo"].ToString().Replace("'", "''") + "'," +
+                                    "Analisis = '" + TabRegEvo["Analisis"].ToString().Replace("'", "''") + "'," +
+                                    "PlanN = '" + TabRegEvo["PlanN"].ToString().Replace("'", "''") + "'," +
                                     "TensionSisto = '" + TabRegEvo["TensionSisto"].ToString() + "'," +
                                     "TensionDiasto = '" + TabRegEvo["TensionDiasto"].ToString() + "'," +
                                     "FrecuCardi = '" + TabRegEvo["FrecuCardi"].ToString() + "'," +
@@ -4124,7 +4143,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "'" + TabAntPac["CodigoAnteced"].ToString() + "'," +
                                     "'" + TabAntPac["TipoAnteced"].ToString() + "'," +
                                     "'" + TabAntPac["CodAten"].ToString() + "'," +
-                                    "'" + TabAntPac["Observaciones"].ToString().Replace("'", "") + "'," +
+                                    "'" + TabAntPac["Observaciones"].ToString().Replace("'", "''") + "'," +
                                     "'" + TabAntPac["Cantidad"].ToString() + "'," +
                                      $"{Conexion.ValidarFechaNula(TabAntPac["FechasAntecede"].ToString())}" +
                                     "'" + TabAntPac["Incluido"].ToString() + "'," +

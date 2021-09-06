@@ -249,10 +249,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                 SqlEmpTerCentra = "SELECT [Datos empresas y terceros].* ";
                                 SqlEmpTerCentra = SqlEmpTerCentra + "FROM [ACDATOXPSQL].[dbo].[Datos empresas y terceros] ";
                                 SqlEmpTerCentra = SqlEmpTerCentra + "WHERE (CarAdmin = '" + CodAdm + "')";
-
-
-                                 
-
+                          
                                 ConectarPortatil();
 
                                 SqlDataReader TabEmpTerCentra;

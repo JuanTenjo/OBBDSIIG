@@ -53,6 +53,7 @@ namespace OBBDSIIG.Forms
             this.lblFecha = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblCodUsuario = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblNomUsuario = new System.Windows.Forms.ToolStripStatusLabel();
+            this.sedeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -86,7 +87,8 @@ namespace OBBDSIIG.Forms
             this.sedeCentralToolStripMenuItem,
             this.sedeCentralCitologiaToolStripMenuItem,
             this.sedeCenrtralHigieneOralToolStripMenuItem,
-            this.sedeCentralHistoriasToolStripMenuItem1});
+            this.sedeCentralHistoriasToolStripMenuItem1,
+            this.sedeToolStripMenuItem});
             this.exportarToolStripMenuItem.Name = "exportarToolStripMenuItem";
             resources.ApplyResources(this.exportarToolStripMenuItem, "exportarToolStripMenuItem");
             // 
@@ -218,6 +220,12 @@ namespace OBBDSIIG.Forms
             this.lblNomUsuario.Name = "lblNomUsuario";
             resources.ApplyResources(this.lblNomUsuario, "lblNomUsuario");
             // 
+            // sedeToolStripMenuItem
+            // 
+            this.sedeToolStripMenuItem.Name = "sedeToolStripMenuItem";
+            resources.ApplyResources(this.sedeToolStripMenuItem, "sedeToolStripMenuItem");
+            this.sedeToolStripMenuItem.Click += new System.EventHandler(this.sedeToolStripMenuItem_Click);
+            // 
             // FrmPrincipal
             // 
             resources.ApplyResources(this, "$this");
@@ -264,5 +272,6 @@ namespace OBBDSIIG.Forms
         private System.Windows.Forms.ToolStripMenuItem pacientesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem serviciosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem usuariosToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem sedeToolStripMenuItem;
     }
 }

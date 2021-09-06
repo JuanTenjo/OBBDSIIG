@@ -39,7 +39,6 @@ C:\Users\tenjo\OneDrive\Escritorio\OBBDSIIG\obj\Debug\OBBDSIIG.Forms.FrmExportar
 C:\Users\tenjo\OneDrive\Escritorio\OBBDSIIG\obj\Debug\OBBDSIIG.Forms.FrmImportar.FrmImportHigieneOral.resources
 C:\Users\tenjo\OneDrive\Escritorio\OBBDSIIG\obj\Debug\OBBDSIIG.Forms.FrmImportar.FrmImportSedeCentral.resources
 C:\Users\tenjo\OneDrive\Escritorio\OBBDSIIG\obj\Debug\OBBDSIIG.Forms.FrmImportar.FrmImportSedeCentralHistorias.resources
-C:\Users\tenjo\OneDrive\Escritorio\OBBDSIIG\obj\Debug\OBBDSIIG.Forms.FrmIntegrar.FrmIntegrarBiometria.resources
 C:\Users\tenjo\OneDrive\Escritorio\OBBDSIIG\obj\Debug\OBBDSIIG.Forms.FrmIntegrar.FrmIntegrarEntidades.resources
 C:\Users\tenjo\OneDrive\Escritorio\OBBDSIIG\obj\Debug\OBBDSIIG.Forms.FrmIntegrar.FrmIntegrarMedicos.resources
 C:\Users\tenjo\OneDrive\Escritorio\OBBDSIIG\obj\Debug\OBBDSIIG.Forms.FrmIntegrar.FrmIntegrarPacientes.resources
@@ -52,3 +51,5 @@ C:\Users\tenjo\OneDrive\Escritorio\OBBDSIIG\obj\Debug\OBBDSIIG.Forms.FrmPrincipa
 C:\Users\tenjo\OneDrive\Escritorio\OBBDSIIG\obj\Debug\OBBDSIIG.csproj.GenerateResource.cache
 C:\Users\tenjo\OneDrive\Escritorio\OBBDSIIG\obj\Debug\OBBDSIIG.csproj.CoreCompileInputs.cache
 C:\Users\tenjo\OneDrive\Escritorio\OBBDSIIG\obj\Debug\es-CO\OBBDSIIG.resources.dll
+C:\Users\tenjo\OneDrive\Escritorio\OBBDSIIG\obj\Debug\OBBDSIIG.Forms.FrmIntegrar.FrmIExportarBiometria.resources
+C:\Users\tenjo\OneDrive\Escritorio\OBBDSIIG\obj\Debug\OBBDSIIG.Forms.FrmIntegrar.FrmIntegrarBiometria.resources

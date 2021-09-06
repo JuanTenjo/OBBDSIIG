@@ -392,7 +392,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.MaximizeBox = false;
             this.Name = "FrmExportHigieneOral";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmExportHigieneOral";
+            this.Text = "Exportar Higiene Oral";
             this.Load += new System.EventHandler(this.FrmExportHigieneOral_Load);
             this.groupBox6.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);

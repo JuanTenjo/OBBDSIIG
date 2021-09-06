@@ -236,8 +236,13 @@ namespace OBBDSIIG.Forms
                                    "User ID= " + Conexion.username + "; " +
                                    "Password=" + Conexion.password;
 
+
+
+            //FrmImpo
+
             FrmIntegrarBiometria frmIntegrarBiometria = new FrmIntegrarBiometria();
             frmIntegrarBiometria.ShowDialog();
+
 
         }
 
@@ -332,6 +337,19 @@ namespace OBBDSIIG.Forms
             empresa.ShowDialog();
 
 
+        }
+
+        private void sedeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Utils.BaseDeDatosPrincipal = "ACDATOXPSQL";
+
+            Conexion.conexionSQL = "Server=" + Conexion.servidor + "; " +
+                                   "Initial Catalog=" + Utils.BaseDeDatosPrincipal + ";" +
+                                   "User ID= " + Conexion.username + "; " +
+                                   "Password=" + Conexion.password;
+
+            FrmIExportarBiometria frmIntegrarBiometria = new FrmIExportarBiometria();
+            frmIntegrarBiometria.ShowDialog();
         }
     }
 }
