@@ -61,9 +61,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // label15
             // 
             this.label15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(395, 82);
+            this.label15.Location = new System.Drawing.Point(527, 89);
+            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(75, 12);
+            this.label15.Size = new System.Drawing.Size(100, 22);
             this.label15.TabIndex = 81;
             this.label15.Text = "Integrar";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -73,9 +74,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.BtnBuscarPacientes.BackgroundImage = global::OBBDSIIG.Properties.Resources.icons8_exportar_30;
             this.BtnBuscarPacientes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.BtnBuscarPacientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnBuscarPacientes.Location = new System.Drawing.Point(406, 98);
+            this.BtnBuscarPacientes.Location = new System.Drawing.Point(542, 114);
+            this.BtnBuscarPacientes.Margin = new System.Windows.Forms.Padding(4);
             this.BtnBuscarPacientes.Name = "BtnBuscarPacientes";
-            this.BtnBuscarPacientes.Size = new System.Drawing.Size(43, 34);
+            this.BtnBuscarPacientes.Size = new System.Drawing.Size(57, 42);
             this.BtnBuscarPacientes.TabIndex = 80;
             this.BtnBuscarPacientes.UseVisualStyleBackColor = true;
             this.BtnBuscarPacientes.Click += new System.EventHandler(this.BtnBuscarPacientes_Click);
@@ -91,19 +93,22 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox1.Location = new System.Drawing.Point(12, 58);
+            this.groupBox1.Location = new System.Drawing.Point(16, 71);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(339, 95);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Size = new System.Drawing.Size(448, 104);
             this.groupBox1.TabIndex = 79;
             this.groupBox1.TabStop = false;
             // 
             // TxtPaciExis
             // 
             this.TxtPaciExis.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtPaciExis.Location = new System.Drawing.Point(268, 65);
+            this.TxtPaciExis.Location = new System.Drawing.Point(357, 73);
+            this.TxtPaciExis.Margin = new System.Windows.Forms.Padding(4);
             this.TxtPaciExis.Name = "TxtPaciExis";
             this.TxtPaciExis.ReadOnly = true;
-            this.TxtPaciExis.Size = new System.Drawing.Size(65, 20);
+            this.TxtPaciExis.Size = new System.Drawing.Size(85, 23);
             this.TxtPaciExis.TabIndex = 24;
             this.TxtPaciExis.Text = "0";
             this.TxtPaciExis.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -111,10 +116,11 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // TxtCanPaciForm
             // 
             this.TxtCanPaciForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtCanPaciForm.Location = new System.Drawing.Point(268, 41);
+            this.TxtCanPaciForm.Location = new System.Drawing.Point(357, 43);
+            this.TxtCanPaciForm.Margin = new System.Windows.Forms.Padding(4);
             this.TxtCanPaciForm.Name = "TxtCanPaciForm";
             this.TxtCanPaciForm.ReadOnly = true;
-            this.TxtCanPaciForm.Size = new System.Drawing.Size(65, 20);
+            this.TxtCanPaciForm.Size = new System.Drawing.Size(85, 23);
             this.TxtCanPaciForm.TabIndex = 23;
             this.TxtCanPaciForm.Text = "0";
             this.TxtCanPaciForm.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -122,10 +128,11 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // TxtCanPaciFor
             // 
             this.TxtCanPaciFor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtCanPaciFor.Location = new System.Drawing.Point(268, 18);
+            this.TxtCanPaciFor.Location = new System.Drawing.Point(357, 15);
+            this.TxtCanPaciFor.Margin = new System.Windows.Forms.Padding(4);
             this.TxtCanPaciFor.Name = "TxtCanPaciFor";
             this.TxtCanPaciFor.ReadOnly = true;
-            this.TxtCanPaciFor.Size = new System.Drawing.Size(65, 20);
+            this.TxtCanPaciFor.Size = new System.Drawing.Size(85, 23);
             this.TxtCanPaciFor.TabIndex = 22;
             this.TxtCanPaciFor.Text = "0";
             this.TxtCanPaciFor.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -135,9 +142,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label13.BackColor = System.Drawing.Color.LightSeaGreen;
             this.label13.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.Color.White;
-            this.label13.Location = new System.Drawing.Point(0, 64);
+            this.label13.Location = new System.Drawing.Point(0, 71);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(267, 23);
+            this.label13.Size = new System.Drawing.Size(356, 28);
             this.label13.TabIndex = 20;
             this.label13.Text = "Pacientes validados:";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -147,9 +155,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label12.BackColor = System.Drawing.Color.LightSeaGreen;
             this.label12.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.Color.White;
-            this.label12.Location = new System.Drawing.Point(0, 40);
+            this.label12.Location = new System.Drawing.Point(0, 41);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(267, 23);
+            this.label12.Size = new System.Drawing.Size(356, 28);
             this.label12.TabIndex = 19;
             this.label12.Text = "Pacientes agregados al equipo actual:";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -159,9 +168,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label11.BackColor = System.Drawing.Color.LightSeaGreen;
             this.label11.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(0, 16);
+            this.label11.Location = new System.Drawing.Point(0, 12);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(267, 23);
+            this.label11.Size = new System.Drawing.Size(356, 28);
             this.label11.TabIndex = 18;
             this.label11.Text = "Cantidad de Registros de Pacientes:";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -169,19 +179,21 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // TxtPrefiPorFor
             // 
             this.TxtPrefiPorFor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtPrefiPorFor.Location = new System.Drawing.Point(435, 32);
+            this.TxtPrefiPorFor.Location = new System.Drawing.Point(580, 39);
+            this.TxtPrefiPorFor.Margin = new System.Windows.Forms.Padding(4);
             this.TxtPrefiPorFor.Name = "TxtPrefiPorFor";
             this.TxtPrefiPorFor.ReadOnly = true;
-            this.TxtPrefiPorFor.Size = new System.Drawing.Size(59, 20);
+            this.TxtPrefiPorFor.Size = new System.Drawing.Size(77, 23);
             this.TxtPrefiPorFor.TabIndex = 78;
             // 
             // TxtPrefiCenFor
             // 
             this.TxtPrefiCenFor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtPrefiCenFor.Location = new System.Drawing.Point(435, 10);
+            this.TxtPrefiCenFor.Location = new System.Drawing.Point(580, 12);
+            this.TxtPrefiCenFor.Margin = new System.Windows.Forms.Padding(4);
             this.TxtPrefiCenFor.Name = "TxtPrefiCenFor";
             this.TxtPrefiCenFor.ReadOnly = true;
-            this.TxtPrefiCenFor.Size = new System.Drawing.Size(59, 20);
+            this.TxtPrefiCenFor.Size = new System.Drawing.Size(77, 23);
             this.TxtPrefiCenFor.TabIndex = 77;
             // 
             // label4
@@ -189,9 +201,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label4.BackColor = System.Drawing.Color.LightSeaGreen;
             this.label4.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(376, 30);
+            this.label4.Location = new System.Drawing.Point(501, 37);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(59, 23);
+            this.label4.Size = new System.Drawing.Size(79, 28);
             this.label4.TabIndex = 76;
             this.label4.Text = "Prefijo:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -201,27 +214,30 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label3.BackColor = System.Drawing.Color.LightSeaGreen;
             this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(376, 8);
+            this.label3.Location = new System.Drawing.Point(501, 10);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(59, 23);
+            this.label3.Size = new System.Drawing.Size(79, 28);
             this.label3.TabIndex = 75;
             this.label3.Text = "Prefijo:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // TxtInstanPortaFor
             // 
-            this.TxtInstanPortaFor.Location = new System.Drawing.Point(139, 33);
+            this.TxtInstanPortaFor.Location = new System.Drawing.Point(185, 41);
+            this.TxtInstanPortaFor.Margin = new System.Windows.Forms.Padding(4);
             this.TxtInstanPortaFor.Name = "TxtInstanPortaFor";
             this.TxtInstanPortaFor.ReadOnly = true;
-            this.TxtInstanPortaFor.Size = new System.Drawing.Size(235, 20);
+            this.TxtInstanPortaFor.Size = new System.Drawing.Size(312, 22);
             this.TxtInstanPortaFor.TabIndex = 74;
             // 
             // TxtInstanCenFor
             // 
-            this.TxtInstanCenFor.Location = new System.Drawing.Point(139, 11);
+            this.TxtInstanCenFor.Location = new System.Drawing.Point(185, 14);
+            this.TxtInstanCenFor.Margin = new System.Windows.Forms.Padding(4);
             this.TxtInstanCenFor.Name = "TxtInstanCenFor";
             this.TxtInstanCenFor.ReadOnly = true;
-            this.TxtInstanCenFor.Size = new System.Drawing.Size(235, 20);
+            this.TxtInstanCenFor.Size = new System.Drawing.Size(312, 22);
             this.TxtInstanCenFor.TabIndex = 73;
             // 
             // label2
@@ -229,9 +245,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label2.BackColor = System.Drawing.Color.LightSeaGreen;
             this.label2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(12, 32);
+            this.label2.Location = new System.Drawing.Point(16, 39);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(127, 23);
+            this.label2.Size = new System.Drawing.Size(169, 28);
             this.label2.TabIndex = 72;
             this.label2.Text = "Instancia portatil:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -241,18 +258,20 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label1.BackColor = System.Drawing.Color.LightSeaGreen;
             this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(16, 11);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(127, 23);
+            this.label1.Size = new System.Drawing.Size(169, 28);
             this.label1.TabIndex = 71;
             this.label1.Text = "Instancia central:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ProgressBar
             // 
-            this.ProgressBar.Location = new System.Drawing.Point(12, 159);
+            this.ProgressBar.Location = new System.Drawing.Point(16, 183);
+            this.ProgressBar.Margin = new System.Windows.Forms.Padding(4);
             this.ProgressBar.Name = "ProgressBar";
-            this.ProgressBar.Size = new System.Drawing.Size(482, 23);
+            this.ProgressBar.Size = new System.Drawing.Size(643, 28);
             this.ProgressBar.TabIndex = 83;
             // 
             // groupBox6
@@ -262,18 +281,21 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.groupBox6.Controls.Add(this.lblNombreUser);
             this.groupBox6.Controls.Add(this.lblCodigoUser);
             this.groupBox6.Controls.Add(this.label16);
-            this.groupBox6.Location = new System.Drawing.Point(12, 190);
+            this.groupBox6.Location = new System.Drawing.Point(16, 219);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(482, 34);
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox6.Size = new System.Drawing.Size(643, 42);
             this.groupBox6.TabIndex = 84;
             this.groupBox6.TabStop = false;
             // 
             // LblCodEntiFac
             // 
             this.LblCodEntiFac.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblCodEntiFac.Location = new System.Drawing.Point(399, 14);
+            this.LblCodEntiFac.Location = new System.Drawing.Point(532, 17);
+            this.LblCodEntiFac.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LblCodEntiFac.Name = "LblCodEntiFac";
-            this.LblCodEntiFac.Size = new System.Drawing.Size(38, 13);
+            this.LblCodEntiFac.Size = new System.Drawing.Size(51, 16);
             this.LblCodEntiFac.TabIndex = 31;
             this.LblCodEntiFac.Text = "CodEnti";
             this.LblCodEntiFac.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -282,9 +304,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // lblNivelPermitido
             // 
             this.lblNivelPermitido.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNivelPermitido.Location = new System.Drawing.Point(441, 14);
+            this.lblNivelPermitido.Location = new System.Drawing.Point(588, 17);
+            this.lblNivelPermitido.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNivelPermitido.Name = "lblNivelPermitido";
-            this.lblNivelPermitido.Size = new System.Drawing.Size(38, 13);
+            this.lblNivelPermitido.Size = new System.Drawing.Size(51, 16);
             this.lblNivelPermitido.TabIndex = 30;
             this.lblNivelPermitido.Text = "NivelPermitido";
             this.lblNivelPermitido.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -293,9 +316,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // lblNombreUser
             // 
             this.lblNombreUser.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombreUser.Location = new System.Drawing.Point(96, 9);
+            this.lblNombreUser.Location = new System.Drawing.Point(128, 11);
+            this.lblNombreUser.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNombreUser.Name = "lblNombreUser";
-            this.lblNombreUser.Size = new System.Drawing.Size(383, 22);
+            this.lblNombreUser.Size = new System.Drawing.Size(511, 27);
             this.lblNombreUser.TabIndex = 11;
             this.lblNombreUser.Text = "NombreUser";
             this.lblNombreUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -303,9 +327,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // lblCodigoUser
             // 
             this.lblCodigoUser.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCodigoUser.Location = new System.Drawing.Point(31, 9);
+            this.lblCodigoUser.Location = new System.Drawing.Point(41, 11);
+            this.lblCodigoUser.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCodigoUser.Name = "lblCodigoUser";
-            this.lblCodigoUser.Size = new System.Drawing.Size(67, 22);
+            this.lblCodigoUser.Size = new System.Drawing.Size(89, 27);
             this.lblCodigoUser.TabIndex = 9;
             this.lblCodigoUser.Text = "lblcodiuser";
             this.lblCodigoUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -313,18 +338,19 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // label16
             // 
             this.label16.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(0, 9);
+            this.label16.Location = new System.Drawing.Point(0, 11);
+            this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(31, 22);
+            this.label16.Size = new System.Drawing.Size(41, 27);
             this.label16.TabIndex = 8;
             this.label16.Text = "ID:";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FrmIntegrarPacientes
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(514, 236);
+            this.ClientSize = new System.Drawing.Size(668, 271);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.label15);
@@ -340,10 +366,11 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "FrmIntegrarPacientes";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Intergrar Pacientes";
+            this.Text = "INTEGRAR PACIENTES";
             this.Load += new System.EventHandler(this.FrmIntegrarPacientes_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

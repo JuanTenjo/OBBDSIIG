@@ -158,7 +158,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                 }
 
                 Utils.Informa = "¿Usted desea iniciar el proceso de integración de los" + "\r";
-                Utils.Informa += "datos biometricos del servidor al portatil" + "\r";
+                Utils.Informa += "datos biometricos del servidor al portatil?" + "\r";
                 var res = MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
 

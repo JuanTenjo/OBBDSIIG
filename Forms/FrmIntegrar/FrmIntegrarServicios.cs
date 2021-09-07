@@ -244,7 +244,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "VALUES" +
                                         "(" +
                                         "'" + CasasLaboratoriosCen["CodCaPro"].ToString() + "'," +
-                                        "'" + CasasLaboratoriosCen["NomCaPro"].ToString() + "'," +
+                                        "'" + CasasLaboratoriosCen["NomCaPro"].ToString().Replace("'", "''") + "'," +
                                         "'" + CasasLaboratoriosCen["HabilCaPro"].ToString() + "'," +
                                         "'" + CasasLaboratoriosCen["CodRegis"].ToString() + "'," +
                                         $"{Conexion.ValidarFechaNula(CasasLaboratoriosCen["FecRegis"].ToString())}" +
@@ -261,7 +261,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                     {
 
                                         Utils.SqlDatos = $"UPDATE [BDFARMA].[dbo].[Datos casas laboratorios] SET " +
-                                        "NomCaPro ='" + CasasLaboratoriosCen["NomCaPro"].ToString().Replace("'", "") + "', " +
+                                        "NomCaPro ='" + CasasLaboratoriosCen["NomCaPro"].ToString().Replace("'", "''") + "', " +
                                         "HabilCaPro ='" + CasasLaboratoriosCen["HabilCaPro"].ToString() + "', " +
                                         "CodRegis ='" + CasasLaboratoriosCen["CodRegis"].ToString() + "', " +
                                         $"FecRegis = {Conexion.ValidarFechaNula(CasasLaboratoriosCen["FecRegis"].ToString())} " +
@@ -344,7 +344,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "VALUES" +
                                         "(" +
                                         "'" + FormaFamaceuticaCen["CodForFar"].ToString() + "'," +
-                                        "'" + FormaFamaceuticaCen["NomForFar"].ToString() + "'," +
+                                        "'" + FormaFamaceuticaCen["NomForFar"].ToString().Replace("'", "''") + "'," +
                                         "'" + FormaFamaceuticaCen["ViaAdminis"].ToString() + "'," +
                                         "'" + FormaFamaceuticaCen["CodRegis"].ToString() + "'," +
                                         $"{Conexion.ValidarFechaNula(FormaFamaceuticaCen["FecRegis"].ToString())}" +
@@ -361,7 +361,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                     {
 
                                         Utils.SqlDatos = $"UPDATE [BDFARMA].[dbo].[Datos forma farmaceutica] SET " +
-                                        "NomForFar ='" + FormaFamaceuticaCen["NomForFar"].ToString() + "', " +
+                                        "NomForFar ='" + FormaFamaceuticaCen["NomForFar"].ToString().Replace("'", "''") + "', " +
                                         "ViaAdminis ='" + FormaFamaceuticaCen["ViaAdminis"].ToString() + "', " +
                                         "CodRegis ='" + FormaFamaceuticaCen["CodRegis"].ToString() + "', " +
                                         $"FecRegis = {Conexion.ValidarFechaNula(FormaFamaceuticaCen["FecRegis"].ToString())} " +
@@ -520,7 +520,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "VALUES" +
                                         "(" +
                                         "'" + TabServi["CodInterno"].ToString() + "'," +
-                                        "'" + TabServi["NomServicio"].ToString().Replace("'", "") + "'," +
+                                        "'" + TabServi["NomServicio"].ToString().Replace("'", "''") + "'," +
                                         "'" + TabServi["CodiMedMin"].ToString() + "'," +
                                         "'" + TabServi["GrupoServi"].ToString() + "'," +
                                         "'" + TabServi["TipoServi"].ToString() + "'," +
@@ -592,7 +592,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                     else
                                     {
                                         Utils.SqlDatos = $"UPDATE [ACDATOXPSQL].[dbo].[Datos catalogo de servicios] SET " +
-                                        "NomServicio ='" + TabServi["NomServicio"].ToString().Replace("'","") + "', " +
+                                        "NomServicio ='" + TabServi["NomServicio"].ToString().Replace("'","''") + "', " +
                                         "CodiMedMin ='" + TabServi["CodiMedMin"].ToString() + "', " +
                                         "GrupoServi ='" + TabServi["GrupoServi"].ToString() + "', " +
                                         "TipoServi ='" + TabServi["TipoServi"].ToString() + "', " +
@@ -845,8 +845,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "'" + TabProFarCen["CodiMinSa"].ToString() + "'," +
                                         "'" + TabProFarCen["CodiCUN"].ToString() + "'," +
                                         "'" + TabProFarCen["Habilitado"].ToString() + "'," +
-                                        "'" + TabProFarCen["NombreGenerico"].ToString().Replace("'","") + "'," +
-                                        "'" + TabProFarCen["NomAlterno"].ToString() + "'," +
+                                        "'" + TabProFarCen["NombreGenerico"].ToString().Replace("'","''") + "'," +
+                                        "'" + TabProFarCen["NomAlterno"].ToString().Replace("'", "''") + "'," +
                                         "'" + TabProFarCen["PrinActivo"].ToString() + "'," +
                                         "'" + TabProFarCen["CodCaProdu"].ToString() + "'," +
                                         "'" + TabProFarCen["CentCosto"].ToString() + "'," +
@@ -856,7 +856,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "'" + TabProFarCen["Decontrol"].ToString() + "'," +
                                         "'" + TabProFarCen["Medida"].ToString() + "'," +
                                         "'" + TabProFarCen["Formafarma"].ToString() + "'," +
-                                        "'" + TabProFarCen["Concentra"].ToString() + "'," +
+                                        "'" + TabProFarCen["Concentra"].ToString().Replace("'", "''") + "'," +
                                         "'" + TabProFarCen["SiPos"].ToString() + "'," +
                                         "'" + TabProFarCen["Material"].ToString() + "'," +
                                         "'" + TabProFarCen["NivelMin"].ToString() + "'," +
@@ -941,8 +941,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "CodiMinSa ='" + TabProFarCen["CodiMinSa"].ToString() + "', " +
                                         "CodiCUN ='" + TabProFarCen["CodiCUN"].ToString() + "', " +
                                         "Habilitado ='" + TabProFarCen["Habilitado"].ToString() + "', " +
-                                        "NombreGenerico ='" + TabProFarCen["NombreGenerico"].ToString() + "', " +
-                                        "NomAlterno ='" + TabProFarCen["NomAlterno"].ToString() + "', " +
+                                        "NombreGenerico ='" + TabProFarCen["NombreGenerico"].ToString().Replace("'", "''") + "', " +
+                                        "NomAlterno ='" + TabProFarCen["NomAlterno"].ToString().Replace("'", "''") + "', " +
                                         "PrinActivo ='" + TabProFarCen["PrinActivo"].ToString() + "', " +
                                         "CodCaProdu ='" + TabProFarCen["CodCaProdu"].ToString() + "', " +
                                         "CentCosto ='" + TabProFarCen["CentCosto"].ToString() + "', " +
@@ -952,7 +952,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "Decontrol ='" + TabProFarCen["Decontrol"].ToString() + "', " +
                                         "Medida ='" + TabProFarCen["Medida"].ToString() + "', " +
                                         "Formafarma ='" + TabProFarCen["Formafarma"].ToString() + "', " +
-                                        "Concentra ='" + TabProFarCen["Concentra"].ToString() + "', " +
+                                        "Concentra ='" + TabProFarCen["Concentra"].ToString().Replace("'", "''") + "', " +
                                         "SiPos ='" + TabProFarCen["SiPos"].ToString() + "', " +
                                         "Material ='" + TabProFarCen["Material"].ToString() + "', " +
                                         "NivelMin ='" + TabProFarCen["NivelMin"].ToString() + "', " +
