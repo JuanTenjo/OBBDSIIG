@@ -1054,6 +1054,8 @@ namespace OBBDSIIG.Forms.FrmImportar
                             CodAtenLoc = TabTratamiento["CodigoAten"].ToString();
                             CodTratamiento = TabTratamiento["NumTrataM1"].ToString();
 
+
+                            //Revisar
                             SqlTratamientoCen = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos de los tratamientos] ";
                             SqlTratamientoCen += "WHERE NumTrataM1 = N'" + CodTratamiento + "' AND CodigoAten = N'" + CodAtenLoc + "' AND HistorTrata = N'" + CodHistT + "'";
 
@@ -2031,6 +2033,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                             CodNumeroDocumento = "";
                             TipoDocRegis = "";
 
+                            //Revisamos si el número de codigo de atencion existe
 
                             CodDetObsDoc = TabDetObsDoc["CodigoAtencion"].ToString();
                             CodNumeroDocumento = TabDetObsDoc["NumeroDocumento"].ToString();
@@ -2295,7 +2298,7 @@ namespace OBBDSIIG.Forms.FrmImportar
         {
             try
             {
-                string CodRegMedic, MedicCodMedic, MedicNumForm, SqlRegMedic, SqlRegMedicCen;
+                string CodRegMedic, MedicCodMedic, MedicNumForm, SqlRegMedic, SqlRegMedicCen, TipoDocuMed;
 
                 SqlDataReader TabRegMedic, TabRegMedicCen;
 
@@ -2322,6 +2325,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                         ConectarPortatil();
                         while (TabRegMedic.Read())
                         {
+                            
                             CodRegMedic = TabRegMedic["CodAten"].ToString();
                             MedicCodMedic = TabRegMedic["CodMedic"].ToString();
                             MedicNumForm = TabRegMedic["NumForm"].ToString();
@@ -2339,6 +2343,16 @@ namespace OBBDSIIG.Forms.FrmImportar
                                 SqlCommand command = new SqlCommand(SqlRegMedicCen, connection);
                                 command.Connection.Open();
                                 TabRegMedicCen = command.ExecuteReader();
+
+
+                                if (string.IsNullOrWhiteSpace(TabRegMedic["TipoDocuMed"].ToString()))
+                                {
+                                    TipoDocuMed = "01";
+                                }
+                                else
+                                {
+                                    TipoDocuMed = TabRegMedic["TipoDocuMed"].ToString();
+                                }
 
                                 if (TabRegMedicCen.HasRows == false)
                                 {
@@ -2407,7 +2421,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                                     "'" + TabRegMedic["Secuelas"].ToString() + "'," +
                                     "'" + TabRegMedic["OtroRies"].ToString() + "'," +
                                     "'" + TabRegMedic["CualOtra"].ToString() + "'," +
-                                    "'" + TabRegMedic["TipoDocuMed"].ToString() + "'" +
+                                    "'" + TipoDocuMed + "'" +
                                     ")";
 
                                     Boolean Insert = Conexion.SqlInsert(Utils.SqlDatos);
@@ -2415,6 +2429,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                                 }
                                 else
                                 {
+
                                     Utils.SqlDatos = "UPDATE [DACONEXTSQL].[dbo].[Datos registros medicamentos] SET " +
                                     "CodMedic = '" + TabRegMedic["CodMedic"].ToString() + "'," +
                                     "Formafarma = '" + TabRegMedic["Formafarma"].ToString() + "'," +
@@ -2444,7 +2459,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                                     "Secuelas = '" + TabRegMedic["Secuelas"].ToString() + "'," +
                                     "OtroRies = '" + TabRegMedic["OtroRies"].ToString() + "'," +
                                     "CualOtra = '" + TabRegMedic["CualOtra"].ToString() + "'," +
-                                    "TipoDocuMed = '" + TabRegMedic["TipoDocuMed"].ToString() + "' " +
+                                    "TipoDocuMed = '" + TipoDocuMed + "' " +
                                     "WHERE (CodAten = N'" + CodRegMedic + "') AND (CodMedic = N'" + MedicCodMedic + "') AND (NumForm = N'" + MedicNumForm + "')";
                                     // TabRegMedicCen!TipoDocuMed = TabRegMedic!TipoDocuMed
                                     //' TabRegMedicCen!ItemConsecMEDREF = TabRegMedic!ItemConsecMED
@@ -3292,6 +3307,7 @@ namespace OBBDSIIG.Forms.FrmImportar
             {
                 CargarDatosUser();
                 CargarRangoFechas();
+
             }
             catch (Exception ex)
             {
@@ -3308,650 +3324,160 @@ namespace OBBDSIIG.Forms.FrmImportar
             try
             {
 
-
-                string UsaRegis = "", SqlHistoCli = "", SqlHistCen = "", CodBusAten, SqlAnexPor = "", NumUniAnexa = "", HistoPaci = "", SqlAnexCen = "";
-
-                DateTime Fecha2 = DateTime.Now;
-                string Fecha = Fecha2.ToString("yyyy-MM-dd");
-                int FunDetAntCon = 0, FunAntDePac = 0, FunAntPac = 0, FunRegEvo = 0, FunDetObsDoc = 0, FunDetEscAbre = 0, FunRegHtaDiabe = 0, FunTratamiento = 0, FunSegControl = 0, FunRemision = 0;
-
-
-                UsaRegis = lblCodigoUser.Text;
-                Utils.Titulo01 = "Control para exportar datos";
-
-
-                if (string.IsNullOrWhiteSpace(TxtInstanCenFor.Text) || (TxtInstanCenFor.Text == ""))
+                if (ImportarHistorias.IsBusy != true) //Si el proceso esta corriendo no puede voler a iniciarse 
                 {
-                    Utils.Informa = "Lo siento pero mientras no exista";
-                    Utils.Informa += "el nombre de la instancia central,";
-                    Utils.Informa += "no se puede empezar a ejecutar el";
-                    Utils.Informa += "proceso de exportación de datos.";
-                    MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                if (string.IsNullOrWhiteSpace(TxtPrefiCenFor.Text) || (TxtPrefiCenFor.Text == ""))
-                {
-                    Utils.Informa = "Lo siento pero mientras no exista";
-                    Utils.Informa += "el prefijo de la instancia central,";
-                    Utils.Informa += "no se puede empezar a ejecutar el";
-                    Utils.Informa += "proceso de exportación de datos.";
-                    MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                if (string.IsNullOrWhiteSpace(TxtInstanPortaFor.Text) || (TxtInstanPortaFor.Text == ""))
-                {
-                    Utils.Informa = "Lo siento pero mientras no exista";
-                    Utils.Informa += "nombre de la instancia del porttatil,";
-                    Utils.Informa += "no se puede empezar a ejecutar el";
-                    Utils.Informa += "proceso de exportación de datos.";
-                    MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                if (string.IsNullOrWhiteSpace(TxtPrefiPorFor.Text) || (TxtPrefiPorFor.Text == ""))
-                {
-                    Utils.Informa = "Lo siento pero mientras no exista";
-                    Utils.Informa += "prefijo de la instancia del porttatil,";
-                    Utils.Informa += "no se puede empezar a ejecutar el";
-                    Utils.Informa += "proceso de exportación de datos.";
-                    MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
 
 
-                if (DateInicial.Value > DateFinal.Value)
-                {
-                    Utils.Informa = "Lo siento pero";
-                    Utils.Informa += "la fecha inicial no puede ser mayor a la fecha final";
-                    MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                    string UsaRegis = "", SqlHistoCli = "", SqlHistCen = "", CodBusAten, SqlAnexPor = "", NumUniAnexa = "", HistoPaci = "", SqlAnexCen = "";
 
-                string FecIniPro = Convert.ToString(DateInicial.Value.ToString("yyyy-MM-dd"));
-                string FecFinPro = Convert.ToString(DateFinal.Value.ToString("yyyy-MM-dd"));
-
-                string PfiCen = TxtPrefiCenFor.Text;
-                string PfiPor = TxtPrefiPorFor.Text;
+                    DateTime Fecha2 = DateTime.Now;
+                    string Fecha = Fecha2.ToString("yyyy-MM-dd");
+                    int FunDetAntCon = 0, FunAntDePac = 0, FunAntPac = 0, FunRegEvo = 0, FunDetObsDoc = 0, FunDetEscAbre = 0, FunRegHtaDiabe = 0, FunTratamiento = 0, FunSegControl = 0, FunRemision = 0;
 
 
-                Utils.Informa = "¿Usted desea iniciar el proceso de exportación" + "\r";
-                Utils.Informa += "todas las historias clinicas en la instancia del" + "\r";
-                Utils.Informa += "servidor central a la instancia del portatil.?" + "\r";
-                Utils.Informa += "Fecha Inicial: " + FecIniPro + "\r";
-                Utils.Informa += "Fecha Final: " + FecFinPro;
-                var res = MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    UsaRegis = lblCodigoUser.Text;
+                    Utils.Titulo01 = "Control para exportar datos";
 
 
-                if (res == DialogResult.Yes)
-                {
-                    TxtCanHistFor.Text = "0";
-                    TxtCanhisFormExis.Text = "0";
-
-
-                    ConectarCentral();
-
-
-
-                    //SqlHistoCli = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos atencion de la consulta] ";
-                    //SqlHistoCli += "WHERE ([Datos atencion de la consulta].Activa = 'False' ) AND ";
-                    //SqlHistoCli += "([Datos atencion de la consulta].FecAtenc >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) AND";
-                    //SqlHistoCli += "([Datos atencion de la consulta].FecAtenc <= CONVERT(DATETIME, '" + FecFinPro + "', 102))";
-
-
-                    SqlHistoCli = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos atencion de la consulta] ";
-                    SqlHistoCli += "WHERE ([Datos atencion de la consulta].PrefiHis = N'" + PfiCen + "') AND";
-                    SqlHistoCli += "([Datos atencion de la consulta].Activa = 'False' ) AND ";
-                    SqlHistoCli += "([Datos atencion de la consulta].FecAtenc >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) AND";
-                    SqlHistoCli += "([Datos atencion de la consulta].FecAtenc <= CONVERT(DATETIME, '" + FecFinPro + "', 102))";
-
-
-                    string SqlHistoCliCount = "SELECT count(*) as totalAten FROM [DACONEXTSQL].[dbo].[Datos atencion de la consulta] ";
-                    SqlHistoCliCount += "WHERE ([Datos atencion de la consulta].PrefiHis = N'" + PfiCen + "') AND ([Datos atencion de la consulta].Activa = 'False' ) AND ";
-                    SqlHistoCliCount += "([Datos atencion de la consulta].FecAtenc >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) AND";
-                    SqlHistoCliCount += "([Datos atencion de la consulta].FecAtenc <= CONVERT(DATETIME, '" + FecFinPro + "', 102))";
-
-
-                    SqlDataReader reader = Conexion.SQLDataReader(SqlHistoCliCount);
-
-                    int totalAten = 0;
-
-                    if (reader.HasRows)
+                    if (string.IsNullOrWhiteSpace(TxtInstanCenFor.Text) || (TxtInstanCenFor.Text == ""))
                     {
-                        reader.Read();
-                        totalAten = Convert.ToInt32(reader["totalAten"]);
+                        Utils.Informa = "Lo siento pero mientras no exista";
+                        Utils.Informa += "el nombre de la instancia central,";
+                        Utils.Informa += "no se puede empezar a ejecutar el";
+                        Utils.Informa += "proceso de exportación de datos.";
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
-                        if (totalAten != 0)
+                    if (string.IsNullOrWhiteSpace(TxtPrefiCenFor.Text) || (TxtPrefiCenFor.Text == ""))
+                    {
+                        Utils.Informa = "Lo siento pero mientras no exista";
+                        Utils.Informa += "el prefijo de la instancia central,";
+                        Utils.Informa += "no se puede empezar a ejecutar el";
+                        Utils.Informa += "proceso de exportación de datos.";
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(TxtInstanPortaFor.Text) || (TxtInstanPortaFor.Text == ""))
+                    {
+                        Utils.Informa = "Lo siento pero mientras no exista";
+                        Utils.Informa += "nombre de la instancia del porttatil,";
+                        Utils.Informa += "no se puede empezar a ejecutar el";
+                        Utils.Informa += "proceso de exportación de datos.";
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(TxtPrefiPorFor.Text) || (TxtPrefiPorFor.Text == ""))
+                    {
+                        Utils.Informa = "Lo siento pero mientras no exista";
+                        Utils.Informa += "prefijo de la instancia del porttatil,";
+                        Utils.Informa += "no se puede empezar a ejecutar el";
+                        Utils.Informa += "proceso de exportación de datos.";
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+
+                    if (DateInicial.Value > DateFinal.Value)
+                    {
+                        Utils.Informa = "Lo siento pero";
+                        Utils.Informa += "la fecha inicial no puede ser mayor a la fecha final";
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                    string FecIniPro = Convert.ToString(DateInicial.Value.ToString("yyyy-MM-dd"));
+                    string FecFinPro = Convert.ToString(DateFinal.Value.ToString("yyyy-MM-dd"));
+
+                    string PfiCen = TxtPrefiCenFor.Text;
+                    string PfiPor = TxtPrefiPorFor.Text;
+
+
+                    Utils.Informa = "¿Usted desea iniciar el proceso de exportación" + "\r";
+                    Utils.Informa += "todas las historias clinicas en la instancia del" + "\r";
+                    Utils.Informa += "servidor central a la instancia del portatil.?" + "\r";
+                    Utils.Informa += "Fecha Inicial: " + FecIniPro + "\r";
+                    Utils.Informa += "Fecha Final: " + FecFinPro;
+                    var res = MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+
+                    if (res == DialogResult.Yes)
+                    {
+                        TxtCanHistFor.Text = "0";
+                        TxtCanhisFormExis.Text = "0";
+
+
+                        ConectarCentral();
+
+                        //SqlHistoCli = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos atencion de la consulta] ";
+                        //SqlHistoCli += "WHERE ([Datos atencion de la consulta].Activa = 'False' ) AND ";
+                        //SqlHistoCli += "([Datos atencion de la consulta].FecAtenc >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) AND";
+                        //SqlHistoCli += "([Datos atencion de la consulta].FecAtenc <= CONVERT(DATETIME, '" + FecFinPro + "', 102))";
+
+                        string SqlHistoCliCount = "SELECT count(*) as totalAten FROM [DACONEXTSQL].[dbo].[Datos atencion de la consulta] ";
+                        SqlHistoCliCount += "WHERE ([Datos atencion de la consulta].PrefiHis = N'" + PfiCen + "') AND ([Datos atencion de la consulta].Activa = 'False' ) AND ";
+                        SqlHistoCliCount += "([Datos atencion de la consulta].FecAtenc >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) AND";
+                        SqlHistoCliCount += "([Datos atencion de la consulta].FecAtenc <= CONVERT(DATETIME, '" + FecFinPro + "', 102))";
+
+
+                        SqlDataReader reader = Conexion.SQLDataReader(SqlHistoCliCount);
+
+                        int totalAten = 0;
+
+                        if (reader.HasRows)
                         {
+                            reader.Read();
+                            totalAten = Convert.ToInt32(reader["totalAten"]);
 
-                            BarraExportHistorias.Minimum = 1;
-                            BarraExportHistorias.Maximum = totalAten;
-                        }
+                            if (totalAten != 0)
+                            {
 
-
-                    }
-                    else
-                    {
-                        BarraExportHistorias.Minimum = 0;
-                        BarraExportHistorias.Maximum = 1;
-                        BarraExportHistorias.Value = 0;
-                    }
-
-                    if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
-
-                    if (backgroundWorker1.IsBusy != true)
-                    {
-                        backgroundWorker1.RunWorkerAsync();
-                    }
+                                BarraExportHistorias.Minimum = 1;
+                                BarraExportHistorias.Maximum = totalAten;
+                                LblTotal.Text = totalAten.ToString();
+                            }
 
 
-                    SqlDataReader TabHistoCli;
-
-                    using (SqlConnection connection = new SqlConnection(Conexion.conexionSQL))
-                    {
-                        SqlCommand command = new SqlCommand(SqlHistoCli, connection);
-                        command.Connection.Open();
-                        TabHistoCli = command.ExecuteReader();
-
-
-                        if (TabHistoCli.HasRows == false)
-                        {
-                            Utils.Informa = "Lo siento pero en el rango de fecha" + "\r";
-                            Utils.Informa += "digitado no existen datos para exportar, " + "\r";
-                            Utils.Informa += "atenciones de consultas.";
-                            MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         }
                         else
                         {
-                            while (TabHistoCli.Read())
-                            {
-                                // 'Revisamos si el número de codigo de atencion existe
+                            BarraExportHistorias.Minimum = 0;
+                            BarraExportHistorias.Maximum = 1;
+                            BarraExportHistorias.Value = 0;
+                        }
 
-                                CodBusAten = TabHistoCli["CodConExt"].ToString();
-                                HistoPaci = TabHistoCli["HistoriaNum"].ToString();
-
-                                SqlHistCen = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos atencion de la consulta] ";
-                                SqlHistCen += "Where CodConExt = '" + CodBusAten + "'";
-
-                                ConectarPortatil();
+                        if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
 
 
-                                SqlDataReader TabHistorCen;
+                        ImportarHistorias.RunWorkerAsync();
+                    }
+         
+                }
+                else
+                {
+                    Utils.Titulo01 = "Control de ejecución";
+                    Utils.Informa = "El proceso ya esta corriendo " + "\r";
+                    Utils.Informa += "¿Desea Cancelarlo? " + "\r";
+                    var res2 = MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
-                                using (SqlConnection connection2 = new SqlConnection(Conexion.conexionSQL))
-                                {
-                                    SqlCommand command2 = new SqlCommand(SqlHistCen, connection2);
-                                    command2.Connection.Open();
-                                    TabHistorCen = command2.ExecuteReader();
+                    if(res2 == DialogResult.Yes)
+                    {
+                        ImportarHistorias.CancelAsync();
+                        Utils.Titulo01 = "Control de ejecución";
+                        Utils.Informa = "Se cancelo la operacion " + "\r";
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        BarraExportHistorias.Minimum = 0;
+                        BarraExportHistorias.Maximum = 1;
+                        BarraExportHistorias.Value = 0;
+                        LblCantidad.Text = "0";
+                        LblTotal.Text = "0";
+                    }
 
+                }
 
-                                    if (TabHistorCen.HasRows == false)
-                                    {
-                                        //Agregue
-
-                                        Utils.SqlDatos = "INSERT INTO [DACONEXTSQL].[dbo].[Datos atencion de la consulta] " +
-                                        "(" +
-                                        "CodConExt," +
-                                        "TipoAten," +
-                                        "NumCuenta," +
-                                        "HistoriaNum," +
-                                        "FecAtenc," +
-                                        "HoraInicio," +
-                                        "Dxprinc," +
-                                        "DxEntra," +
-                                        "DxMuer," +
-                                        "DxRelac01," +
-                                        "DxRelac02," +
-                                        "DxRelac03," +
-                                        "DxRelac04," +
-                                        "ImpeDX," +
-                                        "TipoDxPrin," +
-                                        "UnidadEdad," +
-                                        "ValorEdad," +
-                                        "EdadMeses," +
-                                        "CodMediIngresa," +
-                                        "CodiMedi," +
-                                        "CodEspeci," +
-                                        "CodiMediSalida," +
-                                        "CodEspeciSalida," +
-                                        "FormAten," +
-                                        "ImagAten," +
-                                        "LaboAten," +
-                                        "ProAten," +
-                                        "TuvoControl," +
-                                        "TipoControl," +
-                                        "TuvoProcedimiento," +
-                                        "Fechallega," +
-                                        "HoraLlega," +
-                                        "CodEstado," +
-                                        "MedioLlegada," +
-                                        "CualMedio," +
-                                        "NomAcomp," +
-                                        "CodParen," +
-                                        "DirParen," +
-                                        "TelParen," +
-                                        "FechaOcurre," +
-                                        "HoraOcurre," +
-                                        "CausaBase," +
-                                        "SitOcurre," +
-                                        "MotConsul," +
-                                        "HistEnfActual," +
-                                        "TensionSisto," +
-                                        "TensionDiasto," +
-                                        "FrecuCardi," +
-                                        "FrecuRespi," +
-                                        "temperatura," +
-                                        "PesoAMB," +
-                                        "TallaAMB," +
-                                        "IMC," +
-                                        "CatIMC," +
-                                        "PerimetroCefalico," +
-                                        "SPO2," +
-                                        "CabezaCuello," +
-                                        "Endocrino," +
-                                        "CardioPulmonar," +
-                                        "Cardiovascular," +
-                                        "Abdomen," +
-                                        "GenitoUrinario," +
-                                        "Neurologico," +
-                                        "Extremidades," +
-                                        "PielyFaneras," +
-                                        "OsteoMuscu," +
-                                        "GlasGow," +
-                                        "Glaswog01," +
-                                        "Glaswog02," +
-                                        "Glaswog03," +
-                                        "EstadoGral," +
-                                        "CabezaCuelloFisi," +
-                                        "OcularFisi," +
-                                        "ORLFisi," +
-                                        "DorsalLumbarFisi," +
-                                        "AbdomenFisi," +
-                                        "ExtremidadesFisi," +
-                                        "ToraxFisico," +
-                                        "CardioVascuFisi," +
-                                        "PielSub," +
-                                        "ExaGineco," +
-                                        "TactoRectal," +
-                                        "ExaMamas," +
-                                        "AparLocomo," +
-                                        "AparGanglio," +
-                                        "NeuroFisico," +
-                                        "pqsiquiatrico," +
-                                        "Conducta," +
-                                        "CodiColumna," +
-                                        "PosTPlan," +
-                                        "Remision," +
-                                        "RemiNum," +
-                                        "DestinoUsuario," +
-                                        "Activa," +
-                                        "ActivaInicialUrgencias," +
-                                        "ExamenesAuxiliares," +
-                                        "EpicrisisActiva," +
-                                        "EpicrisisCerr," +
-                                        "ValoraH," +
-                                        "CodiMediValor," +
-                                        "FechaValora," +
-                                        "HoraLlegaValora," +
-                                        "DetalleValora," +
-                                        "Soporte," +
-                                        "OtAnteceCE," +
-                                        "IngresoEPI," +
-                                        "EvolucionEPI," +
-                                        "EgresoEPI," +
-                                        "CodiMediEpi," +
-                                        "FechaEpi," +
-                                        "HoraEpi," +
-                                        "CodColor," +
-                                        "NumeroCitas," +
-                                        "Horaregis," +
-                                        "HoraAtencion," +
-                                        "CodiRegis," +
-                                        "FecRegis," +
-                                        "CodiModi," +
-                                        "FecModi," +
-                                        "ResumenEvoEPI," +
-                                        "PrefiHis" +
-                                         ")" +
-                                        "VALUES" +
-                                        "(" +
-                                         "'" + TabHistoCli["CodConExt"].ToString() + "'," +
-                                         "'" + TabHistoCli["TipoAten"].ToString() + "'," +
-                                         "'" + TabHistoCli["NumCuenta"].ToString() + "'," +
-                                         "'" + TabHistoCli["HistoriaNum"].ToString() + "'," +
-                                        $"{Conexion.ValidarFechaNula(TabHistoCli["FecAtenc"].ToString())}" +
-                                         $"{Conexion.ValidarHoraNula(TabHistoCli["HoraInicio"].ToString())}" +
-                                         "'" + TabHistoCli["Dxprinc"].ToString() + "'," +
-                                         "'" + TabHistoCli["DxEntra"].ToString() + "'," +
-                                         "'" + TabHistoCli["DxMuer"].ToString() + "'," +
-                                         "'" + TabHistoCli["DxRelac01"].ToString() + "'," +
-                                         "'" + TabHistoCli["DxRelac02"].ToString() + "'," +
-                                         "'" + TabHistoCli["DxRelac03"].ToString() + "'," +
-                                         "'" + TabHistoCli["DxRelac04"].ToString() + "'," +
-                                         "'" + TabHistoCli["ImpeDX"].ToString() + "'," +
-                                         "'" + TabHistoCli["TipoDxPrin"].ToString() + "'," +
-                                         "'" + TabHistoCli["UnidadEdad"].ToString() + "'," +
-                                         "'" + TabHistoCli["ValorEdad"].ToString() + "'," +
-                                         "'" + TabHistoCli["EdadMeses"].ToString() + "'," +
-                                         "'" + TabHistoCli["CodMediIngresa"].ToString() + "'," +
-                                         "'" + TabHistoCli["CodiMedi"].ToString() + "'," +
-                                         "'" + TabHistoCli["CodEspeci"].ToString() + "'," +
-                                         "'" + TabHistoCli["CodiMediSalida"].ToString() + "'," +
-                                         "'" + TabHistoCli["CodEspeciSalida"].ToString() + "'," +
-                                         "'" + TabHistoCli["FormAten"].ToString() + "'," +
-                                         "'" + TabHistoCli["ImagAten"].ToString() + "'," +
-                                         "'" + TabHistoCli["LaboAten"].ToString() + "'," +
-                                         "'" + TabHistoCli["ProAten"].ToString() + "'," +
-                                         "'" + TabHistoCli["TuvoControl"].ToString() + "'," +
-                                         "'" + TabHistoCli["TipoControl"].ToString() + "'," +
-                                         "'" + TabHistoCli["TuvoProcedimiento"].ToString() + "'," +
-                                         $"{Conexion.ValidarFechaNula(TabHistoCli["Fechallega"].ToString())}" +
-                                         $"{Conexion.ValidarHoraNula(TabHistoCli["HoraLlega"].ToString())}" +
-                                         "'" + TabHistoCli["CodEstado"].ToString() + "'," +
-                                         "'" + TabHistoCli["MedioLlegada"].ToString() + "'," +
-                                         "'" + TabHistoCli["CualMedio"].ToString() + "'," +
-                                         "'" + TabHistoCli["NomAcomp"].ToString() + "'," +
-                                         "'" + TabHistoCli["CodParen"].ToString() + "'," +
-                                         "'" + TabHistoCli["DirParen"].ToString() + "'," +
-                                         "'" + TabHistoCli["TelParen"].ToString() + "'," +
-                                        $"{Conexion.ValidarFechaNula(TabHistoCli["FechaOcurre"].ToString())}" +
-                                         $"{Conexion.ValidarHoraNula(TabHistoCli["HoraOcurre"].ToString())}" +
-                                         "'" + TabHistoCli["CausaBase"].ToString() + "'," +
-                                         "'" + TabHistoCli["SitOcurre"].ToString() + "'," +
-                                         "'" + TabHistoCli["MotConsul"].ToString().Replace("'", "") + "'," +
-                                         "'" + TabHistoCli["HistEnfActual"].ToString() + "'," +
-                                         "'" + TabHistoCli["TensionSisto"].ToString() + "'," +
-                                         "'" + TabHistoCli["TensionDiasto"].ToString() + "'," +
-                                         "'" + TabHistoCli["FrecuCardi"].ToString() + "'," +
-                                         "'" + TabHistoCli["FrecuRespi"].ToString() + "'," +
-                                         "'" + TabHistoCli["temperatura"].ToString() + "'," +
-                                         "'" + TabHistoCli["PesoAMB"].ToString() + "'," +
-                                         "'" + TabHistoCli["TallaAMB"].ToString() + "'," +
-                                         "'" + TabHistoCli["IMC"].ToString() + "'," +
-                                         "'" + TabHistoCli["CatIMC"].ToString() + "'," +
-                                         "'" + TabHistoCli["PerimetroCefalico"].ToString() + "'," +
-                                         "'" + TabHistoCli["SPO2"].ToString() + "'," +
-                                         "'" + TabHistoCli["CabezaCuello"].ToString() + "'," +
-                                         "'" + TabHistoCli["Endocrino"].ToString() + "'," +
-                                         "'" + TabHistoCli["CardioPulmonar"].ToString() + "'," +
-                                         "'" + TabHistoCli["Cardiovascular"].ToString() + "'," +
-                                         "'" + TabHistoCli["Abdomen"].ToString() + "'," +
-                                         "'" + TabHistoCli["GenitoUrinario"].ToString() + "'," +
-                                         "'" + TabHistoCli["Neurologico"].ToString() + "'," +
-                                         "'" + TabHistoCli["Extremidades"].ToString() + "'," +
-                                         "'" + TabHistoCli["PielyFaneras"].ToString() + "'," +
-                                         "'" + TabHistoCli["OsteoMuscu"].ToString() + "'," +
-                                         "'" + TabHistoCli["GlasGow"].ToString() + "'," +
-                                         "'" + TabHistoCli["Glaswog01"].ToString() + "'," +
-                                         "'" + TabHistoCli["Glaswog02"].ToString() + "'," +
-                                         "'" + TabHistoCli["Glaswog03"].ToString() + "'," +
-                                         "'" + TabHistoCli["EstadoGral"].ToString() + "'," +
-                                         "'" + TabHistoCli["CabezaCuelloFisi"].ToString() + "'," +
-                                         "'" + TabHistoCli["OcularFisi"].ToString() + "'," +
-                                         "'" + TabHistoCli["ORLFisi"].ToString() + "'," +
-                                         "'" + TabHistoCli["DorsalLumbarFisi"].ToString() + "'," +
-                                         "'" + TabHistoCli["AbdomenFisi"].ToString() + "'," +
-                                         "'" + TabHistoCli["ExtremidadesFisi"].ToString() + "'," +
-                                         "'" + TabHistoCli["ToraxFisico"].ToString() + "'," +
-                                         "'" + TabHistoCli["CardioVascuFisi"].ToString() + "'," +
-                                         "'" + TabHistoCli["PielSub"].ToString() + "'," +
-                                         "'" + TabHistoCli["ExaGineco"].ToString() + "'," +
-                                         "'" + TabHistoCli["TactoRectal"].ToString() + "'," +
-                                         "'" + TabHistoCli["ExaMamas"].ToString() + "'," +
-                                         "'" + TabHistoCli["AparLocomo"].ToString() + "'," +
-                                         "'" + TabHistoCli["AparGanglio"].ToString() + "'," +
-                                         "'" + TabHistoCli["NeuroFisico"].ToString() + "'," +
-                                         "'" + TabHistoCli["pqsiquiatrico"].ToString() + "'," +
-                                         "'" + TabHistoCli["Conducta"].ToString() + "'," +
-                                         "'" + TabHistoCli["CodiColumna"].ToString() + "'," +
-                                         "'" + TabHistoCli["PosTPlan"].ToString() + "'," +
-                                         "'" + TabHistoCli["Remision"].ToString() + "'," +
-                                         "'" + TabHistoCli["RemiNum"].ToString() + "'," +
-                                         "'" + TabHistoCli["DestinoUsuario"].ToString() + "'," +
-                                         "'" + TabHistoCli["Activa"].ToString() + "'," +
-                                         "'" + TabHistoCli["ActivaInicialUrgencias"].ToString() + "'," +
-                                         "'" + TabHistoCli["ExamenesAuxiliares"].ToString() + "'," +
-                                         "'" + TabHistoCli["EpicrisisActiva"].ToString() + "'," +
-                                         "'" + TabHistoCli["EpicrisisCerr"].ToString() + "'," +
-                                         "'" + TabHistoCli["ValoraH"].ToString() + "'," +
-                                         "'" + TabHistoCli["CodiMediValor"].ToString() + "'," +
-                                         $"{Conexion.ValidarFechaNula(TabHistoCli["FechaValora"].ToString())}" +
-                                         $"{Conexion.ValidarHoraNula(TabHistoCli["HoraLlegaValora"].ToString())}" +
-                                         "'" + TabHistoCli["DetalleValora"].ToString() + "'," +
-                                         "'" + TabHistoCli["Soporte"].ToString() + "'," +
-                                         "'" + TabHistoCli["OtAnteceCE"].ToString() + "'," +
-
-                                        //********** Campos que no aparecen en la E.S.E de san agustin
-                                        //TabHistorCen!OservaMedica = TabHistoCli!OservaMedica
-                                        //TabHistorCen!ObsevaLabora = TabHistoCli!ObsevaLabora
-                                        //TabHistorCen!ObservaImagen = TabHistoCli!ObservaImagen
-                                        //'**********
-                                         "'" + TabHistoCli["IngresoEPI"].ToString() + "'," +
-                                         "'" + TabHistoCli["EvolucionEPI"].ToString() + "'," +
-                                         "'" + TabHistoCli["EgresoEPI"].ToString() + "'," +
-                                         "'" + TabHistoCli["CodiMediEpi"].ToString() + "'," +
-                                        $"{Conexion.ValidarFechaNula(TabHistoCli["FechaEpi"].ToString())}" +
-                                         $"{Conexion.ValidarHoraNula(TabHistoCli["HoraEpi"].ToString())}" +
-                                         "'" + TabHistoCli["CodColor"].ToString() + "'," +
-                                         "'" + TabHistoCli["NumeroCitas"].ToString() + "'," +
-                                         $"{Conexion.ValidarHoraNula(TabHistoCli["Horaregis"].ToString())}" +
-                                         $"{Conexion.ValidarHoraNula(TabHistoCli["HoraAtencion"].ToString())}" +
-                                         "'" + TabHistoCli["CodiRegis"].ToString() + "'," +
-                                         $"{Conexion.ValidarFechaNula(TabHistoCli["FecRegis"].ToString())}" +
-                                         "'" + TabHistoCli["CodiModi"].ToString() + "'," +
-                                         $"{Conexion.ValidarFechaNula(TabHistoCli["FecModi"].ToString())}" +
-
-                                        //TabHistorCen!SintRespiratorioNO = TabHistoCli!SintRespiratorioNO
-                                        //TabHistorCen!SintPielNO = TabHistoCli!SintPielNO
-                                        //TabHistorCen!SintSNNO = TabHistoCli!SintSNNO
-                                        //'********** Campos que no aparecen en la E.S.E de san agustin
-                                        //TabHistorCen!ProcediQxOxEPI = TabHistoCli!ProcediQxOxEPI
-                                        //TabHistorCen!TratamientosEPI = TabHistoCli!TratamientosEPI
-                                        //TabHistorCen!ResumenEPI = TabHistoCli!ResumenEPI
-                                        //'**********
-                                         "'" + TabHistoCli["ResumenEvoEPI"].ToString() + "'," +
-
-                                        //'********** Campos que no aparecen en la E.S.E de san agustin
-                                        //TabHistorCen!ComplicacionesEPI = TabHistoCli!ComplicacionesEPI
-                                        //TabHistorCen!CondicionesEPI = TabHistoCli!CondicionesEPI
-                                        //TabHistorCen!PronosticoEPI = TabHistoCli!PronosticoEPI
-                                        //TabHistorCen!RecomendacionesEPI = TabHistoCli!RecomendacionesEPI
-                                        //'**********
-
-                                         "'" + TabHistoCli["PrefiHis"].ToString() + "'" +
-                                        ")";
-
-                                        Boolean Insert = Conexion.SqlInsert(Utils.SqlDatos);
-
-                                        FunDetAntCon = DetalleatencionconsultaIMP(CodBusAten);
-                                        FunAntPac = AntecedentespacientesIMP(CodBusAten);
-                                        FunRegEvo = RegistrodeevolucionesIMP(CodBusAten);
-                                        FunDetObsDoc = DetallesdeobservacionespordocumentoIMP(CodBusAten); 
-                                        FunDetEscAbre = DetalleescalaabreviadaIMP(CodBusAten);               
-                                        FunRegHtaDiabe = RegistroHtaDiabeticosIMP(CodBusAten);
-                                        FunTratamiento = TratamientosIMP(HistoPaci, CodBusAten);   
-                                        FunSegControl = SeguimientodecontrolesIMP(CodBusAten);//AQUI  
-                                        FunRemision = RemisionesIMP(CodBusAten);
-
-                                        int COUN = Convert.ToInt32(TxtCanHistFor.Text) + 1;
-                                        TxtCanHistFor.Text = COUN.ToString();
-
-
-                                    }
-                                    else
-                                    {
-                                        //Modifique los datos
-                                        Utils.SqlDatos = "UPDATE [DACONEXTSQL].[dbo].[Datos atencion de la consulta] SET " +
-                                        "Dxprinc = '" + TabHistoCli["Dxprinc"].ToString() + "'," +
-                                        "DxEntra = '" + TabHistoCli["DxEntra"].ToString() + "'," +
-                                        "DxMuer = '" + TabHistoCli["DxMuer"].ToString() + "'," +
-                                        "DxRelac01 = '" + TabHistoCli["DxRelac01"].ToString() + "'," +
-                                        "DxRelac02 = '" + TabHistoCli["DxRelac02"].ToString() + "'," +
-                                        "DxRelac03 = '" + TabHistoCli["DxRelac03"].ToString() + "'," +
-                                        "DxRelac04 = '" + TabHistoCli["DxRelac04"].ToString() + "'," +
-                                        "ImpeDX = '" + TabHistoCli["ImpeDX"].ToString() + "'," +
-                                        "TipoDxPrin = '" + TabHistoCli["TipoDxPrin"].ToString() + "'," +
-                                        "UnidadEdad = '" + TabHistoCli["UnidadEdad"].ToString() + "'," +
-                                        "ValorEdad = '" + TabHistoCli["ValorEdad"].ToString() + "'," +
-                                        "EdadMeses = '" + TabHistoCli["EdadMeses"].ToString() + "'," +
-                                        "CodMediIngresa = '" + TabHistoCli["CodMediIngresa"].ToString() + "'," +
-                                        "CodiMedi = '" + TabHistoCli["CodiMedi"].ToString() + "'," +
-                                        "CodEspeci = '" + TabHistoCli["CodEspeci"].ToString() + "'," +
-                                        "CodiMediSalida = '" + TabHistoCli["CodiMediSalida"].ToString() + "'," +
-                                        "CodEspeciSalida = '" + TabHistoCli["CodEspeciSalida"].ToString() + "'," +
-                                        "FormAten = '" + TabHistoCli["FormAten"].ToString() + "'," +
-                                        "ImagAten = '" + TabHistoCli["ImagAten"].ToString() + "'," +
-                                        "LaboAten = '" + TabHistoCli["LaboAten"].ToString() + "'," +
-                                        "ProAten = '" + TabHistoCli["ProAten"].ToString() + "'," +
-                                        "TuvoControl = '" + TabHistoCli["TuvoControl"].ToString() + "'," +
-                                        "TipoControl = '" + TabHistoCli["TipoControl"].ToString() + "'," +
-                                        "TuvoProcedimiento = '" + TabHistoCli["TuvoProcedimiento"].ToString() + "'," +
-                                        $"Fechallega = {Conexion.ValidarFechaNula(TabHistoCli["Fechallega"].ToString())}" +
-                                        $"HoraLlega = {Conexion.ValidarHoraNula(TabHistoCli["HoraLlega"].ToString())}" +
-                                        "CodEstado = '" + TabHistoCli["CodEstado"].ToString() + "'," +
-                                        "MedioLlegada = '" + TabHistoCli["MedioLlegada"].ToString() + "'," +
-                                        "CualMedio = '" + TabHistoCli["CualMedio"].ToString() + "'," +
-                                        "NomAcomp = '" + TabHistoCli["NomAcomp"].ToString() + "'," +
-                                        "CodParen = '" + TabHistoCli["CodParen"].ToString() + "'," +
-                                        "DirParen = '" + TabHistoCli["DirParen"].ToString() + "'," +
-                                        "TelParen = '" + TabHistoCli["TelParen"].ToString() + "'," +
-                                         $"FechaOcurre = {Conexion.ValidarFechaNula(TabHistoCli["FechaOcurre"].ToString())}" +
-                                        $"HoraOcurre = {Conexion.ValidarHoraNula(TabHistoCli["HoraOcurre"].ToString())}" +
-                                        "CausaBase = '" + TabHistoCli["CausaBase"].ToString() + "'," +
-                                        "SitOcurre = '" + TabHistoCli["SitOcurre"].ToString() + "'," +
-                                        "MotConsul = '" + TabHistoCli["MotConsul"].ToString().Replace("'", "") + "'," +
-                                        "HistEnfActual = '" + TabHistoCli["HistEnfActual"].ToString() + "'," +
-                                        "TensionSisto = '" + TabHistoCli["TensionSisto"].ToString() + "'," +
-                                        "TensionDiasto = '" + TabHistoCli["TensionDiasto"].ToString() + "'," +
-                                        "FrecuCardi = '" + TabHistoCli["FrecuCardi"].ToString() + "'," +
-                                        "FrecuRespi = '" + TabHistoCli["FrecuRespi"].ToString() + "'," +
-                                        "temperatura = '" + TabHistoCli["temperatura"].ToString() + "'," +
-                                        "PesoAMB = '" + TabHistoCli["PesoAMB"].ToString() + "'," +
-                                        "TallaAMB = '" + TabHistoCli["TallaAMB"].ToString() + "'," +
-                                        "IMC = '" + TabHistoCli["IMC"].ToString() + "'," +
-                                        "CatIMC = '" + TabHistoCli["CatIMC"].ToString() + "'," +
-                                        "PerimetroCefalico = '" + TabHistoCli["PerimetroCefalico"].ToString() + "'," +
-                                        "SPO2 = '" + TabHistoCli["SPO2"].ToString() + "'," +
-                                        "CabezaCuello = '" + TabHistoCli["CabezaCuello"].ToString() + "'," +
-                                        "Endocrino = '" + TabHistoCli["Endocrino"].ToString() + "'," +
-                                        "CardioPulmonar = '" + TabHistoCli["CardioPulmonar"].ToString() + "'," +
-                                        "Cardiovascular = '" + TabHistoCli["Cardiovascular"].ToString() + "'," +
-                                        "Abdomen = '" + TabHistoCli["Abdomen"].ToString() + "'," +
-                                        "GenitoUrinario = '" + TabHistoCli["GenitoUrinario"].ToString() + "'," +
-                                        "Neurologico = '" + TabHistoCli["Neurologico"].ToString() + "'," +
-                                        "Extremidades = '" + TabHistoCli["Extremidades"].ToString() + "'," +
-                                        "PielyFaneras = '" + TabHistoCli["PielyFaneras"].ToString() + "'," +
-                                        "OsteoMuscu = '" + TabHistoCli["OsteoMuscu"].ToString() + "'," +
-                                        "GlasGow = '" + TabHistoCli["GlasGow"].ToString() + "'," +
-                                        "Glaswog01 = '" + TabHistoCli["Glaswog01"].ToString() + "'," +
-                                        "Glaswog02 = '" + TabHistoCli["Glaswog02"].ToString() + "'," +
-                                        "Glaswog03 = '" + TabHistoCli["Glaswog03"].ToString() + "'," +
-                                        "EstadoGral = '" + TabHistoCli["EstadoGral"].ToString() + "'," +
-                                        "CabezaCuelloFisi = '" + TabHistoCli["CabezaCuelloFisi"].ToString() + "'," +
-                                        "OcularFisi = '" + TabHistoCli["OcularFisi"].ToString() + "'," +
-                                        "ORLFisi = '" + TabHistoCli["ORLFisi"].ToString() + "'," +
-                                        "DorsalLumbarFisi = '" + TabHistoCli["DorsalLumbarFisi"].ToString() + "'," +
-                                        "AbdomenFisi = '" + TabHistoCli["AbdomenFisi"].ToString() + "'," +
-                                        "ExtremidadesFisi = '" + TabHistoCli["ExtremidadesFisi"].ToString() + "'," +
-                                        "ToraxFisico = '" + TabHistoCli["ToraxFisico"].ToString() + "'," +
-                                        "CardioVascuFisi = '" + TabHistoCli["CardioVascuFisi"].ToString() + "'," +
-                                        "PielSub = '" + TabHistoCli["PielSub"].ToString() + "'," +
-                                        "ExaGineco = '" + TabHistoCli["ExaGineco"].ToString() + "'," +
-                                        "TactoRectal = '" + TabHistoCli["TactoRectal"].ToString() + "'," +
-                                        "ExaMamas = '" + TabHistoCli["ExaMamas"].ToString() + "'," +
-                                        "AparLocomo = '" + TabHistoCli["AparLocomo"].ToString() + "'," +
-                                        "AparGanglio = '" + TabHistoCli["AparGanglio"].ToString() + "'," +
-                                        "NeuroFisico = '" + TabHistoCli["NeuroFisico"].ToString() + "'," +
-                                        "pqsiquiatrico = '" + TabHistoCli["pqsiquiatrico"].ToString() + "'," +
-                                        "Conducta = '" + TabHistoCli["Conducta"].ToString() + "'," +
-                                        "CodiColumna = '" + TabHistoCli["CodiColumna"].ToString() + "'," +
-                                        "PosTPlan = '" + TabHistoCli["PosTPlan"].ToString() + "'," +
-                                        "Remision = '" + TabHistoCli["Remision"].ToString() + "'," +
-                                        "RemiNum = '" + TabHistoCli["RemiNum"].ToString() + "'," +
-                                        "DestinoUsuario = '" + TabHistoCli["DestinoUsuario"].ToString() + "'," +
-                                        "Activa = '" + TabHistoCli["Activa"].ToString() + "'," +
-                                        "ActivaInicialUrgencias = '" + TabHistoCli["ActivaInicialUrgencias"].ToString() + "'," +
-                                        "ExamenesAuxiliares = '" + TabHistoCli["ExamenesAuxiliares"].ToString() + "'," +
-                                        "EpicrisisActiva = '" + TabHistoCli["EpicrisisActiva"].ToString() + "'," +
-                                        "EpicrisisCerr = '" + TabHistoCli["EpicrisisCerr"].ToString() + "'," +
-                                        "ValoraH = '" + TabHistoCli["ValoraH"].ToString() + "'," +
-                                        "CodiMediValor = '" + TabHistoCli["CodiMediValor"].ToString() + "'," +
-                                        $"FechaValora = {Conexion.ValidarFechaNula(TabHistoCli["FechaValora"].ToString())}" +
-                                         $"HoraLlegaValora = {Conexion.ValidarHoraNula(TabHistoCli["HoraLlegaValora"].ToString())}" +
-                                        "DetalleValora = '" + TabHistoCli["DetalleValora"].ToString() + "'," +
-                                        "Soporte = '" + TabHistoCli["Soporte"].ToString() + "'," +
-                                        "OtAnteceCE = '" + TabHistoCli["OtAnteceCE"].ToString() + "'," +
-                                        "IngresoEPI = '" + TabHistoCli["IngresoEPI"].ToString() + "'," +
-                                        "EvolucionEPI = '" + TabHistoCli["EvolucionEPI"].ToString() + "'," +
-                                        "EgresoEPI = '" + TabHistoCli["EgresoEPI"].ToString() + "'," +
-                                        "CodiMediEpi = '" + TabHistoCli["CodiMediEpi"].ToString() + "'," +
-                                        $"FechaEpi = {Conexion.ValidarFechaNula(TabHistoCli["FechaEpi"].ToString())}" +
-                                         $"HoraEpi = {Conexion.ValidarHoraNula(TabHistoCli["HoraEpi"].ToString())}" +
-                                        "CodColor = '" + TabHistoCli["CodColor"].ToString() + "'," +
-                                        "NumeroCitas = '" + TabHistoCli["NumeroCitas"].ToString() + "'," +
-                                        $"Horaregis = {Conexion.ValidarHoraNula(TabHistoCli["Horaregis"].ToString())}" +
-                                        $"HoraAtencion = {Conexion.ValidarHoraNula(TabHistoCli["HoraAtencion"].ToString())}" +
-                                        "CodiRegis = '" + TabHistoCli["CodiRegis"].ToString() + "'," +
-                                        $"FecRegis = {Conexion.ValidarFechaNula(TabHistoCli["FecRegis"].ToString())}" +
-                                        "CodiModi = '" + TabHistoCli["CodiModi"].ToString() + "'," +
-                                        $"FecModi = {Conexion.ValidarFechaNula(TabHistoCli["FecModi"].ToString())}" +
-                                        //TabHistorCen!SintRespiratorioNO = TabHistoCli!SintRespiratorioNO
-                                        //TabHistorCen!SintPielNO = TabHistoCli!SintPielNO
-                                        //TabHistorCen!SintSNNO = TabHistoCli!SintSNNO
-
-
-                                        //'********** Campos que no aparecen en la E.S.E de san agustin
-                                        //TabHistorCen!ProcediQxOxEPI = TabHistoCli!ProcediQxOxEPI
-                                        //TabHistorCen!TratamientosEPI = TabHistoCli!TratamientosEPI
-                                        //TabHistorCen!ResumenEPI = TabHistoCli!ResumenEPI
-                                        //'**********
-                                        "ResumenEvoEPI = '" + TabHistoCli["ResumenEvoEPI"].ToString() + "'," +
-                                        "PrefiHis = '" + TabHistoCli["PrefiHis"].ToString() + "' " +
-                                        "WHERE CodConExt = '" + CodBusAten + "'";
-
-
-                                        Boolean Act = Conexion.SQLUpdate(Utils.SqlDatos);
-
-                                        FunDetAntCon = DetalleatencionconsultaIMP(CodBusAten);
-                                        FunAntPac = AntecedentespacientesIMP(CodBusAten);
-                                        FunRegEvo = RegistrodeevolucionesIMP(CodBusAten);
-                                        FunDetObsDoc = DetallesdeobservacionespordocumentoIMP(CodBusAten);
-                                        FunDetEscAbre = DetalleescalaabreviadaIMP(CodBusAten);
-                                        FunRegHtaDiabe = RegistroHtaDiabeticosIMP(CodBusAten);  
-                                        FunTratamiento = TratamientosIMP(HistoPaci, CodBusAten);
-                                        FunSegControl = SeguimientodecontrolesIMP(CodBusAten);
-                                        FunRemision = RemisionesIMP(CodBusAten);
-
-                                        int COUN = Convert.ToInt32(TxtCanhisFormExis.Text) + 1;
-                                        TxtCanhisFormExis.Text = COUN.ToString();
-
-
-                                    }//Final de TabHistorCen.BOF
-
-                                    TabHistorCen.Close();
-
-                                }//using
-
-
-                                BarraExportHistorias.Increment(1);
-
-                            }//While
-
-
-                        }// if(TabHistoCli.HasRows == false)
-
-                    }//uSING
-
-
-                    Utils.Informa = "El proceso ha terminado satisfactoriamente " + "\r";
-                    MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    BarraExportHistorias.Minimum = 0;
-                    BarraExportHistorias.Maximum = 1;
-                    BarraExportHistorias.Value = 0;
-
-
-                }//´Pregunta
             }
+
             catch (Exception ex)
             {
                 Utils.Titulo01 = "Control de errores de ejecución";
@@ -3963,19 +3489,619 @@ namespace OBBDSIIG.Forms.FrmImportar
                 BarraExportHistorias.Value = 0;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            finally
+        }
+
+        private void ImportarHistorias_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
             {
+
+                //Revisa si se ha cancelado el proceso, si se cancelo, ps se cancela la ejecucion
+                if(ImportarHistorias.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                }
+
+             
+
+                string UsaRegis = "", SqlHistoCli = "", SqlHistCen = "", CodBusAten, SqlAnexPor = "", NumUniAnexa = "", HistoPaci = "", SqlAnexCen = "";
+
+                DateTime Fecha2 = DateTime.Now;
+                string Fecha = Fecha2.ToString("yyyy-MM-dd");
+                int FunDetAntCon = 0, FunAntDePac = 0, FunAntPac = 0, FunRegEvo = 0, FunDetObsDoc = 0, FunDetEscAbre = 0, FunRegHtaDiabe = 0, FunTratamiento = 0, FunSegControl = 0, FunRemision = 0;
+
+                string FecIniPro = Convert.ToString(DateInicial.Value.ToString("yyyy-MM-dd"));
+                string FecFinPro = Convert.ToString(DateFinal.Value.ToString("yyyy-MM-dd"));
+
+                string PfiCen = TxtPrefiCenFor.Text;
+                string PfiPor = TxtPrefiPorFor.Text;
+
+
+                UsaRegis = lblCodigoUser.Text;
+                Utils.Titulo01 = "Control para exportar datos";
+
+
+                SqlHistoCli = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos atencion de la consulta] ";
+                SqlHistoCli += "WHERE ([Datos atencion de la consulta].PrefiHis = N'" + PfiCen + "') AND";
+                SqlHistoCli += "([Datos atencion de la consulta].Activa = 'False' ) AND ";
+                SqlHistoCli += "([Datos atencion de la consulta].FecAtenc >= CONVERT(DATETIME, '" + FecIniPro + "', 102)) AND";
+                SqlHistoCli += "([Datos atencion de la consulta].FecAtenc <= CONVERT(DATETIME, '" + FecFinPro + "', 102))";
+
+                SqlDataReader TabHistoCli;
+
+                using (SqlConnection connection = new SqlConnection(Conexion.conexionSQL))
+                {
+                    SqlCommand command = new SqlCommand(SqlHistoCli, connection);
+                    command.Connection.Open();
+                    TabHistoCli = command.ExecuteReader();
+
+
+                    if (TabHistoCli.HasRows == false)
+                    {
+                        Utils.Informa = "Lo siento pero en el rango de fecha" + "\r";
+                        Utils.Informa += "digitado no existen datos para exportar, " + "\r";
+                        Utils.Informa += "atenciones de consultas.";
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+                    else
+                    {
+                        int contador = 0;
+
+                        while (TabHistoCli.Read())
+                        {
+                            contador += 1;
+                            // 'Revisamos si el número de codigo de atencion existe
+
+                            CodBusAten = TabHistoCli["CodConExt"].ToString();
+                            HistoPaci = TabHistoCli["HistoriaNum"].ToString();
+
+                            SqlHistCen = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos atencion de la consulta] ";
+                            SqlHistCen += "Where CodConExt = '" + CodBusAten + "'";
+
+                            ConectarPortatil();
+
+
+                            SqlDataReader TabHistorCen;
+
+                            using (SqlConnection connection2 = new SqlConnection(Conexion.conexionSQL))
+                            {
+                                SqlCommand command2 = new SqlCommand(SqlHistCen, connection2);
+                                command2.Connection.Open();
+                                TabHistorCen = command2.ExecuteReader();
+
+
+                                if (TabHistorCen.HasRows == false)
+                                {
+                                    //Agregue
+
+                                    Utils.SqlDatos = "INSERT INTO [DACONEXTSQL].[dbo].[Datos atencion de la consulta] " +
+                                    "(" +
+                                    "CodConExt," +
+                                    "TipoAten," +
+                                    "NumCuenta," +
+                                    "HistoriaNum," +
+                                    "FecAtenc," +
+                                    "HoraInicio," +
+                                    "Dxprinc," +
+                                    "DxEntra," +
+                                    "DxMuer," +
+                                    "DxRelac01," +
+                                    "DxRelac02," +
+                                    "DxRelac03," +
+                                    "DxRelac04," +
+                                    "ImpeDX," +
+                                    "TipoDxPrin," +
+                                    "UnidadEdad," +
+                                    "ValorEdad," +
+                                    "EdadMeses," +
+                                    "CodMediIngresa," +
+                                    "CodiMedi," +
+                                    "CodEspeci," +
+                                    "CodiMediSalida," +
+                                    "CodEspeciSalida," +
+                                    "FormAten," +
+                                    "ImagAten," +
+                                    "LaboAten," +
+                                    "ProAten," +
+                                    "TuvoControl," +
+                                    "TipoControl," +
+                                    "TuvoProcedimiento," +
+                                    "Fechallega," +
+                                    "HoraLlega," +
+                                    "CodEstado," +
+                                    "MedioLlegada," +
+                                    "CualMedio," +
+                                    "NomAcomp," +
+                                    "CodParen," +
+                                    "DirParen," +
+                                    "TelParen," +
+                                    "FechaOcurre," +
+                                    "HoraOcurre," +
+                                    "CausaBase," +
+                                    "SitOcurre," +
+                                    "MotConsul," +
+                                    "HistEnfActual," +
+                                    "TensionSisto," +
+                                    "TensionDiasto," +
+                                    "FrecuCardi," +
+                                    "FrecuRespi," +
+                                    "temperatura," +
+                                    "PesoAMB," +
+                                    "TallaAMB," +
+                                    "IMC," +
+                                    "CatIMC," +
+                                    "PerimetroCefalico," +
+                                    "SPO2," +
+                                    "CabezaCuello," +
+                                    "Endocrino," +
+                                    "CardioPulmonar," +
+                                    "Cardiovascular," +
+                                    "Abdomen," +
+                                    "GenitoUrinario," +
+                                    "Neurologico," +
+                                    "Extremidades," +
+                                    "PielyFaneras," +
+                                    "OsteoMuscu," +
+                                    "GlasGow," +
+                                    "Glaswog01," +
+                                    "Glaswog02," +
+                                    "Glaswog03," +
+                                    "EstadoGral," +
+                                    "CabezaCuelloFisi," +
+                                    "OcularFisi," +
+                                    "ORLFisi," +
+                                    "DorsalLumbarFisi," +
+                                    "AbdomenFisi," +
+                                    "ExtremidadesFisi," +
+                                    "ToraxFisico," +
+                                    "CardioVascuFisi," +
+                                    "PielSub," +
+                                    "ExaGineco," +
+                                    "TactoRectal," +
+                                    "ExaMamas," +
+                                    "AparLocomo," +
+                                    "AparGanglio," +
+                                    "NeuroFisico," +
+                                    "pqsiquiatrico," +
+                                    "Conducta," +
+                                    "CodiColumna," +
+                                    "PosTPlan," +
+                                    "Remision," +
+                                    "RemiNum," +
+                                    "DestinoUsuario," +
+                                    "Activa," +
+                                    "ActivaInicialUrgencias," +
+                                    "ExamenesAuxiliares," +
+                                    "EpicrisisActiva," +
+                                    "EpicrisisCerr," +
+                                    "ValoraH," +
+                                    "CodiMediValor," +
+                                    "FechaValora," +
+                                    "HoraLlegaValora," +
+                                    "DetalleValora," +
+                                    "Soporte," +
+                                    "OtAnteceCE," +
+                                    "IngresoEPI," +
+                                    "EvolucionEPI," +
+                                    "EgresoEPI," +
+                                    "CodiMediEpi," +
+                                    "FechaEpi," +
+                                    "HoraEpi," +
+                                    "CodColor," +
+                                    "NumeroCitas," +
+                                    "Horaregis," +
+                                    "HoraAtencion," +
+                                    "CodiRegis," +
+                                    "FecRegis," +
+                                    "CodiModi," +
+                                    "FecModi," +
+                                    "ResumenEvoEPI," +
+                                    "PrefiHis" +
+                                     ")" +
+                                    "VALUES" +
+                                    "(" +
+                                     "'" + TabHistoCli["CodConExt"].ToString() + "'," +
+                                     "'" + TabHistoCli["TipoAten"].ToString() + "'," +
+                                     "'" + TabHistoCli["NumCuenta"].ToString() + "'," +
+                                     "'" + TabHistoCli["HistoriaNum"].ToString() + "'," +
+                                    $"{Conexion.ValidarFechaNula(TabHistoCli["FecAtenc"].ToString())}" +
+                                     $"{Conexion.ValidarHoraNula(TabHistoCli["HoraInicio"].ToString())}" +
+                                     "'" + TabHistoCli["Dxprinc"].ToString() + "'," +
+                                     "'" + TabHistoCli["DxEntra"].ToString() + "'," +
+                                     "'" + TabHistoCli["DxMuer"].ToString() + "'," +
+                                     "'" + TabHistoCli["DxRelac01"].ToString() + "'," +
+                                     "'" + TabHistoCli["DxRelac02"].ToString() + "'," +
+                                     "'" + TabHistoCli["DxRelac03"].ToString() + "'," +
+                                     "'" + TabHistoCli["DxRelac04"].ToString() + "'," +
+                                     "'" + TabHistoCli["ImpeDX"].ToString() + "'," +
+                                     "'" + TabHistoCli["TipoDxPrin"].ToString() + "'," +
+                                     "'" + TabHistoCli["UnidadEdad"].ToString() + "'," +
+                                     "'" + TabHistoCli["ValorEdad"].ToString() + "'," +
+                                     "'" + TabHistoCli["EdadMeses"].ToString() + "'," +
+                                     "'" + TabHistoCli["CodMediIngresa"].ToString() + "'," +
+                                     "'" + TabHistoCli["CodiMedi"].ToString() + "'," +
+                                     "'" + TabHistoCli["CodEspeci"].ToString() + "'," +
+                                     "'" + TabHistoCli["CodiMediSalida"].ToString() + "'," +
+                                     "'" + TabHistoCli["CodEspeciSalida"].ToString() + "'," +
+                                     "'" + TabHistoCli["FormAten"].ToString() + "'," +
+                                     "'" + TabHistoCli["ImagAten"].ToString() + "'," +
+                                     "'" + TabHistoCli["LaboAten"].ToString() + "'," +
+                                     "'" + TabHistoCli["ProAten"].ToString() + "'," +
+                                     "'" + TabHistoCli["TuvoControl"].ToString() + "'," +
+                                     "'" + TabHistoCli["TipoControl"].ToString() + "'," +
+                                     "'" + TabHistoCli["TuvoProcedimiento"].ToString() + "'," +
+                                     $"{Conexion.ValidarFechaNula(TabHistoCli["Fechallega"].ToString())}" +
+                                     $"{Conexion.ValidarHoraNula(TabHistoCli["HoraLlega"].ToString())}" +
+                                     "'" + TabHistoCli["CodEstado"].ToString() + "'," +
+                                     "'" + TabHistoCli["MedioLlegada"].ToString() + "'," +
+                                     "'" + TabHistoCli["CualMedio"].ToString() + "'," +
+                                     "'" + TabHistoCli["NomAcomp"].ToString() + "'," +
+                                     "'" + TabHistoCli["CodParen"].ToString() + "'," +
+                                     "'" + TabHistoCli["DirParen"].ToString() + "'," +
+                                     "'" + TabHistoCli["TelParen"].ToString() + "'," +
+                                    $"{Conexion.ValidarFechaNula(TabHistoCli["FechaOcurre"].ToString())}" +
+                                     $"{Conexion.ValidarHoraNula(TabHistoCli["HoraOcurre"].ToString())}" +
+                                     "'" + TabHistoCli["CausaBase"].ToString() + "'," +
+                                     "'" + TabHistoCli["SitOcurre"].ToString() + "'," +
+                                     "'" + TabHistoCli["MotConsul"].ToString().Replace("'", "") + "'," +
+                                     "'" + TabHistoCli["HistEnfActual"].ToString() + "'," +
+                                     "'" + TabHistoCli["TensionSisto"].ToString() + "'," +
+                                     "'" + TabHistoCli["TensionDiasto"].ToString() + "'," +
+                                     "'" + TabHistoCli["FrecuCardi"].ToString() + "'," +
+                                     "'" + TabHistoCli["FrecuRespi"].ToString() + "'," +
+                                     "'" + TabHistoCli["temperatura"].ToString() + "'," +
+                                     "'" + TabHistoCli["PesoAMB"].ToString() + "'," +
+                                     "'" + TabHistoCli["TallaAMB"].ToString() + "'," +
+                                     "'" + TabHistoCli["IMC"].ToString() + "'," +
+                                     "'" + TabHistoCli["CatIMC"].ToString() + "'," +
+                                     "'" + TabHistoCli["PerimetroCefalico"].ToString() + "'," +
+                                     "'" + TabHistoCli["SPO2"].ToString() + "'," +
+                                     "'" + TabHistoCli["CabezaCuello"].ToString() + "'," +
+                                     "'" + TabHistoCli["Endocrino"].ToString() + "'," +
+                                     "'" + TabHistoCli["CardioPulmonar"].ToString() + "'," +
+                                     "'" + TabHistoCli["Cardiovascular"].ToString() + "'," +
+                                     "'" + TabHistoCli["Abdomen"].ToString() + "'," +
+                                     "'" + TabHistoCli["GenitoUrinario"].ToString() + "'," +
+                                     "'" + TabHistoCli["Neurologico"].ToString() + "'," +
+                                     "'" + TabHistoCli["Extremidades"].ToString() + "'," +
+                                     "'" + TabHistoCli["PielyFaneras"].ToString() + "'," +
+                                     "'" + TabHistoCli["OsteoMuscu"].ToString() + "'," +
+                                     "'" + TabHistoCli["GlasGow"].ToString() + "'," +
+                                     "'" + TabHistoCli["Glaswog01"].ToString() + "'," +
+                                     "'" + TabHistoCli["Glaswog02"].ToString() + "'," +
+                                     "'" + TabHistoCli["Glaswog03"].ToString() + "'," +
+                                     "'" + TabHistoCli["EstadoGral"].ToString() + "'," +
+                                     "'" + TabHistoCli["CabezaCuelloFisi"].ToString() + "'," +
+                                     "'" + TabHistoCli["OcularFisi"].ToString() + "'," +
+                                     "'" + TabHistoCli["ORLFisi"].ToString() + "'," +
+                                     "'" + TabHistoCli["DorsalLumbarFisi"].ToString() + "'," +
+                                     "'" + TabHistoCli["AbdomenFisi"].ToString() + "'," +
+                                     "'" + TabHistoCli["ExtremidadesFisi"].ToString() + "'," +
+                                     "'" + TabHistoCli["ToraxFisico"].ToString() + "'," +
+                                     "'" + TabHistoCli["CardioVascuFisi"].ToString() + "'," +
+                                     "'" + TabHistoCli["PielSub"].ToString() + "'," +
+                                     "'" + TabHistoCli["ExaGineco"].ToString() + "'," +
+                                     "'" + TabHistoCli["TactoRectal"].ToString() + "'," +
+                                     "'" + TabHistoCli["ExaMamas"].ToString() + "'," +
+                                     "'" + TabHistoCli["AparLocomo"].ToString() + "'," +
+                                     "'" + TabHistoCli["AparGanglio"].ToString() + "'," +
+                                     "'" + TabHistoCli["NeuroFisico"].ToString() + "'," +
+                                     "'" + TabHistoCli["pqsiquiatrico"].ToString() + "'," +
+                                     "'" + TabHistoCli["Conducta"].ToString() + "'," +
+                                     "'" + TabHistoCli["CodiColumna"].ToString() + "'," +
+                                     "'" + TabHistoCli["PosTPlan"].ToString() + "'," +
+                                     "'" + TabHistoCli["Remision"].ToString() + "'," +
+                                     "'" + TabHistoCli["RemiNum"].ToString() + "'," +
+                                     "'" + TabHistoCli["DestinoUsuario"].ToString() + "'," +
+                                     "'" + TabHistoCli["Activa"].ToString() + "'," +
+                                     "'" + TabHistoCli["ActivaInicialUrgencias"].ToString() + "'," +
+                                     "'" + TabHistoCli["ExamenesAuxiliares"].ToString() + "'," +
+                                     "'" + TabHistoCli["EpicrisisActiva"].ToString() + "'," +
+                                     "'" + TabHistoCli["EpicrisisCerr"].ToString() + "'," +
+                                     "'" + TabHistoCli["ValoraH"].ToString() + "'," +
+                                     "'" + TabHistoCli["CodiMediValor"].ToString() + "'," +
+                                     $"{Conexion.ValidarFechaNula(TabHistoCli["FechaValora"].ToString())}" +
+                                     $"{Conexion.ValidarHoraNula(TabHistoCli["HoraLlegaValora"].ToString())}" +
+                                     "'" + TabHistoCli["DetalleValora"].ToString() + "'," +
+                                     "'" + TabHistoCli["Soporte"].ToString() + "'," +
+                                     "'" + TabHistoCli["OtAnteceCE"].ToString() + "'," +
+
+                                     //********** Campos que no aparecen en la E.S.E de san agustin
+                                     //TabHistorCen!OservaMedica = TabHistoCli!OservaMedica
+                                     //TabHistorCen!ObsevaLabora = TabHistoCli!ObsevaLabora
+                                     //TabHistorCen!ObservaImagen = TabHistoCli!ObservaImagen
+                                     //'**********
+                                     "'" + TabHistoCli["IngresoEPI"].ToString() + "'," +
+                                     "'" + TabHistoCli["EvolucionEPI"].ToString() + "'," +
+                                     "'" + TabHistoCli["EgresoEPI"].ToString() + "'," +
+                                     "'" + TabHistoCli["CodiMediEpi"].ToString() + "'," +
+                                    $"{Conexion.ValidarFechaNula(TabHistoCli["FechaEpi"].ToString())}" +
+                                     $"{Conexion.ValidarHoraNula(TabHistoCli["HoraEpi"].ToString())}" +
+                                     "'" + TabHistoCli["CodColor"].ToString() + "'," +
+                                     "'" + TabHistoCli["NumeroCitas"].ToString() + "'," +
+                                     $"{Conexion.ValidarHoraNula(TabHistoCli["Horaregis"].ToString())}" +
+                                     $"{Conexion.ValidarHoraNula(TabHistoCli["HoraAtencion"].ToString())}" +
+                                     "'" + TabHistoCli["CodiRegis"].ToString() + "'," +
+                                     $"{Conexion.ValidarFechaNula(TabHistoCli["FecRegis"].ToString())}" +
+                                     "'" + TabHistoCli["CodiModi"].ToString() + "'," +
+                                     $"{Conexion.ValidarFechaNula(TabHistoCli["FecModi"].ToString())}" +
+
+                                     //TabHistorCen!SintRespiratorioNO = TabHistoCli!SintRespiratorioNO
+                                     //TabHistorCen!SintPielNO = TabHistoCli!SintPielNO
+                                     //TabHistorCen!SintSNNO = TabHistoCli!SintSNNO
+                                     //'********** Campos que no aparecen en la E.S.E de san agustin
+                                     //TabHistorCen!ProcediQxOxEPI = TabHistoCli!ProcediQxOxEPI
+                                     //TabHistorCen!TratamientosEPI = TabHistoCli!TratamientosEPI
+                                     //TabHistorCen!ResumenEPI = TabHistoCli!ResumenEPI
+                                     //'**********
+                                     "'" + TabHistoCli["ResumenEvoEPI"].ToString() + "'," +
+
+                                     //'********** Campos que no aparecen en la E.S.E de san agustin
+                                     //TabHistorCen!ComplicacionesEPI = TabHistoCli!ComplicacionesEPI
+                                     //TabHistorCen!CondicionesEPI = TabHistoCli!CondicionesEPI
+                                     //TabHistorCen!PronosticoEPI = TabHistoCli!PronosticoEPI
+                                     //TabHistorCen!RecomendacionesEPI = TabHistoCli!RecomendacionesEPI
+                                     //'**********
+
+                                     "'" + TabHistoCli["PrefiHis"].ToString() + "'" +
+                                    ")";
+
+                                    Boolean Insert = Conexion.SqlInsert(Utils.SqlDatos);
+
+                                    FunDetAntCon = DetalleatencionconsultaIMP(CodBusAten);
+                                    FunAntPac = AntecedentespacientesIMP(CodBusAten);
+                                    FunRegEvo = RegistrodeevolucionesIMP(CodBusAten);
+                                    FunDetObsDoc = DetallesdeobservacionespordocumentoIMP(CodBusAten);
+                                    FunDetEscAbre = DetalleescalaabreviadaIMP(CodBusAten);
+                                    FunRegHtaDiabe = RegistroHtaDiabeticosIMP(CodBusAten);
+                                    FunTratamiento = TratamientosIMP(HistoPaci, CodBusAten);
+                                    FunSegControl = SeguimientodecontrolesIMP(CodBusAten);//AQUI  
+                                    FunRemision = RemisionesIMP(CodBusAten);
+
+
+                                    //Task FunDetAntCon = new Task(() =>
+                                    //{
+                                    //    DetalleatencionconsultaIMP(CodBusAten);
+                                    //});
+                                    //Task FunAntPac = new Task(() =>
+                                    //{
+                                    //    AntecedentespacientesIMP(CodBusAten);
+                                    //});
+                                    //Task FunRegEvo = new Task(() =>
+                                    //{
+                                    //    RegistrodeevolucionesIMP(CodBusAten);
+                                    //});
+                                    //Task FunDetObsDoc = new Task(() =>
+                                    //{
+                                    //    DetallesdeobservacionespordocumentoIMP(CodBusAten);
+                                    //});
+                                    //Task FunDetEscAbre = new Task(() =>
+                                    //{
+                                    //    DetalleescalaabreviadaIMP(CodBusAten);
+                                    //});
+                                    //Task FunRegHtaDiabe = new Task(() =>
+                                    //{
+                                    //    RegistroHtaDiabeticosIMP(CodBusAten);
+                                    //});
+                                    //Task FunTratamiento = new Task(() =>
+                                    //{
+                                    //    TratamientosIMP(HistoPaci, CodBusAten);
+                                    //});
+                                    //Task FunSegControl = new Task(() =>
+                                    //{
+                                    //    SeguimientodecontrolesIMP(CodBusAten);//AQUI  
+                                    //});
+                                    //Task FunRemision = new Task(() =>
+                                    //{
+                                    //    RemisionesIMP(CodBusAten);
+                                    //});
+
+
+
+
+                                    //int COUN = Convert.ToInt32(TxtCanHistFor.Text) + 1;
+                                    //TxtCanHistFor.Text = COUN.ToString();
+
+
+                                }
+                                else
+                                {
+                                    //Modifique los datos
+                                    Utils.SqlDatos = "UPDATE [DACONEXTSQL].[dbo].[Datos atencion de la consulta] SET " +
+                                    "Dxprinc = '" + TabHistoCli["Dxprinc"].ToString() + "'," +
+                                    "DxEntra = '" + TabHistoCli["DxEntra"].ToString() + "'," +
+                                    "DxMuer = '" + TabHistoCli["DxMuer"].ToString() + "'," +
+                                    "DxRelac01 = '" + TabHistoCli["DxRelac01"].ToString() + "'," +
+                                    "DxRelac02 = '" + TabHistoCli["DxRelac02"].ToString() + "'," +
+                                    "DxRelac03 = '" + TabHistoCli["DxRelac03"].ToString() + "'," +
+                                    "DxRelac04 = '" + TabHistoCli["DxRelac04"].ToString() + "'," +
+                                    "ImpeDX = '" + TabHistoCli["ImpeDX"].ToString() + "'," +
+                                    "TipoDxPrin = '" + TabHistoCli["TipoDxPrin"].ToString() + "'," +
+                                    "UnidadEdad = '" + TabHistoCli["UnidadEdad"].ToString() + "'," +
+                                    "ValorEdad = '" + TabHistoCli["ValorEdad"].ToString() + "'," +
+                                    "EdadMeses = '" + TabHistoCli["EdadMeses"].ToString() + "'," +
+                                    "CodMediIngresa = '" + TabHistoCli["CodMediIngresa"].ToString() + "'," +
+                                    "CodiMedi = '" + TabHistoCli["CodiMedi"].ToString() + "'," +
+                                    "CodEspeci = '" + TabHistoCli["CodEspeci"].ToString() + "'," +
+                                    "CodiMediSalida = '" + TabHistoCli["CodiMediSalida"].ToString() + "'," +
+                                    "CodEspeciSalida = '" + TabHistoCli["CodEspeciSalida"].ToString() + "'," +
+                                    "FormAten = '" + TabHistoCli["FormAten"].ToString() + "'," +
+                                    "ImagAten = '" + TabHistoCli["ImagAten"].ToString() + "'," +
+                                    "LaboAten = '" + TabHistoCli["LaboAten"].ToString() + "'," +
+                                    "ProAten = '" + TabHistoCli["ProAten"].ToString() + "'," +
+                                    "TuvoControl = '" + TabHistoCli["TuvoControl"].ToString() + "'," +
+                                    "TipoControl = '" + TabHistoCli["TipoControl"].ToString() + "'," +
+                                    "TuvoProcedimiento = '" + TabHistoCli["TuvoProcedimiento"].ToString() + "'," +
+                                    $"Fechallega = {Conexion.ValidarFechaNula(TabHistoCli["Fechallega"].ToString())}" +
+                                    $"HoraLlega = {Conexion.ValidarHoraNula(TabHistoCli["HoraLlega"].ToString())}" +
+                                    "CodEstado = '" + TabHistoCli["CodEstado"].ToString() + "'," +
+                                    "MedioLlegada = '" + TabHistoCli["MedioLlegada"].ToString() + "'," +
+                                    "CualMedio = '" + TabHistoCli["CualMedio"].ToString() + "'," +
+                                    "NomAcomp = '" + TabHistoCli["NomAcomp"].ToString() + "'," +
+                                    "CodParen = '" + TabHistoCli["CodParen"].ToString() + "'," +
+                                    "DirParen = '" + TabHistoCli["DirParen"].ToString() + "'," +
+                                    "TelParen = '" + TabHistoCli["TelParen"].ToString() + "'," +
+                                     $"FechaOcurre = {Conexion.ValidarFechaNula(TabHistoCli["FechaOcurre"].ToString())}" +
+                                    $"HoraOcurre = {Conexion.ValidarHoraNula(TabHistoCli["HoraOcurre"].ToString())}" +
+                                    "CausaBase = '" + TabHistoCli["CausaBase"].ToString() + "'," +
+                                    "SitOcurre = '" + TabHistoCli["SitOcurre"].ToString() + "'," +
+                                    "MotConsul = '" + TabHistoCli["MotConsul"].ToString().Replace("'", "") + "'," +
+                                    "HistEnfActual = '" + TabHistoCli["HistEnfActual"].ToString() + "'," +
+                                    "TensionSisto = '" + TabHistoCli["TensionSisto"].ToString() + "'," +
+                                    "TensionDiasto = '" + TabHistoCli["TensionDiasto"].ToString() + "'," +
+                                    "FrecuCardi = '" + TabHistoCli["FrecuCardi"].ToString() + "'," +
+                                    "FrecuRespi = '" + TabHistoCli["FrecuRespi"].ToString() + "'," +
+                                    "temperatura = '" + TabHistoCli["temperatura"].ToString() + "'," +
+                                    "PesoAMB = '" + TabHistoCli["PesoAMB"].ToString() + "'," +
+                                    "TallaAMB = '" + TabHistoCli["TallaAMB"].ToString() + "'," +
+                                    "IMC = '" + TabHistoCli["IMC"].ToString() + "'," +
+                                    "CatIMC = '" + TabHistoCli["CatIMC"].ToString() + "'," +
+                                    "PerimetroCefalico = '" + TabHistoCli["PerimetroCefalico"].ToString() + "'," +
+                                    "SPO2 = '" + TabHistoCli["SPO2"].ToString() + "'," +
+                                    "CabezaCuello = '" + TabHistoCli["CabezaCuello"].ToString() + "'," +
+                                    "Endocrino = '" + TabHistoCli["Endocrino"].ToString() + "'," +
+                                    "CardioPulmonar = '" + TabHistoCli["CardioPulmonar"].ToString() + "'," +
+                                    "Cardiovascular = '" + TabHistoCli["Cardiovascular"].ToString() + "'," +
+                                    "Abdomen = '" + TabHistoCli["Abdomen"].ToString() + "'," +
+                                    "GenitoUrinario = '" + TabHistoCli["GenitoUrinario"].ToString() + "'," +
+                                    "Neurologico = '" + TabHistoCli["Neurologico"].ToString() + "'," +
+                                    "Extremidades = '" + TabHistoCli["Extremidades"].ToString() + "'," +
+                                    "PielyFaneras = '" + TabHistoCli["PielyFaneras"].ToString() + "'," +
+                                    "OsteoMuscu = '" + TabHistoCli["OsteoMuscu"].ToString() + "'," +
+                                    "GlasGow = '" + TabHistoCli["GlasGow"].ToString() + "'," +
+                                    "Glaswog01 = '" + TabHistoCli["Glaswog01"].ToString() + "'," +
+                                    "Glaswog02 = '" + TabHistoCli["Glaswog02"].ToString() + "'," +
+                                    "Glaswog03 = '" + TabHistoCli["Glaswog03"].ToString() + "'," +
+                                    "EstadoGral = '" + TabHistoCli["EstadoGral"].ToString() + "'," +
+                                    "CabezaCuelloFisi = '" + TabHistoCli["CabezaCuelloFisi"].ToString() + "'," +
+                                    "OcularFisi = '" + TabHistoCli["OcularFisi"].ToString() + "'," +
+                                    "ORLFisi = '" + TabHistoCli["ORLFisi"].ToString() + "'," +
+                                    "DorsalLumbarFisi = '" + TabHistoCli["DorsalLumbarFisi"].ToString() + "'," +
+                                    "AbdomenFisi = '" + TabHistoCli["AbdomenFisi"].ToString() + "'," +
+                                    "ExtremidadesFisi = '" + TabHistoCli["ExtremidadesFisi"].ToString() + "'," +
+                                    "ToraxFisico = '" + TabHistoCli["ToraxFisico"].ToString() + "'," +
+                                    "CardioVascuFisi = '" + TabHistoCli["CardioVascuFisi"].ToString() + "'," +
+                                    "PielSub = '" + TabHistoCli["PielSub"].ToString() + "'," +
+                                    "ExaGineco = '" + TabHistoCli["ExaGineco"].ToString() + "'," +
+                                    "TactoRectal = '" + TabHistoCli["TactoRectal"].ToString() + "'," +
+                                    "ExaMamas = '" + TabHistoCli["ExaMamas"].ToString() + "'," +
+                                    "AparLocomo = '" + TabHistoCli["AparLocomo"].ToString() + "'," +
+                                    "AparGanglio = '" + TabHistoCli["AparGanglio"].ToString() + "'," +
+                                    "NeuroFisico = '" + TabHistoCli["NeuroFisico"].ToString() + "'," +
+                                    "pqsiquiatrico = '" + TabHistoCli["pqsiquiatrico"].ToString() + "'," +
+                                    "Conducta = '" + TabHistoCli["Conducta"].ToString() + "'," +
+                                    "CodiColumna = '" + TabHistoCli["CodiColumna"].ToString() + "'," +
+                                    "PosTPlan = '" + TabHistoCli["PosTPlan"].ToString() + "'," +
+                                    "Remision = '" + TabHistoCli["Remision"].ToString() + "'," +
+                                    "RemiNum = '" + TabHistoCli["RemiNum"].ToString() + "'," +
+                                    "DestinoUsuario = '" + TabHistoCli["DestinoUsuario"].ToString() + "'," +
+                                    "Activa = '" + TabHistoCli["Activa"].ToString() + "'," +
+                                    "ActivaInicialUrgencias = '" + TabHistoCli["ActivaInicialUrgencias"].ToString() + "'," +
+                                    "ExamenesAuxiliares = '" + TabHistoCli["ExamenesAuxiliares"].ToString() + "'," +
+                                    "EpicrisisActiva = '" + TabHistoCli["EpicrisisActiva"].ToString() + "'," +
+                                    "EpicrisisCerr = '" + TabHistoCli["EpicrisisCerr"].ToString() + "'," +
+                                    "ValoraH = '" + TabHistoCli["ValoraH"].ToString() + "'," +
+                                    "CodiMediValor = '" + TabHistoCli["CodiMediValor"].ToString() + "'," +
+                                    $"FechaValora = {Conexion.ValidarFechaNula(TabHistoCli["FechaValora"].ToString())}" +
+                                     $"HoraLlegaValora = {Conexion.ValidarHoraNula(TabHistoCli["HoraLlegaValora"].ToString())}" +
+                                    "DetalleValora = '" + TabHistoCli["DetalleValora"].ToString() + "'," +
+                                    "Soporte = '" + TabHistoCli["Soporte"].ToString() + "'," +
+                                    "OtAnteceCE = '" + TabHistoCli["OtAnteceCE"].ToString() + "'," +
+                                    "IngresoEPI = '" + TabHistoCli["IngresoEPI"].ToString() + "'," +
+                                    "EvolucionEPI = '" + TabHistoCli["EvolucionEPI"].ToString() + "'," +
+                                    "EgresoEPI = '" + TabHistoCli["EgresoEPI"].ToString() + "'," +
+                                    "CodiMediEpi = '" + TabHistoCli["CodiMediEpi"].ToString() + "'," +
+                                    $"FechaEpi = {Conexion.ValidarFechaNula(TabHistoCli["FechaEpi"].ToString())}" +
+                                     $"HoraEpi = {Conexion.ValidarHoraNula(TabHistoCli["HoraEpi"].ToString())}" +
+                                    "CodColor = '" + TabHistoCli["CodColor"].ToString() + "'," +
+                                    "NumeroCitas = '" + TabHistoCli["NumeroCitas"].ToString() + "'," +
+                                    $"Horaregis = {Conexion.ValidarHoraNula(TabHistoCli["Horaregis"].ToString())}" +
+                                    $"HoraAtencion = {Conexion.ValidarHoraNula(TabHistoCli["HoraAtencion"].ToString())}" +
+                                    "CodiRegis = '" + TabHistoCli["CodiRegis"].ToString() + "'," +
+                                    $"FecRegis = {Conexion.ValidarFechaNula(TabHistoCli["FecRegis"].ToString())}" +
+                                    "CodiModi = '" + TabHistoCli["CodiModi"].ToString() + "'," +
+                                    $"FecModi = {Conexion.ValidarFechaNula(TabHistoCli["FecModi"].ToString())}" +
+                                    //TabHistorCen!SintRespiratorioNO = TabHistoCli!SintRespiratorioNO
+                                    //TabHistorCen!SintPielNO = TabHistoCli!SintPielNO
+                                    //TabHistorCen!SintSNNO = TabHistoCli!SintSNNO
+
+
+                                    //'********** Campos que no aparecen en la E.S.E de san agustin
+                                    //TabHistorCen!ProcediQxOxEPI = TabHistoCli!ProcediQxOxEPI
+                                    //TabHistorCen!TratamientosEPI = TabHistoCli!TratamientosEPI
+                                    //TabHistorCen!ResumenEPI = TabHistoCli!ResumenEPI
+                                    //'**********
+                                    "ResumenEvoEPI = '" + TabHistoCli["ResumenEvoEPI"].ToString() + "'," +
+                                    "PrefiHis = '" + TabHistoCli["PrefiHis"].ToString() + "' " +
+                                    "WHERE CodConExt = '" + CodBusAten + "'";
+
+
+                                    Boolean Act = Conexion.SQLUpdate(Utils.SqlDatos);
+
+                                    FunDetAntCon = DetalleatencionconsultaIMP(CodBusAten);
+                                    FunAntPac = AntecedentespacientesIMP(CodBusAten);
+                                    FunRegEvo = RegistrodeevolucionesIMP(CodBusAten);
+                                    FunDetObsDoc = DetallesdeobservacionespordocumentoIMP(CodBusAten);
+                                    FunDetEscAbre = DetalleescalaabreviadaIMP(CodBusAten);
+                                    FunRegHtaDiabe = RegistroHtaDiabeticosIMP(CodBusAten);
+                                    FunTratamiento = TratamientosIMP(HistoPaci, CodBusAten);
+                                    FunSegControl = SeguimientodecontrolesIMP(CodBusAten);
+                                    FunRemision = RemisionesIMP(CodBusAten);
+
+                                    //int COUN = Convert.ToInt32(TxtCanhisFormExis.Text) + 1;
+                                    //TxtCanhisFormExis.Text = COUN.ToString();
+
+
+                                }//Final de TabHistorCen.BOF
+
+                                TabHistorCen.Close();
+
+                            }//using
+
+
+                            //BarraExportHistorias.Increment(1);
+                            ImportarHistorias.ReportProgress(contador);
+
+                        }//While
+                    }// if(TabHistoCli.HasRows == false)
+                }//uSING
+
+
+            }
+            catch (Exception ex)
+            {
+                Utils.Titulo01 = "Control de errores de ejecución";
+                Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
+                Utils.Informa += "después de hacer click sobre el botón importar" + "\r";
+                Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
                 BarraExportHistorias.Minimum = 0;
                 BarraExportHistorias.Maximum = 1;
                 BarraExportHistorias.Value = 0;
+                MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ImportarHistorias.CancelAsync();
             }
         }
 
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+
+
+        private void ImportarHistorias_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+
+            BarraExportHistorias.Value = e.ProgressPercentage;
+            LblCantidad.Text = e.ProgressPercentage.ToString();
 
         }
 
-
+        private void ImportarHistorias_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Utils.Informa = "El proceso ha terminado satisfactoriamente " + "\r";
+            Utils.Titulo01 = "Control para importar datos";
+            MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            BarraExportHistorias.Minimum = 0;
+            BarraExportHistorias.Maximum = 1;
+            BarraExportHistorias.Value = 0;
+            LblCantidad.Text = "0";
+            LblTotal.Text = "0";
+        }
     }
 }

@@ -715,7 +715,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                         "TexResol = '" + TexResFacElec + "', " +
                                         "FecVenci = CONVERT(DATETIME, '" + FecVenciString + "', 102), " +                                        //Utils.SqlDatos = "UPDATE [ACDATOXPSQL].[dbo].[Datos de las facturas realizadas] SET "+
                                         "NumResol = '" + NumResFac + "', " +
-                                        "CodEstaDian = 01, " + //Preparada para enviar a la dian
+                                        "CodEstaDian = '01', " + //Preparada para enviar a la dian
                                         "NumFacAntes =  '" + FacPorta + "' ," +
                                         "PrefiFacElec =  '" + PrefiFacE + "' " +
                                         "WHERE NumFactura = '" + FacPorta + "' AND PrefiFac = N'" + PfiPor + "' "; //Preguntar

@@ -260,6 +260,8 @@
   <ItemGroup>
     <None Include="Pictures\icons8-exportar-30.png" />
     <None Include="Pictures\icons8-guardar-30.png" />
+    <None Include="Pictures\detener.png" />
+    <None Include="Pictures\cerrar.png" />
     <Content Include="SIIGHOSPLUSICONO.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
