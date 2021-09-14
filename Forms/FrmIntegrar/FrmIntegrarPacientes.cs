@@ -1548,5 +1548,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             }
         }
 
+        private void BtnSalir_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
     }
 }

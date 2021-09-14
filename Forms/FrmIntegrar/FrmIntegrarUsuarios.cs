@@ -849,5 +849,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void BtnSalir_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
     }
 }

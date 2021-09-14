@@ -63,13 +63,21 @@ namespace OBBDSIIG.Forms.FrmImportar
         {
             try
             {
-                DateTime FechaActual = DateTime.Now;
 
-                DateTime FechaUnMesAntes = DateTime.Now.AddMonths(-1);
+                int mes = DateTime.Now.Month;
 
-                DateInicial.Value = FechaUnMesAntes;
+                int ano = DateTime.Now.Year;
 
-                DateFinal.Value = FechaActual;
+                int FechaUnMesAntes2 = mes - 1;
+
+                DateTime primerDiaMesAntes = new DateTime(ano, FechaUnMesAntes2, 1);
+
+                DateTime ultimoDiaMesAntes = primerDiaMesAntes.AddMonths(1).AddDays(-1);
+
+                DateInicial.Value = primerDiaMesAntes;
+
+                DateFinal.Value = ultimoDiaMesAntes;
+
             }
             catch (Exception ex)
             {
@@ -79,7 +87,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                 Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        } //Carga las fechas desde la fecha actual y un mes antes. Para los filtros
+        }
 
 
 
@@ -610,6 +618,11 @@ namespace OBBDSIIG.Forms.FrmImportar
                 ProgresBar.Value = 0;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void BtnSalir_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
         }
     }
 }

@@ -38,6 +38,7 @@ namespace OBBDSIIG.Forms
             this.sedeCentralCitologiaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sedeCenrtralHigieneOralToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sedeCentralHistoriasToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.sedeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sedeCentralToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.sedeCentralHigieneOralToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,7 +54,6 @@ namespace OBBDSIIG.Forms
             this.lblFecha = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblCodUsuario = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblNomUsuario = new System.Windows.Forms.ToolStripStatusLabel();
-            this.sedeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -115,6 +115,12 @@ namespace OBBDSIIG.Forms
             this.sedeCentralHistoriasToolStripMenuItem1.Name = "sedeCentralHistoriasToolStripMenuItem1";
             resources.ApplyResources(this.sedeCentralHistoriasToolStripMenuItem1, "sedeCentralHistoriasToolStripMenuItem1");
             this.sedeCentralHistoriasToolStripMenuItem1.Click += new System.EventHandler(this.sedeCentralHistoriasToolStripMenuItem1_Click);
+            // 
+            // sedeToolStripMenuItem
+            // 
+            this.sedeToolStripMenuItem.Name = "sedeToolStripMenuItem";
+            resources.ApplyResources(this.sedeToolStripMenuItem, "sedeToolStripMenuItem");
+            this.sedeToolStripMenuItem.Click += new System.EventHandler(this.sedeToolStripMenuItem_Click);
             // 
             // importarToolStripMenuItem
             // 
@@ -219,12 +225,6 @@ namespace OBBDSIIG.Forms
             this.lblNomUsuario.BackColor = System.Drawing.Color.White;
             this.lblNomUsuario.Name = "lblNomUsuario";
             resources.ApplyResources(this.lblNomUsuario, "lblNomUsuario");
-            // 
-            // sedeToolStripMenuItem
-            // 
-            this.sedeToolStripMenuItem.Name = "sedeToolStripMenuItem";
-            resources.ApplyResources(this.sedeToolStripMenuItem, "sedeToolStripMenuItem");
-            this.sedeToolStripMenuItem.Click += new System.EventHandler(this.sedeToolStripMenuItem_Click);
             // 
             // FrmPrincipal
             // 

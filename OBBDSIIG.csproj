@@ -262,6 +262,7 @@
     <None Include="Pictures\icons8-guardar-30.png" />
     <None Include="Pictures\detener.png" />
     <None Include="Pictures\cerrar.png" />
+    <None Include="Pictures\icons8-cerrar-ventana-35.png" />
     <Content Include="SIIGHOSPLUSICONO.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

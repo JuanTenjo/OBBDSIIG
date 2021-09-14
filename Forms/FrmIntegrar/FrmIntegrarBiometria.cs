@@ -42,8 +42,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     LblCodEntiFac.Text = Utils.codUnicoEmpresa; // '*********************** Se agrega a partir del 13 de octubre de 2020 *********************************
 
                     TxtInstanCenFor.Text = Utils.InstanCenFor;
-
+                    TxtPrefiCenFor.Text = Utils.PrefiCenFor;
                     TxtInstanPortaFor.Text = Utils.InstanPortaFor;
+                    TxtPrefiPorFor.Text = Utils.PrefiPorFor;
 
                 }
 
@@ -808,6 +809,11 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                 ProgressBar.Value = 0;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void BtnSalir_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
         }
     }
 }

@@ -63,9 +63,9 @@ namespace OBBDSIIG.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap cerrar {
+        internal static System.Drawing.Bitmap detener {
             get {
-                object obj = ResourceManager.GetObject("cerrar", resourceCulture);
+                object obj = ResourceManager.GetObject("detener", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace OBBDSIIG.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap detener {
+        internal static System.Drawing.Bitmap icons8_cerrar_ventana_35 {
             get {
-                object obj = ResourceManager.GetObject("detener", resourceCulture);
+                object obj = ResourceManager.GetObject("icons8-cerrar-ventana-35", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
