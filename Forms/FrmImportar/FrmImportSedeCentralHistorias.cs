@@ -1744,10 +1744,10 @@ namespace OBBDSIIG.Forms.FrmImportar
                                     "'" + TabRegHtaDiabe["CondClinAsoc"].ToString() + "'," +
                                     "'" + TabRegHtaDiabe["RiesCardio"].ToString() + "'," +
                                     "'" + TabRegHtaDiabe["TomaEkg"].ToString() + "'," +
-                                    "'" + TabRegHtaDiabe["EKG"].ToString() + "'," +
+                                    "'" + TabRegHtaDiabe["EKG"].ToString().Replace("'","''") + "'," +
                                     $"{Conexion.ValidarFechaNula(TabRegHtaDiabe["FecTomEKG"].ToString())}" +
                                     "'" + TabRegHtaDiabe["HabiNuti"].ToString() + "'," +
-                                    "'" + TabRegHtaDiabe["ObsNutri"].ToString() + "'," +
+                                    "'" + TabRegHtaDiabe["ObsNutri"].ToString().Replace("'", "''") + "'," +
                                     "'" + TabRegHtaDiabe["ActFisica"].ToString() + "'," +
                                     "'" + TabRegHtaDiabe["REmiMedInt"].ToString() + "'," +
                                     "'" + TabRegHtaDiabe["RemiNutr"].ToString() + "'," +
@@ -1761,7 +1761,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                                     "'" + TabRegHtaDiabe["BnNoTomaMed"].ToString() + "'," +
                                     "'" + TabRegHtaDiabe["CaeMalMediDejaToma"].ToString() + "'," +
                                     "'" + TabRegHtaDiabe["AdheTrata"].ToString() + "'," +
-                                    "'" + TabRegHtaDiabe["Observacion"].ToString() + "'," +
+                                    "'" + TabRegHtaDiabe["Observacion"].ToString().Replace("'", "''") + "'," +
                                     "'" + TabRegHtaDiabe["TomaGlice"].ToString() + "'," +
                                     $"{Conexion.ValidarFechaNula(TabRegHtaDiabe["FecGli"].ToString())}" +
                                     "'" + TabRegHtaDiabe["TomaColeste"].ToString() + "'," +
@@ -1812,10 +1812,10 @@ namespace OBBDSIIG.Forms.FrmImportar
                                     "CondClinAsoc= '" + TabRegHtaDiabe["CondClinAsoc"].ToString() + "'," +
                                     "RiesCardio= '" + TabRegHtaDiabe["RiesCardio"].ToString() + "'," +
                                     "TomaEkg= '" + TabRegHtaDiabe["TomaEkg"].ToString() + "'," +
-                                    "EKG= '" + TabRegHtaDiabe["EKG"].ToString() + "'," +
+                                    "EKG= '" + TabRegHtaDiabe["EKG"].ToString().Replace("'", "''") + "'," +
                                     $"FecTomEKG = {Conexion.ValidarFechaNula(TabRegHtaDiabe["FecTomEKG"].ToString())}" +
                                     "HabiNuti= '" + TabRegHtaDiabe["HabiNuti"].ToString() + "'," +
-                                    "ObsNutri= '" + TabRegHtaDiabe["ObsNutri"].ToString() + "'," +
+                                    "ObsNutri= '" + TabRegHtaDiabe["ObsNutri"].ToString().Replace("'", "''") + "'," +
                                     "ActFisica= '" + TabRegHtaDiabe["ActFisica"].ToString() + "'," +
                                     "REmiMedInt= '" + TabRegHtaDiabe["REmiMedInt"].ToString() + "'," +
                                     "RemiNutr= '" + TabRegHtaDiabe["RemiNutr"].ToString() + "'," +
@@ -1829,7 +1829,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                                     "BnNoTomaMed= '" + TabRegHtaDiabe["BnNoTomaMed"].ToString() + "'," +
                                     "CaeMalMediDejaToma= '" + TabRegHtaDiabe["CaeMalMediDejaToma"].ToString() + "'," +
                                     "AdheTrata= '" + TabRegHtaDiabe["AdheTrata"].ToString() + "'," +
-                                    "Observacion= '" + TabRegHtaDiabe["Observacion"].ToString() + "'," +
+                                    "Observacion= '" + TabRegHtaDiabe["Observacion"].ToString().Replace("'", "''") + "'," +
                                     "TomaGlice= '" + TabRegHtaDiabe["TomaGlice"].ToString() + "'," +
                                     $"FecGli = {Conexion.ValidarFechaNula(TabRegHtaDiabe["FecGli"].ToString())}" +
                                     "TomaColeste= '" + TabRegHtaDiabe["TomaColeste"].ToString() + "'," +
@@ -3348,7 +3348,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                         Utils.Informa += "el nombre de la instancia central,";
                         Utils.Informa += "no se puede empezar a ejecutar el";
                         Utils.Informa += "proceso de exportación de datos.";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -3358,7 +3358,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                         Utils.Informa += "el prefijo de la instancia central,";
                         Utils.Informa += "no se puede empezar a ejecutar el";
                         Utils.Informa += "proceso de exportación de datos.";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -3368,7 +3368,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                         Utils.Informa += "nombre de la instancia del porttatil,";
                         Utils.Informa += "no se puede empezar a ejecutar el";
                         Utils.Informa += "proceso de exportación de datos.";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -3378,7 +3378,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                         Utils.Informa += "prefijo de la instancia del porttatil,";
                         Utils.Informa += "no se puede empezar a ejecutar el";
                         Utils.Informa += "proceso de exportación de datos.";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -3387,7 +3387,8 @@ namespace OBBDSIIG.Forms.FrmImportar
                     {
                         Utils.Informa = "Lo siento pero";
                         Utils.Informa += "la fecha inicial no puede ser mayor a la fecha final";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
 
                     string FecIniPro = Convert.ToString(DateInicial.Value.ToString("yyyy-MM-dd"));
@@ -3410,7 +3411,8 @@ namespace OBBDSIIG.Forms.FrmImportar
                     {
                         TxtCanHistFor.Text = "0";
                         TxtCanhisFormExis.Text = "0";
-
+                        GlobalCantiAct = 0;
+                        GlobalCantiIngre = 0;
 
                         ConectarCentral();
 

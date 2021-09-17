@@ -30,7 +30,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmIntegrarEntidades));
-            this.label15 = new System.Windows.Forms.Label();
+            this.LblIntegrar = new System.Windows.Forms.Label();
             this.BtnBuscarPacientes = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.TxtCanEmpTerExis = new System.Windows.Forms.TextBox();
@@ -56,24 +56,25 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label16 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.BtnSalir = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
+            this.LblDetener = new System.Windows.Forms.Label();
             this.BtnDetener = new System.Windows.Forms.Button();
             this.LblTotal = new System.Windows.Forms.Label();
             this.LblEslash = new System.Windows.Forms.Label();
             this.LblCantidad = new System.Windows.Forms.Label();
+            this.IntegrarEntidades = new System.ComponentModel.BackgroundWorker();
             this.groupBox1.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label15
+            // LblIntegrar
             // 
-            this.label15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(17, 196);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(55, 17);
-            this.label15.TabIndex = 57;
-            this.label15.Text = "Integrar";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.LblIntegrar.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblIntegrar.Location = new System.Drawing.Point(43, 194);
+            this.LblIntegrar.Name = "LblIntegrar";
+            this.LblIntegrar.Size = new System.Drawing.Size(55, 17);
+            this.LblIntegrar.TabIndex = 57;
+            this.LblIntegrar.Text = "Integrar";
+            this.LblIntegrar.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // BtnBuscarPacientes
             // 
@@ -81,7 +82,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.BtnBuscarPacientes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.BtnBuscarPacientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnBuscarPacientes.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.BtnBuscarPacientes.Location = new System.Drawing.Point(22, 214);
+            this.BtnBuscarPacientes.Location = new System.Drawing.Point(48, 212);
             this.BtnBuscarPacientes.Name = "BtnBuscarPacientes";
             this.BtnBuscarPacientes.Size = new System.Drawing.Size(43, 34);
             this.BtnBuscarPacientes.TabIndex = 56;
@@ -330,7 +331,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // label5
             // 
             this.label5.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(78, 196);
+            this.label5.Location = new System.Drawing.Point(104, 194);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(43, 17);
             this.label5.TabIndex = 92;
@@ -343,23 +344,23 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.BtnSalir.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.BtnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSalir.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.BtnSalir.Location = new System.Drawing.Point(77, 214);
+            this.BtnSalir.Location = new System.Drawing.Point(103, 212);
             this.BtnSalir.Name = "BtnSalir";
             this.BtnSalir.Size = new System.Drawing.Size(43, 34);
             this.BtnSalir.TabIndex = 91;
             this.BtnSalir.UseVisualStyleBackColor = true;
             this.BtnSalir.Click += new System.EventHandler(this.BtnSalir_Click);
             // 
-            // label9
+            // LblDetener
             // 
-            this.label9.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(127, 196);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(54, 17);
-            this.label9.TabIndex = 90;
-            this.label9.Text = "Detener";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label9.Visible = false;
+            this.LblDetener.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblDetener.Location = new System.Drawing.Point(44, 194);
+            this.LblDetener.Name = "LblDetener";
+            this.LblDetener.Size = new System.Drawing.Size(54, 17);
+            this.LblDetener.TabIndex = 90;
+            this.LblDetener.Text = "Detener";
+            this.LblDetener.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.LblDetener.Visible = false;
             // 
             // BtnDetener
             // 
@@ -367,12 +368,13 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.BtnDetener.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.BtnDetener.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnDetener.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.BtnDetener.Location = new System.Drawing.Point(131, 214);
+            this.BtnDetener.Location = new System.Drawing.Point(48, 212);
             this.BtnDetener.Name = "BtnDetener";
             this.BtnDetener.Size = new System.Drawing.Size(43, 34);
             this.BtnDetener.TabIndex = 89;
             this.BtnDetener.UseVisualStyleBackColor = true;
             this.BtnDetener.Visible = false;
+            this.BtnDetener.Click += new System.EventHandler(this.BtnDetener_Click);
             // 
             // LblTotal
             // 
@@ -410,6 +412,14 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.LblCantidad.Text = "0";
             this.LblCantidad.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // IntegrarEntidades
+            // 
+            this.IntegrarEntidades.WorkerReportsProgress = true;
+            this.IntegrarEntidades.WorkerSupportsCancellation = true;
+            this.IntegrarEntidades.DoWork += new System.ComponentModel.DoWorkEventHandler(this.IntegrarEntidades_DoWork);
+            this.IntegrarEntidades.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.IntegrarEntidades_ProgressChanged);
+            this.IntegrarEntidades.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.IntegrarEntidades_RunWorkerCompleted);
+            // 
             // FrmIntegrarEntidades
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -422,8 +432,6 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.Controls.Add(this.LblCantidad);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.BtnSalir);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.BtnDetener);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.TxtPrefiPorFor);
             this.Controls.Add(this.TxtPrefiCenFor);
@@ -434,9 +442,11 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ProgressBar);
-            this.Controls.Add(this.label15);
+            this.Controls.Add(this.LblIntegrar);
             this.Controls.Add(this.BtnBuscarPacientes);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.LblDetener);
+            this.Controls.Add(this.BtnDetener);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -453,7 +463,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
         }
 
         #endregion
-        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label LblIntegrar;
         private System.Windows.Forms.Button BtnBuscarPacientes;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox TxtCanEmpTerExis;
@@ -479,10 +489,11 @@ namespace OBBDSIIG.Forms.FrmIntegrar
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button BtnSalir;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label LblDetener;
         private System.Windows.Forms.Button BtnDetener;
         private System.Windows.Forms.Label LblTotal;
         private System.Windows.Forms.Label LblEslash;
         private System.Windows.Forms.Label LblCantidad;
+        private System.ComponentModel.BackgroundWorker IntegrarEntidades;
     }
 }

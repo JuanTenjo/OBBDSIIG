@@ -233,7 +233,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                         Utils.Informa += "el nombre de la instancia central,";
                         Utils.Informa += "no se puede empezar a ejecutar el";
                         Utils.Informa += "proceso de exportación de datos.";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -243,7 +243,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                         Utils.Informa += "el prefijo de la instancia central,";
                         Utils.Informa += "no se puede empezar a ejecutar el";
                         Utils.Informa += "proceso de exportación de datos.";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -253,7 +253,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                         Utils.Informa += "nombre de la instancia del porttatil,";
                         Utils.Informa += "no se puede empezar a ejecutar el";
                         Utils.Informa += "proceso de exportación de datos.";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -263,7 +263,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                         Utils.Informa += "prefijo de la instancia del porttatil,";
                         Utils.Informa += "no se puede empezar a ejecutar el";
                         Utils.Informa += "proceso de exportación de datos.";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -272,7 +272,8 @@ namespace OBBDSIIG.Forms.FrmExportar
                     {
                         Utils.Informa = "Lo siento pero";
                         Utils.Informa += "la fecha inicial no puede ser mayor a la fecha final";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
 
 
@@ -342,7 +343,6 @@ namespace OBBDSIIG.Forms.FrmExportar
                                 Utils.Informa = "Lo siento pero en el rango de fecha " + "\r";
                                 Utils.Informa += "digitado no existen datos para exportar." + "\r";
                                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                                 ProgressBar.Minimum = 0;
                                 ProgressBar.Maximum = 1;
                                 ProgressBar.Value = 0;
@@ -373,12 +373,12 @@ namespace OBBDSIIG.Forms.FrmExportar
 
         int globalCanCitoFor = 0;
         int globalCanCitoFormExis = 0;
-        int contador = 0;
 
         private void ExportarHistoCito_DoWork(object sender, DoWorkEventArgs e)
         {
             try
             {
+                int contador = 0;
 
                 string SqlCito = "", SqlCitoCen = "", CodBusCito = "";
 

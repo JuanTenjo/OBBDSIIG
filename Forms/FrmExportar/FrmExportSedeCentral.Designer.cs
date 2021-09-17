@@ -353,7 +353,8 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.BtnBuscarPacientes.BackgroundImage = global::OBBDSIIG.Properties.Resources.icons8_exportar_30;
             this.BtnBuscarPacientes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.BtnBuscarPacientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnBuscarPacientes.Location = new System.Drawing.Point(73, 264);
+            this.BtnBuscarPacientes.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.BtnBuscarPacientes.Location = new System.Drawing.Point(73, 263);
             this.BtnBuscarPacientes.Name = "BtnBuscarPacientes";
             this.BtnBuscarPacientes.Size = new System.Drawing.Size(43, 34);
             this.BtnBuscarPacientes.TabIndex = 16;

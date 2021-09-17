@@ -43,7 +43,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label11 = new System.Windows.Forms.Label();
             this.TxtCanFirAgr = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
+            this.LblExportar = new System.Windows.Forms.Label();
             this.BtnBuscarPacientes = new System.Windows.Forms.Button();
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
             this.TxtPrefiPorFor = new System.Windows.Forms.TextBox();
@@ -62,11 +62,12 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label16 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.BtnSalir = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
+            this.LblDetener = new System.Windows.Forms.Label();
             this.BtnDetener = new System.Windows.Forms.Button();
             this.LblTotal = new System.Windows.Forms.Label();
             this.LblEslash = new System.Windows.Forms.Label();
             this.LblCantidad = new System.Windows.Forms.Label();
+            this.ExportarBiometria = new System.ComponentModel.BackgroundWorker();
             this.groupBox1.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.SuspendLayout();
@@ -226,15 +227,15 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.label10.Text = "Cantidad de Registros de firmas agregadas:";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label15
+            // LblExportar
             // 
-            this.label15.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(24, 281);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(57, 20);
-            this.label15.TabIndex = 73;
-            this.label15.Text = "Exportar";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.LblExportar.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblExportar.Location = new System.Drawing.Point(54, 280);
+            this.LblExportar.Name = "LblExportar";
+            this.LblExportar.Size = new System.Drawing.Size(57, 20);
+            this.LblExportar.TabIndex = 73;
+            this.LblExportar.Text = "Exportar";
+            this.LblExportar.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // BtnBuscarPacientes
             // 
@@ -242,7 +243,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.BtnBuscarPacientes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.BtnBuscarPacientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnBuscarPacientes.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.BtnBuscarPacientes.Location = new System.Drawing.Point(28, 302);
+            this.BtnBuscarPacientes.Location = new System.Drawing.Point(58, 301);
             this.BtnBuscarPacientes.Name = "BtnBuscarPacientes";
             this.BtnBuscarPacientes.Size = new System.Drawing.Size(43, 34);
             this.BtnBuscarPacientes.TabIndex = 72;
@@ -405,7 +406,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             // label12
             // 
             this.label12.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(83, 284);
+            this.label12.Location = new System.Drawing.Point(113, 283);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(43, 17);
             this.label12.TabIndex = 92;
@@ -418,23 +419,23 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.BtnSalir.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.BtnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSalir.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.BtnSalir.Location = new System.Drawing.Point(83, 302);
+            this.BtnSalir.Location = new System.Drawing.Point(113, 301);
             this.BtnSalir.Name = "BtnSalir";
             this.BtnSalir.Size = new System.Drawing.Size(43, 34);
             this.BtnSalir.TabIndex = 91;
             this.BtnSalir.UseVisualStyleBackColor = true;
             this.BtnSalir.Click += new System.EventHandler(this.BtnSalir_Click);
             // 
-            // label9
+            // LblDetener
             // 
-            this.label9.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(133, 281);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(54, 20);
-            this.label9.TabIndex = 90;
-            this.label9.Text = "Detener";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label9.Visible = false;
+            this.LblDetener.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblDetener.Location = new System.Drawing.Point(54, 280);
+            this.LblDetener.Name = "LblDetener";
+            this.LblDetener.Size = new System.Drawing.Size(54, 20);
+            this.LblDetener.TabIndex = 90;
+            this.LblDetener.Text = "Detener";
+            this.LblDetener.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.LblDetener.Visible = false;
             // 
             // BtnDetener
             // 
@@ -442,12 +443,13 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.BtnDetener.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.BtnDetener.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnDetener.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.BtnDetener.Location = new System.Drawing.Point(137, 302);
+            this.BtnDetener.Location = new System.Drawing.Point(58, 301);
             this.BtnDetener.Name = "BtnDetener";
             this.BtnDetener.Size = new System.Drawing.Size(43, 34);
             this.BtnDetener.TabIndex = 89;
             this.BtnDetener.UseVisualStyleBackColor = true;
             this.BtnDetener.Visible = false;
+            this.BtnDetener.Click += new System.EventHandler(this.BtnDetener_Click);
             // 
             // LblTotal
             // 
@@ -485,6 +487,14 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.LblCantidad.Text = "0";
             this.LblCantidad.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // ExportarBiometria
+            // 
+            this.ExportarBiometria.WorkerReportsProgress = true;
+            this.ExportarBiometria.WorkerSupportsCancellation = true;
+            this.ExportarBiometria.DoWork += new System.ComponentModel.DoWorkEventHandler(this.ExportarBiometria_DoWork);
+            this.ExportarBiometria.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.ExportarBiometria_ProgressChanged);
+            this.ExportarBiometria.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.ExportarBiometria_RunWorkerCompleted);
+            // 
             // FrmIExportarBiometria
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -497,8 +507,6 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.Controls.Add(this.LblCantidad);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.BtnSalir);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.BtnDetener);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.TxtPrefiPorFor);
             this.Controls.Add(this.TxtPrefiCenFor);
@@ -509,9 +517,11 @@ namespace OBBDSIIG.Forms.FrmIntegrar
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ProgressBar);
-            this.Controls.Add(this.label15);
+            this.Controls.Add(this.LblExportar);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.BtnBuscarPacientes);
+            this.Controls.Add(this.LblDetener);
+            this.Controls.Add(this.BtnDetener);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -541,7 +551,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox TxtCanFirAgr;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label LblExportar;
         private System.Windows.Forms.Button BtnBuscarPacientes;
         private System.Windows.Forms.ProgressBar ProgressBar;
         private System.Windows.Forms.TextBox TxtPrefiPorFor;
@@ -560,10 +570,11 @@ namespace OBBDSIIG.Forms.FrmIntegrar
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button BtnSalir;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label LblDetener;
         private System.Windows.Forms.Button BtnDetener;
         private System.Windows.Forms.Label LblTotal;
         private System.Windows.Forms.Label LblEslash;
         private System.Windows.Forms.Label LblCantidad;
+        private System.ComponentModel.BackgroundWorker ExportarBiometria;
     }
 }

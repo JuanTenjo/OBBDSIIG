@@ -169,7 +169,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                         Utils.Informa += "el nombre de la instancia central,";
                         Utils.Informa += "no se puede empezar a ejecutar el";
                         Utils.Informa += "proceso de exportación de datos.";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -179,7 +179,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                         Utils.Informa += "el prefijo de la instancia central,";
                         Utils.Informa += "no se puede empezar a ejecutar el";
                         Utils.Informa += "proceso de exportación de datos.";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -189,7 +189,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                         Utils.Informa += "nombre de la instancia del porttatil,";
                         Utils.Informa += "no se puede empezar a ejecutar el";
                         Utils.Informa += "proceso de exportación de datos.";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -199,7 +199,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                         Utils.Informa += "prefijo de la instancia del porttatil,";
                         Utils.Informa += "no se puede empezar a ejecutar el";
                         Utils.Informa += "proceso de exportación de datos.";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -208,7 +208,8 @@ namespace OBBDSIIG.Forms.FrmExportar
                     {
                         Utils.Informa = "Lo siento pero";
                         Utils.Informa += "la fecha inicial no puede ser mayor a la fecha final";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
 
                     string FecIniPro = Convert.ToString(DateInicial.Value.ToString("yyyy-MM-dd"));
@@ -238,6 +239,9 @@ namespace OBBDSIIG.Forms.FrmExportar
 
                         TxtCanPlacaFor.Text = "0";
                         TxtCanPlacaFormExis.Text = "0";
+                        globalCantidadORal = 0;
+                        globalCantidadAct = 0;
+
 
                         ConectarPortatil();
 
@@ -263,15 +267,21 @@ namespace OBBDSIIG.Forms.FrmExportar
                                 ProgresBar.Maximum = Total;
                                 LblTotal.Text = Total.ToString();
                             }
+                            else
+                            {
+                                
+                                Utils.Informa = "Lo siento pero en el rango de fecha " + "\r";
+                                Utils.Informa += "digitado no existen datos para exportar." + "\r";
+                                MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                ProgresBar.Minimum = 0;
+                                ProgresBar.Maximum = 1;
+                                ProgresBar.Value = 0;
+                                LblTotal.Text = "0";
+
+                            }
 
                         }
-                        else
-                        {
-                            ProgresBar.Minimum = 0;
-                            ProgresBar.Maximum = 1;
-                            ProgresBar.Value = 0;
-                            LblTotal.Text = "0";
-                        }
+
 
                         if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
 

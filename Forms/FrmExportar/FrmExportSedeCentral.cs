@@ -428,7 +428,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                     globalCanCuenExis = 0;
                     globalCanhisForm = 0;
                     globalCanFacForm = 0;
-
+                    contadorProgresBar = 0;
 
                     SqlDataReader reader;
 
@@ -445,7 +445,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                         Utils.Informa += "el nombre de la instancia central,";
                         Utils.Informa += "no se puede empezar a ejecutar el";
                         Utils.Informa += "proceso de exportación de datos.";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -455,7 +455,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                         Utils.Informa += "el prefijo de la instancia central,";
                         Utils.Informa += "no se puede empezar a ejecutar el";
                         Utils.Informa += "proceso de exportación de datos.";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -465,7 +465,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                         Utils.Informa += "nombre de la instancia del porttatil,";
                         Utils.Informa += "no se puede empezar a ejecutar el";
                         Utils.Informa += "proceso de exportación de datos.";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -475,7 +475,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                         Utils.Informa += "prefijo de la instancia del porttatil,";
                         Utils.Informa += "no se puede empezar a ejecutar el";
                         Utils.Informa += "proceso de exportación de datos.";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -484,7 +484,8 @@ namespace OBBDSIIG.Forms.FrmExportar
                     {
                         Utils.Informa = "Lo siento pero";
                         Utils.Informa += "la fecha inicial no puede ser mayor a la fecha final";
-                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
 
                     string FecIniPro = Convert.ToString(DateInicial.Value.ToString("yyyy-MM-dd"));
@@ -618,6 +619,18 @@ namespace OBBDSIIG.Forms.FrmExportar
                         {
                             ExportarCentral.RunWorkerAsync();
                         }
+                        else
+                        {
+
+                            Utils.Informa = "Lo siento pero en el rango de fecha " + "\r";
+                            Utils.Informa += "digitado no existen datos para exportar." + "\r";
+                            MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            progressBar.Minimum = 0;
+                            progressBar.Maximum = 1;
+                            progressBar.Value = 0;
+                            LblTotal.Text = "0";
+
+                        }
 
 
                         if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
@@ -650,7 +663,7 @@ namespace OBBDSIIG.Forms.FrmExportar
         int globalCanCuenExis = 0;
         int globalCanhisForm = 0;
         int globalCanFacForm = 0;
-
+        int contadorProgresBar = 0;
 
         private void ExportarCentral_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -680,9 +693,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                 string PfiCen = TxtPrefiCenFor.Text;
                 string PfiPor = TxtPrefiPorFor.Text;
 
-
-                int contadorProgresBar = 0;
-
+                contadorProgresBar = 0;
 
                 //'Revisamos si ya empieza con la facturación electronica
                 SigoProcFac = 0;
@@ -1010,19 +1021,14 @@ namespace OBBDSIIG.Forms.FrmExportar
                                 Utils.Titulo01 = "Control de ejecución";
                                 Utils.Informa = "Se cancelo la operacion " + "\r";
                                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                break;
+                                return;
                             }
 
                             contadorProgresBar += 1;
 
-                            globalTolFacEx += 1;
-
                             Tipo = "null";
                             Tipo2 = "null";
                             parameters.Clear();
-
-
-                          
 
                             //'Revisamos si el número de historia existe
 
@@ -1900,12 +1906,8 @@ namespace OBBDSIIG.Forms.FrmExportar
 
                             }//ContiPRO
 
-
-                   
-
+         
                             ExportarCentral.ReportProgress(contadorProgresBar);
-
-
 
                         }//While
 
@@ -1945,7 +1947,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                 LblCantidad.Text = "0";
                 LblTotal.Text = "0";
 
-                TxtCanFacFor.Text = globalTolFacEx.ToString();
+                TxtCanFacFor.Text = contadorProgresBar.ToString();
                 TxtCanhisForm.Text = globalCanhisForm.ToString();
                 TxtCanCuenExis.Text = globalCanCuenExis.ToString();
                 TxtCanFacForm.Text = globalCanFacForm.ToString();

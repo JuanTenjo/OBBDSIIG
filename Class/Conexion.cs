@@ -111,7 +111,6 @@ namespace OBBDSIIG.Class
                     }
                 }
 
-                command.CommandTimeout = 300;
 
                 SqlDataReader reader = command.ExecuteReader();
 
@@ -151,7 +150,6 @@ namespace OBBDSIIG.Class
 
                     sqlConnection.Open();
 
-                    command.CommandTimeout = 300;
 
                     command.ExecuteNonQuery();
 
@@ -192,7 +190,7 @@ namespace OBBDSIIG.Class
                         }
                     }
 
-                    command.CommandTimeout = 300;
+                    //command.CommandTimeout = 300;
 
                     sqlConnection.Open();
                     command.ExecuteNonQuery();
@@ -236,7 +234,6 @@ namespace OBBDSIIG.Class
 
                     sqlConnection.Open(); //aqui
 
-                    command.CommandTimeout = 300;
 
                     command.ExecuteNonQuery();
                 }
