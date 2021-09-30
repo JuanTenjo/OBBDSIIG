@@ -482,6 +482,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                 }
                                 else
                                 {
+
                                     Utils.SqlDatos = $"UPDATE [DATUSIIGXPSQL].[dbo].[Datos aplicativos disponibles] SET " +
                                     "NomAplica = '" + TabApliDisCen["NomAplica"].ToString() + "', " +
                                     "NomObje = '" + TabApliDisCen["NomObje"].ToString() + "', " +
@@ -492,8 +493,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                     "Grupo = '" + TabApliDisCen["Grupo"].ToString() + "', " +
                                     "version = '" + TabApliDisCen["version"].ToString() + "', " +
                                     "CodRegis = '" + TabApliDisCen["CodRegis"].ToString() + "', " +
-                                   $"FecRegis = {Conexion.ValidarFechaNula(TabApliDisCen["FecRegis"].ToString())} " +
-                                   $"FecModi = {Conexion.ValidarFechaNula(TabApliDisCen["FecModi"].ToString())} " +
+                                    $"FecRegis = {Conexion.ValidarFechaNula(TabApliDisCen["FecRegis"].ToString())} " +
+                                    $"FecModi = {Conexion.ValidarFechaNula(TabApliDisCen["FecModi"].ToString())} " +
                                     "CodModi = '" + TabApliDisCen["CodModi"].ToString() + "' " +
                                     "WHERE (CodApli = N'" + CodApliDis + "') ";
 

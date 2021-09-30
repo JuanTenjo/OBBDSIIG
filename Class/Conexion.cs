@@ -37,8 +37,6 @@ namespace OBBDSIIG.Class
             return texto;
         }
 
-
-
         public static string ValidarHoraNula(string Hora, bool Opcion = true)
         {
             string ValidarHora = null;

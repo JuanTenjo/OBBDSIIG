@@ -20,7 +20,6 @@ namespace OBBDSIIG.Forms.FrmImportar
         }
 
 
-
         #region Funciones
         private int RemisionesIMP(string CodHistRE)
         {
@@ -1055,7 +1054,10 @@ namespace OBBDSIIG.Forms.FrmImportar
                             CodTratamiento = TabTratamiento["NumTrataM1"].ToString();
 
 
-                            //Revisar
+                            //
+
+
+
                             SqlTratamientoCen = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos de los tratamientos] ";
                             SqlTratamientoCen += "WHERE NumTrataM1 = N'" + CodTratamiento + "' AND CodigoAten = N'" + CodAtenLoc + "' AND HistorTrata = N'" + CodHistT + "'";
 
@@ -1317,7 +1319,6 @@ namespace OBBDSIIG.Forms.FrmImportar
                 return -1;
             }
         }
-
 
         private int DetallesdetratamientosEXP(string CodTra, string AteNcopy)
         {
@@ -2801,6 +2802,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                     {
 
                         ConectarPortatil();
+
                         while (TabRegEvo.Read())
                         {
                             //Revisamos si el número de codigo de atencion existe
@@ -2810,7 +2812,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                             ItemEvoCen = TabRegEvo["Item"].ToString();
 
                             SqlRegEvoCen = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos registro de evoluciones] ";
-                            SqlRegEvoCen = SqlRegEvoCen + "WHERE CodAtencion = N'" + CodRegiEvol + "' AND ItemREF = N'" + ItemEvoCen + "'";
+                            SqlRegEvoCen = SqlRegEvoCen + " WHERE CodAtencion = N'" + CodRegiEvol + "' AND ItemREF = N'" + ItemEvoCen + "'";
 
                             using (SqlConnection connection = new SqlConnection(Conexion.conexionSQL))
                             {

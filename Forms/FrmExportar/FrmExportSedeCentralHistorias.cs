@@ -2064,6 +2064,7 @@ namespace OBBDSIIG.Forms.FrmExportar
         {
             try
             {
+
                 string CodConReg, CodDetEscAbre, CodItemEscREF, SqlDetEscAbre, SqlDetEscAbreCen;
 
                 SqlDataReader TabDetEscAbre, TabDetEscAbreCen;
@@ -2090,7 +2091,9 @@ namespace OBBDSIIG.Forms.FrmExportar
                     }
                     else
                     {
+
                         ConectarCentral();
+
                         while (TabDetEscAbre.Read())
                         {
                             //Revisamos si el número de codigo de atencion existe
@@ -2970,7 +2973,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             }
         }
 
-        private int RegistrodeevolucionesEXP(string CodHistRE)
+        private int RegistrodeevolucionesEXP(string CodHistRE) //REVISAR
         {
             try
             {
@@ -3005,6 +3008,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                             //Revisamos si el número de codigo de atencion existe
                             CodRegiEvol = "";
                             ItemEvoCen = "";
+
                             CodRegiEvol = TabRegEvo["CodAtencion"].ToString();
                             ItemEvoCen = TabRegEvo["Item"].ToString();
 
@@ -4169,7 +4173,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                         break;
                                     }
 
-                                    FunRegEvo = RegistrodeevolucionesEXP(CodBusAten);
+                                    FunRegEvo = RegistrodeevolucionesEXP(CodBusAten); //REVISAR POSIBLE REPLICACION DE DATOS
 
                                     if (FunRegEvo == -1)
                                     {
