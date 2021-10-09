@@ -122,115 +122,115 @@
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="salirToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>96, 22</value>
+    <value>121, 26</value>
   </data>
   <data name="salirToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Salir</value>
   </data>
   <data name="archivoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 20</value>
+    <value>73, 24</value>
   </data>
   <data name="archivoToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Archivo</value>
   </data>
   <data name="sedeCentralToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>209, 22</value>
+    <value>264, 26</value>
   </data>
   <data name="sedeCentralToolStripMenuItem.Text" xml:space="preserve">
     <value>Sede Central</value>
   </data>
   <data name="sedeCentralCitologiaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>209, 22</value>
+    <value>264, 26</value>
   </data>
   <data name="sedeCentralCitologiaToolStripMenuItem.Text" xml:space="preserve">
     <value>Sede Central Citologia</value>
   </data>
   <data name="sedeCenrtralHigieneOralToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>209, 22</value>
+    <value>264, 26</value>
   </data>
   <data name="sedeCenrtralHigieneOralToolStripMenuItem.Text" xml:space="preserve">
     <value>Sede Central Higiene Oral</value>
   </data>
   <data name="sedeCentralHistoriasToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>209, 22</value>
+    <value>264, 26</value>
   </data>
   <data name="sedeCentralHistoriasToolStripMenuItem1.Text" xml:space="preserve">
     <value>Sede Central Historias</value>
   </data>
   <data name="sedeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>209, 22</value>
+    <value>264, 26</value>
   </data>
   <data name="sedeToolStripMenuItem.Text" xml:space="preserve">
     <value>Sede Central Biometria</value>
   </data>
   <data name="exportarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>63, 20</value>
+    <value>79, 24</value>
   </data>
   <data name="exportarToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Exportar</value>
   </data>
   <data name="sedeCentralToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>209, 22</value>
+    <value>264, 26</value>
   </data>
   <data name="sedeCentralToolStripMenuItem1.Text" xml:space="preserve">
     <value>Sede Central</value>
   </data>
   <data name="sedeCentralHigieneOralToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>209, 22</value>
+    <value>264, 26</value>
   </data>
   <data name="sedeCentralHigieneOralToolStripMenuItem.Text" xml:space="preserve">
     <value>Sede Central Higiene Oral</value>
   </data>
   <data name="sedeCentralHistoriasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>209, 22</value>
+    <value>264, 26</value>
   </data>
   <data name="sedeCentralHistoriasToolStripMenuItem.Text" xml:space="preserve">
     <value>Sede Central Historias</value>
   </data>
   <data name="importarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 20</value>
+    <value>81, 24</value>
   </data>
   <data name="importarToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Importar</value>
   </data>
   <data name="biometriaSedeCentralToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 22</value>
+    <value>245, 26</value>
   </data>
   <data name="biometriaSedeCentralToolStripMenuItem.Text" xml:space="preserve">
     <value>Biometria Sede Central</value>
   </data>
   <data name="entidadesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 22</value>
+    <value>245, 26</value>
   </data>
   <data name="entidadesToolStripMenuItem.Text" xml:space="preserve">
     <value>Entidades</value>
   </data>
   <data name="medicosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 22</value>
+    <value>245, 26</value>
   </data>
   <data name="medicosToolStripMenuItem.Text" xml:space="preserve">
     <value>Medicos</value>
   </data>
   <data name="pacientesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 22</value>
+    <value>245, 26</value>
   </data>
   <data name="pacientesToolStripMenuItem.Text" xml:space="preserve">
     <value>Pacientes</value>
   </data>
   <data name="serviciosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 22</value>
+    <value>245, 26</value>
   </data>
   <data name="serviciosToolStripMenuItem.Text" xml:space="preserve">
     <value>Servicios</value>
   </data>
   <data name="usuariosToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 22</value>
+    <value>245, 26</value>
   </data>
   <data name="usuariosToolStripMenuItem1.Text" xml:space="preserve">
     <value>Usuarios</value>
   </data>
   <data name="integrarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 20</value>
+    <value>75, 24</value>
   </data>
   <data name="integrarToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Integrar</value>
@@ -238,8 +238,12 @@
   <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="menuStrip1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 3, 0, 3</value>
+  </data>
   <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>699, 24</value>
+    <value>932, 30</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
@@ -263,12 +267,11 @@
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>132, 17</value>
   </metadata>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="toolStrip1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Bottom</value>
   </data>
   <data name="lblFecha.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 20</value>
+    <value>151, 20</value>
   </data>
   <data name="lblFecha.Text" xml:space="preserve">
     <value>toolStripStatusLabel1</value>
@@ -277,22 +280,22 @@
     <value>MiddleRight</value>
   </data>
   <data name="lblCodUsuario.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 20</value>
+    <value>151, 20</value>
   </data>
   <data name="lblCodUsuario.Text" xml:space="preserve">
     <value>toolStripStatusLabel1</value>
   </data>
   <data name="lblNomUsuario.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 20</value>
+    <value>151, 20</value>
   </data>
   <data name="lblNomUsuario.Text" xml:space="preserve">
     <value>toolStripStatusLabel2</value>
   </data>
   <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 406</value>
+    <value>0, 538</value>
   </data>
   <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>699, 25</value>
+    <value>932, 26</value>
   </data>
   <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -316,10 +319,10 @@
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+    <value>8, 17</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>699, 431</value>
+    <value>932, 564</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt</value>
@@ -490,11 +493,14 @@
         AAA=
 </value>
   </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>OBBDSIIG 0.1.2 (20/09/2021) *** SIIGHOS PLUS ***</value>
+    <value>OBBDSIIG 1.1.3 (20/09/2021) *** SIIGHOS PLUS ***</value>
   </data>
   <data name="&gt;&gt;archivoToolStripMenuItem.Name" xml:space="preserve">
     <value>archivoToolStripMenuItem</value>

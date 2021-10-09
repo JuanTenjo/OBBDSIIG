@@ -1880,7 +1880,9 @@ namespace OBBDSIIG.Forms.FrmImportar
         {
             try
             {
-                string CodConReg, CodDetEscAbre, CodItemEscREF, SqlDetEscAbre, SqlDetEscAbreCen;
+
+                string CodConReg, CodDetEscAbre, CodItemEscREF, SqlDetEscAbre, SqlDetEscAbreCen, CodEscDtt, EscaDesa, CodRan;
+                int NuDeta = 0;
 
                 SqlDataReader TabDetEscAbre, TabDetEscAbreCen;
 
@@ -1901,7 +1903,7 @@ namespace OBBDSIIG.Forms.FrmImportar
 
                     if (TabDetEscAbre.HasRows == false)
                     {
-                        //'No hay registros en la tabla Datos registro  la tabla Datos registro de procedimientos
+                        //'No hay registros en la tabla Datos detalle de escala abreviada
                         return 0;
                     }
                     else
@@ -1912,12 +1914,25 @@ namespace OBBDSIIG.Forms.FrmImportar
                             //Revisamos si el número de codigo de atencion existe
                             CodConReg = TabDetEscAbre["CodControl"].ToString();
                             CodDetEscAbre = TabDetEscAbre["CodAtencion"].ToString();
+                            CodEscDtt = TabDetEscAbre["CodEscalaDet"].ToString();
+
+                            NuDeta = Convert.ToInt32(TabDetEscAbre["NumeralDet"]);
+                            EscaDesa = TabDetEscAbre["EADNumDet"].ToString();
+                            CodRan = TabDetEscAbre["CodigoRango"].ToString();
+
                             CodItemEscREF = TabDetEscAbre["Item"].ToString();
+
+                            //SqlDetEscAbreCen = "SELECT [Datos detalle escala abreviada].* ";
+                            //SqlDetEscAbreCen = SqlDetEscAbreCen + "FROM [DACONEXTSQL].[dbo].[Datos detalle escala abreviada] ";
+                            //SqlDetEscAbreCen = SqlDetEscAbreCen + "WHERE (CodAtencion = '" + CodDetEscAbre + "') AND ";
+                            //SqlDetEscAbreCen = SqlDetEscAbreCen + "(ItemEscREF = '" + CodItemEscREF + "') AND (CodControl = '" + CodConReg + "')";
+
 
                             SqlDetEscAbreCen = "SELECT [Datos detalle escala abreviada].* ";
                             SqlDetEscAbreCen = SqlDetEscAbreCen + "FROM [DACONEXTSQL].[dbo].[Datos detalle escala abreviada] ";
-                            SqlDetEscAbreCen = SqlDetEscAbreCen + "WHERE (CodAtencion = '" + CodDetEscAbre + "') AND ";
-                            SqlDetEscAbreCen = SqlDetEscAbreCen + "(ItemEscREF = '" + CodItemEscREF + "') AND (CodControl = '" + CodConReg + "')";
+                            SqlDetEscAbreCen = SqlDetEscAbreCen + "WHERE (CodControl = '" + CodConReg + "') AND (CodAtencion = '" + CodDetEscAbre + "') and ";
+                            SqlDetEscAbreCen = SqlDetEscAbreCen + "(CodEscalaDet = N'" + CodEscDtt + "') AND (NumeralDet = " + NuDeta + ") and ";
+                            SqlDetEscAbreCen = SqlDetEscAbreCen + "(EADNumDet = N'" + EscaDesa + "') AND (CodigoRango = N'" + CodRan + "')";
 
 
                             using (SqlConnection connection = new SqlConnection(Conexion.conexionSQL))
@@ -1928,12 +1943,14 @@ namespace OBBDSIIG.Forms.FrmImportar
 
                                 if (TabDetEscAbreCen.HasRows == false)
                                 {
+
                                     Utils.SqlDatos = "INSERT INTO [DACONEXTSQL].[dbo].[Datos detalle escala abreviada]  " +
                                     "(" +
                                     "CodControl," +
                                     "CodAtencion," +
                                     "CodEscalaDet," +
                                     "NumeralDet," +
+                                    "EADNumDet," +
                                     "CodigoRango," +
                                     "Estados," +
                                     "UnidadEdadES," +
@@ -1942,11 +1959,12 @@ namespace OBBDSIIG.Forms.FrmImportar
                                     "ItemEscREF" +
                                     ")" +
                                     "VALUES (" +
-                                    "'" + TabDetEscAbre["CodControl"].ToString() + "'," +
-                                    "'" + TabDetEscAbre["CodAtencion"].ToString() + "'," +
-                                    "'" + TabDetEscAbre["CodEscalaDet"].ToString() + "'," +
-                                    "'" + TabDetEscAbre["NumeralDet"].ToString() + "'," +
-                                    "'" + TabDetEscAbre["CodigoRango"].ToString() + "'," +
+                                    "'" + CodConReg + "'," +
+                                    "'" + CodDetEscAbre + "'," +
+                                    "'" + CodEscDtt + "'," +
+                                    "" + NuDeta + "," +
+                                    "'" + EscaDesa + "'," +
+                                    "'" + CodRan + "'," +
                                     "'" + TabDetEscAbre["Estados"].ToString() + "'," +
                                     "'" + TabDetEscAbre["UnidadEdadES"].ToString() + "'," +
                                     "'" + TabDetEscAbre["ValorEdadES"].ToString() + "'," +
@@ -1959,17 +1977,16 @@ namespace OBBDSIIG.Forms.FrmImportar
                                 }
                                 else
                                 {
+
                                     Utils.SqlDatos = "UPDATE  [DACONEXTSQL].[dbo].[Datos detalle escala abreviada] SET " +
-                                    "CodControl = '" + TabDetEscAbre["CodControl"].ToString() + "'," +
-                                    "CodEscalaDet = '" + TabDetEscAbre["CodEscalaDet"].ToString() + "'," +
-                                    "NumeralDet = '" + TabDetEscAbre["NumeralDet"].ToString() + "'," +
-                                    "CodigoRango = '" + TabDetEscAbre["CodigoRango"].ToString() + "'," +
                                     "Estados = '" + TabDetEscAbre["Estados"].ToString() + "'," +
                                     "UnidadEdadES = '" + TabDetEscAbre["UnidadEdadES"].ToString() + "'," +
                                     "ValorEdadES = '" + TabDetEscAbre["ValorEdadES"].ToString() + "'," +
                                     "NoEvaluar = '" + TabDetEscAbre["NoEvaluar"].ToString() + "'," +
                                     "ItemEscREF = '" + CodItemEscREF + "' " +
-                                    "WHERE (CodAtencion = '" + CodDetEscAbre + "') AND (ItemEscREF = '" + CodItemEscREF + "') AND (CodControl = '" + CodConReg + "')";
+                                    "WHERE (CodControl = '" + CodConReg + "') AND (CodAtencion = '" + CodDetEscAbre + "') and " +
+                                    "(CodEscalaDet = N'" + CodEscDtt + "') AND (NumeralDet = " + NuDeta + ") and " +
+                                    "(EADNumDet = N'" + EscaDesa + "') AND (CodigoRango = N'" + CodRan + "')";
 
                                     Boolean Act = Conexion.SQLUpdate(Utils.SqlDatos);
 
