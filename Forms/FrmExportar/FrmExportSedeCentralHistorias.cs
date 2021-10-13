@@ -4386,7 +4386,6 @@ namespace OBBDSIIG.Forms.FrmExportar
                                             "CodigoConsentimiento ='" + TabAnexPor["CodigoConsentimiento"].ToString() + "'," +
                                             "CodigAtencion ='" + TabAnexPor["CodigAtencion"].ToString() + "'," +
                                             $"FechaIngAnteced = {Conexion.ValidarFechaNula(TabHistoCli["FechaIngAnteced"].ToString())}" +
-                                            "HoraNotaANEX = CONVERT(DATETIME,'" + TabHistoCli["HoraNotaANEX"].ToString() + "',8)," +
                                             $"HoraNotaANEX = {Conexion.ValidarHoraNula(TabHistoCli["HoraNotaANEX"].ToString())}" +
                                             "Descripcion ='" + TabAnexPor["Descripcion"].ToString() + "'," +
                                             "Tratamiento ='" + TabAnexPor["Tratamiento"].ToString() + "'," +
