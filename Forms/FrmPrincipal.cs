@@ -29,7 +29,6 @@ namespace OBBDSIIG.Forms
 
         private void FrmPrincipal_Load(object sender, EventArgs e)
         {
-            
             try
             {
                 Utils.BaseDeDatosPrincipal = "ACDATOXPSQL";

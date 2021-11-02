@@ -4346,8 +4346,8 @@ namespace OBBDSIIG.Forms.FrmExportar
                                             "'" + TabAnexPor["TipoDocANEX"].ToString() + "'," +
                                             "'" + TabAnexPor["CodigoConsentimiento"].ToString() + "'," +
                                             "'" + TabAnexPor["CodigAtencion"].ToString() + "'," +
-                                            $"{Conexion.ValidarFechaNula(TabHistoCli["FechaIngAnteced"].ToString())}" +
-                                            $"{Conexion.ValidarHoraNula(TabHistoCli["HoraNotaANEX"].ToString())}" +
+                                            $"{Conexion.ValidarFechaNula(TabAnexPor["FechaIngAnteced"].ToString())}" +
+                                            $"{Conexion.ValidarHoraNula(TabAnexPor["HoraNotaANEX"].ToString())}" +
                                             "'" + TabAnexPor["Descripcion"].ToString() + "'," +
                                             "'" + TabAnexPor["Tratamiento"].ToString() + "'," +
                                             "'" + TabAnexPor["Riesgo"].ToString() + "'," +
@@ -4358,7 +4358,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                             "'" + TabAnexPor["Anulada"].ToString() + "'," +
                                             "'" + TabAnexPor["CodAnula"].ToString() + "'," +
                                             "'" + TabAnexPor["RazonAnula"].ToString() + "'," +
-                                            $"{Conexion.ValidarFechaNula(TabHistoCli["FechaAnula"].ToString())}" +
+                                            $"{Conexion.ValidarFechaNula(TabAnexPor["FechaAnula"].ToString())}" +
                                             "'" + TabAnexPor["Tutor"].ToString() + "'," +
                                             "'" + TabAnexPor["NomTutor"].ToString() + "'," +
                                             "'" + TabAnexPor["TDTutor"].ToString() + "'," +
@@ -4385,8 +4385,8 @@ namespace OBBDSIIG.Forms.FrmExportar
                                             "TipoDocANEX ='" + TabAnexPor["TipoDocANEX"].ToString() + "'," +
                                             "CodigoConsentimiento ='" + TabAnexPor["CodigoConsentimiento"].ToString() + "'," +
                                             "CodigAtencion ='" + TabAnexPor["CodigAtencion"].ToString() + "'," +
-                                            $"FechaIngAnteced = {Conexion.ValidarFechaNula(TabHistoCli["FechaIngAnteced"].ToString())}" +
-                                            $"HoraNotaANEX = {Conexion.ValidarHoraNula(TabHistoCli["HoraNotaANEX"].ToString())}" +
+                                            $"FechaIngAnteced = {Conexion.ValidarFechaNula(TabAnexPor["FechaIngAnteced"].ToString())}" +
+                                            $"HoraNotaANEX = {Conexion.ValidarHoraNula(TabAnexPor["HoraNotaANEX"].ToString())}" +
                                             "Descripcion ='" + TabAnexPor["Descripcion"].ToString() + "'," +
                                             "Tratamiento ='" + TabAnexPor["Tratamiento"].ToString() + "'," +
                                             "Riesgo ='" + TabAnexPor["Riesgo"].ToString() + "'," +
@@ -4397,7 +4397,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                             "Anulada ='" + TabAnexPor["Anulada"].ToString() + "'," +
                                             "CodAnula ='" + TabAnexPor["CodAnula"].ToString() + "'," +
                                             "RazonAnula ='" + TabAnexPor["RazonAnula"].ToString() + "'," +
-                                            $"FechaAnula = {Conexion.ValidarFechaNula(TabHistoCli["FechaAnula"].ToString())}" +
+                                            $"FechaAnula = {Conexion.ValidarFechaNula(TabAnexPor["FechaAnula"].ToString())}" +
                                             "Tutor ='" + TabAnexPor["Tutor"].ToString() + "'," +
                                             "NomTutor ='" + TabAnexPor["NomTutor"].ToString() + "'," +
                                             "TDTutor ='" + TabAnexPor["TDTutor"].ToString() + "'," +

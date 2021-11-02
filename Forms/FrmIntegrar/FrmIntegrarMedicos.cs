@@ -422,8 +422,6 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                         {
                             while (TabMedi.Read())
                             {
-
-
                                 if (IntegrarMedicos.CancellationPending == true)
                                 {
                                     e.Cancel = true;
