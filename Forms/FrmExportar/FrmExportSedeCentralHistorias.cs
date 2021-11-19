@@ -1233,13 +1233,16 @@ namespace OBBDSIIG.Forms.FrmExportar
                         return 0;
                     }
                     else
-                    {
-                        ConectarCentral();
+                    {              
                         while (TabTratamiento.Read())
                         {
+
+                            ConectarCentral();
+
                             //Revisamos si el número de codigo de atencion existe
                             CodAtenLoc = TabTratamiento["CodigoAten"].ToString();
                             CodTratamiento = TabTratamiento["NumTrataM1"].ToString();
+
 
                             SqlTratamientoCen = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos de los tratamientos] ";
                             SqlTratamientoCen += "WHERE NumTrataM1 = N'" + CodTratamiento + "' AND CodigoAten = N'" + CodAtenLoc + "' AND HistorTrata = N'" + CodHistT + "'";
@@ -1253,6 +1256,7 @@ namespace OBBDSIIG.Forms.FrmExportar
 
                                 if (TabTratamientoCen.HasRows == false)
                                 {
+
                                     Utils.SqlDatos = "INSERT INTO [DACONEXTSQL].[dbo].[Datos de los tratamientos]  " +
                                     "(" +
                                     "NumTrataM1," + 
@@ -1402,6 +1406,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                 }
                                 else
                                 {
+
                                     Utils.SqlDatos = "UPDATE [DACONEXTSQL].[dbo].[Datos de los tratamientos] SET " +
                                    "NumTrataM1 ='" + TabTratamiento["NumTrataM1"].ToString() + "'," +
                                     "HistorTrata ='" + TabTratamiento["HistorTrata"].ToString() + "'," +
@@ -1549,9 +1554,11 @@ namespace OBBDSIIG.Forms.FrmExportar
                     }
                     else
                     {
-                        ConectarCentral();
+                      
                         while (TabDetTratam.Read())
                         {
+                            ConectarCentral();
+
                             //Revisamos si el número de codigo de atencion existe
                             NumTraRegis = TabDetTratam["NumTrata"].ToString();
                             ConSeRegis = TabDetTratam["Consecutivo"].ToString();
@@ -1820,9 +1827,10 @@ namespace OBBDSIIG.Forms.FrmExportar
                     }
                     else
                     {
-                        ConectarCentral();
+            
                         while (TabRegHtaDiabe.Read())
                         {
+                            ConectarCentral();
                             //Revisamos si el número de codigo de atencion existe
                             CodRegHtaDiabe = TabRegHtaDiabe["CodAten"].ToString();
 
@@ -2093,10 +2101,13 @@ namespace OBBDSIIG.Forms.FrmExportar
                     else
                     {
 
-                        ConectarCentral();
+                   
 
                         while (TabDetEscAbre.Read())
                         {
+
+                            ConectarCentral();
+
                             //Revisamos si el número de codigo de atencion existe
                             CodConReg = TabDetEscAbre["CodControl"].ToString();
                             CodDetEscAbre = TabDetEscAbre["CodAtencion"].ToString();
@@ -2541,9 +2552,10 @@ namespace OBBDSIIG.Forms.FrmExportar
                     }
                     else
                     {
-                        ConectarCentral();
+               
                         while (TabRegMedic.Read())
                         {
+                            ConectarCentral();
                             CodRegMedic = TabRegMedic["CodAten"].ToString();
                             MedicCodMedic = TabRegMedic["CodMedic"].ToString();
                             MedicNumForm = TabRegMedic["NumForm"].ToString();
@@ -3601,6 +3613,8 @@ namespace OBBDSIIG.Forms.FrmExportar
             try
             {
 
+                ConectarPortatil();
+
                 int contador = 0;
 
                 string UsaRegis = "", SqlHistoCli = "", SqlHistCen = "", CodBusAten, SqlAnexPor = "", NumUniAnexa = "", HistoPaci = "", SqlAnexCen = "";
@@ -3649,6 +3663,8 @@ namespace OBBDSIIG.Forms.FrmExportar
                         while (TabHistoCli.Read())
                         {
 
+                            ConectarCentral();
+
                             contador += 1;
 
 
@@ -3662,7 +3678,6 @@ namespace OBBDSIIG.Forms.FrmExportar
                             }
 
 
-                            ConectarCentral();
                             // 'Revisamos si el número de codigo de atencion existe
 
                             CodBusAten = TabHistoCli["CodConExt"].ToString();

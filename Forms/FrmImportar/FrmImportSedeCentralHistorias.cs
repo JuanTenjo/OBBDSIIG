@@ -1046,17 +1046,15 @@ namespace OBBDSIIG.Forms.FrmImportar
                     }
                     else
                     {
-                        ConectarPortatil();
+               
                         while (TabTratamiento.Read())
                         {
+
+                            ConectarPortatil();
+
                             //Revisamos si el número de codigo de atencion existe
                             CodAtenLoc = TabTratamiento["CodigoAten"].ToString();
                             CodTratamiento = TabTratamiento["NumTrataM1"].ToString();
-
-
-                            //
-
-
 
                             SqlTratamientoCen = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos de los tratamientos] ";
                             SqlTratamientoCen += "WHERE NumTrataM1 = N'" + CodTratamiento + "' AND CodigoAten = N'" + CodAtenLoc + "' AND HistorTrata = N'" + CodHistT + "'";

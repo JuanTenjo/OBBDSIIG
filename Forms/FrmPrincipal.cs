@@ -83,7 +83,7 @@ namespace OBBDSIIG.Forms
                     this.lblCodUsuario.Text = Utils.codUsuario;
                     this.lblNomUsuario.Text = Utils.nomUsuario;
 
-                    Utils.SqlDatos = @"SELECT CodiMinSalud, NitCCEmpresa, NomEmpresa, TipoDocEmp, TelPrin " +
+                    Utils.SqlDatos = @"SELECT CodiMinSalud, NitCCEmpresa,CatEmpresa, NomEmpresa, TipoDocEmp, TelPrin " +
                                    "FROM [BDADMINSIG].[dbo].[Datos informacion de la empresa] " +
                                    "WHERE CodUnico = @codUnicoEmpresa";
 
@@ -102,6 +102,7 @@ namespace OBBDSIIG.Forms
                         Utils.nomEmpresa = Sqldr["NomEmpresa"].ToString();
                         Utils.tipoDocEmp = Sqldr["TipoDocEmp"].ToString();
                         Utils.TelEmpresa = Sqldr["TelPrin"].ToString();
+                        Utils.CateEmpresa = Sqldr["CatEmpresa"].ToString();
                     }
 
 
@@ -111,6 +112,44 @@ namespace OBBDSIIG.Forms
                 {
                     this.Close();
                 }
+
+
+                string cadena = Utils.nomEmpresa;
+
+                string[] parte = cadena.Split(' ');
+
+                int cantidad = parte.Length;
+
+                LblNombreEmpresa.Text = "";
+
+                if (cantidad > 4)
+                {
+
+                    int parImpar = cantidad % 2;
+
+                    int mitadSalto = parImpar == 0 ? cantidad / 2 : (cantidad + 1) / 2;
+
+                    for (int i = 0; i < parte.Length; i++)
+                    {
+                        if (i == mitadSalto)
+                        {
+                            LblNombreEmpresa.Text += "\r";
+                        }
+
+                        LblNombreEmpresa.Text = LblNombreEmpresa.Text + parte[i] + " ";
+
+                    }
+
+                    LblNombreEmpresa.Text += "\r" + Utils.CateEmpresa;
+
+
+                }
+                else
+                {
+                    LblNombreEmpresa.Text = Utils.nomEmpresa + "\r" + Utils.CateEmpresa;
+                }
+
+
 
                 dr.Close();
             }
@@ -351,5 +390,7 @@ namespace OBBDSIIG.Forms
             FrmIExportarBiometria frmIntegrarBiometria = new FrmIExportarBiometria();
             frmIntegrarBiometria.ShowDialog();
         }
+
+    
     }
 }

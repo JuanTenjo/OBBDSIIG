@@ -23,6 +23,8 @@ namespace OBBDSIIG.Class
         public static string nitEmpresa { get; set; }
         public static string nomEmpresa { get; set; }
 
+        public static string CateEmpresa { get; set; }
+        
         public static string TelEmpresa { get; set; }
 
         

@@ -54,6 +54,7 @@ namespace OBBDSIIG.Forms
             this.lblFecha = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblCodUsuario = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblNomUsuario = new System.Windows.Forms.ToolStripStatusLabel();
+            this.LblNombreEmpresa = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -228,16 +229,26 @@ namespace OBBDSIIG.Forms
             this.lblNomUsuario.Name = "lblNomUsuario";
             resources.ApplyResources(this.lblNomUsuario, "lblNomUsuario");
             // 
+            // LblNombreEmpresa
+            // 
+            resources.ApplyResources(this.LblNombreEmpresa, "LblNombreEmpresa");
+            this.LblNombreEmpresa.BackColor = System.Drawing.Color.Transparent;
+            this.LblNombreEmpresa.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.LblNombreEmpresa.ForeColor = System.Drawing.Color.White;
+            this.LblNombreEmpresa.Name = "LblNombreEmpresa";
+            // 
             // FrmPrincipal
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.BackgroundImage = global::OBBDSIIG.Properties.Resources.fondo;
+            this.Controls.Add(this.LblNombreEmpresa);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
-            this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FrmPrincipal";
+            this.TransparencyKey = System.Drawing.Color.ForestGreen;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FrmPrincipal_Load);
             this.menuStrip1.ResumeLayout(false);
@@ -275,5 +286,6 @@ namespace OBBDSIIG.Forms
         private System.Windows.Forms.ToolStripMenuItem serviciosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem usuariosToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem sedeToolStripMenuItem;
+        private System.Windows.Forms.Label LblNombreEmpresa;
     }
 }
