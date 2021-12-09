@@ -216,7 +216,8 @@ namespace OBBDSIIG.Forms.FrmExportar
                 Conexion.conexionSQL = "Server=" + Conexion.servidor + "; " +
                                         "Initial Catalog=" + Utils.BaseDeDatosPrincipal + ";" +
                                         "User ID= " + Conexion.username + "; " +
-                                        "Password=" + Conexion.password;
+                                        "Password=" + Conexion.password + "; " +
+                                        "MultipleActiveResultSets=True"; 
 
             }
             catch (Exception ex)
@@ -237,7 +238,8 @@ namespace OBBDSIIG.Forms.FrmExportar
                 Conexion.conexionSQL = "Server=" + Conexion.servidorCen + "; " +
                                         "Initial Catalog=" + Utils.BaseDeDatosPrincipal + ";" +
                                         "User ID=" + Conexion.usernameCen + "; " +
-                                        "Password=" + Conexion.passwordCen;
+                                        "Password=" + Conexion.passwordCen + ";" +
+                                        "MultipleActiveResultSets=True";
 
             }
             catch (Exception ex)
@@ -321,8 +323,8 @@ namespace OBBDSIIG.Forms.FrmExportar
         {
             try
             {
-                if (LblCodEntiFac.Text != "00")
-                {
+                //if (LblCodEntiFac.Text != "00")
+                //{
                     string SqlInforEmpre;
                     string CodEniBus = LblCodEntiFac.Text;
 
@@ -363,7 +365,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                     TabInforEmpre.Close();
                     if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
 
-                }
+                //}
             }
             catch (Exception ex)
             {
@@ -665,6 +667,9 @@ namespace OBBDSIIG.Forms.FrmExportar
         int globalCanFacForm = 0;
         int contadorProgresBar = 0;
 
+
+
+
         private void ExportarCentral_DoWork(object sender, DoWorkEventArgs e)
         {
             try
@@ -908,23 +913,39 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     string FecVenciString = FecVenci.ToString("yyyy-MM-dd");
 
 
+
+
+
                                     Utils.SqlDatos = "UPDATE [ACDATOXPSQL].[dbo].[Datos de las facturas realizadas] SET " +
                                     "NumFactura = '" + FunConFac + "', " +
                                     "FechaFac = CONVERT(DATETIME, '" + Fecha + "', 102), " +
                                     //   '****************  Los siguientes campos se agregan el 13 de octubre de 2020 ***********************************
                                     "TexResol = '" + TexResFacElec + "', " +
-                                    "FecVenci = CONVERT(DATETIME, '" + FecVenciString + "', 102), " +                                        //Utils.SqlDatos = "UPDATE [ACDATOXPSQL].[dbo].[Datos de las facturas realizadas] SET "+
+                                    "FecVenci = CONVERT(DATETIME, '" + FecVenciString + "', 102), " +                                       
                                     "NumResol = '" + NumResFac + "', " +
                                     "CodEstaDian = '01', " + //Preparada para enviar a la dian
                                     "NumFacAntes =  '" + FacPorta + "' ," +
                                     "PrefiFacElec =  '" + PrefiFacE + "' " +
                                     "WHERE NumFactura = '" + FacPorta + "' AND PrefiFac = N'" + PfiPor + "' "; //Preguntar
 
+
                                     ConectarPortatil();
 
-                                    Boolean EstAct = Conexion.SQLUpdate(Utils.SqlDatos);
+                                    using (SqlConnection sqlConnection = new SqlConnection(Conexion.conexionSQL))
+                                    {
+                                        SqlCommand command = new SqlCommand(Utils.SqlDatos, sqlConnection);
 
-                                    if (EstAct) CantiFacElec += 1;
+                                        sqlConnection.Open();
+
+                                        command.ExecuteNonQuery();
+
+                                    }
+
+
+                                    CantiFacElec += 1;
+
+
+                                    //if (EstAct) CantiFacElec += 1;
 
 
                                 }//Final de SigoProcFac = 1

@@ -123,13 +123,58 @@ namespace OBBDSIIG.Class
                 Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
                 Utils.Informa += "en la funcion SQLDataReader" + "\r";
                 Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
+                Utils.Informa += "Consulta: " + sqlString;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                MessageBox.Show(sqlString);
                 return null;
             }
         }
 
         public static bool SQLUpdate(string sqlString, List<SqlParameter> parameters = null)
+        {
+            try
+            {
+
+                using (sqlConnection = new SqlConnection(conexionSQL))
+                {
+                    SqlCommand command = new SqlCommand(sqlString, sqlConnection);
+
+                    if (parameters != null)
+                    {
+                        foreach (var parameter in parameters)
+                        {
+                            command.Parameters.Add(parameter);
+                        }
+                    }
+
+                    sqlConnection.Open();
+
+
+                    command.ExecuteNonQuery();
+
+                }
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+
+                Utils.Titulo01 = "Control de errores de ejecución";
+                Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
+                Utils.Informa += "en la funcion SQLUpdate" + "\r";
+                Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
+                Utils.Informa += "Consulta: " + sqlString;
+                MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            finally
+            {
+                if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
+            }
+        }
+
+
+        public static bool SQLUpdateSinAbrir(string sqlString, List<SqlParameter> parameters = null)
         {
             try
             {
@@ -172,6 +217,7 @@ namespace OBBDSIIG.Class
                 if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
             }
         }
+
         public static bool SQLDelete(string sqlString, List<SqlParameter> parameters = null)
         {
             try
@@ -203,8 +249,8 @@ namespace OBBDSIIG.Class
                 Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
                 Utils.Informa += "en la funcion SQLUDelete" + "\r";
                 Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
+                Utils.Informa += "Consulta: " + sqlString;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                MessageBox.Show(sqlString);
                 return false;
             }
             finally
@@ -244,8 +290,8 @@ namespace OBBDSIIG.Class
                 Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
                 Utils.Informa += "en la funcion SqlInsert" + "\r";
                 Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
+                Utils.Informa += "Consulta: " + sqlString;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                MessageBox.Show(sqlString);
                 return false;
             }
             finally
@@ -318,6 +364,7 @@ namespace OBBDSIIG.Class
                 Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
                 Utils.Informa += "en la funcion SQLDataSet" + "\r";
                 Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
+                Utils.Informa += "Consulta: " + sqlString;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }

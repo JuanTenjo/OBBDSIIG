@@ -1906,16 +1906,19 @@ namespace OBBDSIIG.Forms.FrmImportar
                     }
                     else
                     {
-                        ConectarPortatil();
+                     
                         while (TabDetEscAbre.Read())
                         {
+                            ConectarPortatil();
                             //Revisamos si el número de codigo de atencion existe
                             CodConReg = TabDetEscAbre["CodControl"].ToString();
                             CodDetEscAbre = TabDetEscAbre["CodAtencion"].ToString();
                             CodEscDtt = TabDetEscAbre["CodEscalaDet"].ToString();
 
                             NuDeta = Convert.ToInt32(TabDetEscAbre["NumeralDet"]);
+
                             EscaDesa = TabDetEscAbre["EADNumDet"].ToString();
+
                             CodRan = TabDetEscAbre["CodigoRango"].ToString();
 
                             CodItemEscREF = TabDetEscAbre["Item"].ToString();
@@ -2816,10 +2819,11 @@ namespace OBBDSIIG.Forms.FrmImportar
                     else
                     {
 
-                        ConectarPortatil();
-
                         while (TabRegEvo.Read())
                         {
+
+                            ConectarPortatil();
+
                             //Revisamos si el número de codigo de atencion existe
                             CodRegiEvol = "";
                             ItemEvoCen = "";
@@ -2937,7 +2941,7 @@ namespace OBBDSIIG.Forms.FrmImportar
                                     "Activa = '" + TabRegEvo["Activa"].ToString() + "'," +
                                     "CodRegis = '" + TabRegEvo["CodRegis"].ToString() + "'," +
                                     $"FechaRegis = {Conexion.ValidarFechaNula(TabRegEvo["FechaRegis"].ToString())} " +          
-                                    $"HorRegis = {Conexion.ValidarHoraNula(TabRegEvo["HorRegis"].ToString(), false)} " +
+                                    $"Horaregis = {Conexion.ValidarHoraNula(TabRegEvo["Horaregis"].ToString(), false)} " +
                                     "WHERE CodAtencion = N'" + CodRegiEvol + "' AND ItemREF = N'" + ItemEvoCen + "'";
 
                                     Boolean Act = Conexion.SQLUpdate(Utils.SqlDatos);

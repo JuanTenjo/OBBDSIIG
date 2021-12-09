@@ -412,10 +412,12 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                         ApliDis = 0;
 
-                        ConectarPortatil();
+                     
 
                         while (TabApliDisCen.Read())
                         {
+
+                            ConectarPortatil();
 
                             if (IntegrarUsuarios.CancellationPending == true)
                             {
@@ -530,6 +532,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                 if (ContiPro == 1)
                 {
+
                     ConectarCentral();
 
                     SqlUsu = "SELECT [Datos usuarios de los aplicativos].* ";
@@ -553,10 +556,12 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                         else
                         {
 
-                            ConectarPortatil();
+                      
 
                             while (TabUsu.Read())
                             {
+
+                                ConectarPortatil();
 
                                 if (IntegrarUsuarios.CancellationPending == true)
                                 {
@@ -716,10 +721,12 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                         {
                             ApliDis = 0;
 
-                            ConectarPortatil();
+                      
 
                             while (TabAplNueCentra.Read())
                             {
+
+                                ConectarPortatil();
 
                                 if (IntegrarUsuarios.CancellationPending == true)
                                 {
@@ -833,10 +840,10 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                         else
                         {
 
-                            ConectarPortatil();
-
                             while (TabPerUsuaCen.Read())
                             {
+
+                                ConectarPortatil();
 
                                 if (IntegrarUsuarios.CancellationPending == true)
                                 {
@@ -848,6 +855,8 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                 }
 
                                 contador += 1;
+
+                                int actinser = 0;
 
                                 CodApliDis = TabPerUsuaCen["CodAplicati"].ToString();
                                 CodUsu = TabPerUsuaCen["CodUsua"].ToString();
@@ -861,12 +870,14 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                                 using (SqlConnection connection = new SqlConnection(Conexion.conexionSQL))
                                 {
-                                    SqlCommand command = new SqlCommand(SqlPerUsuaCen, connection);
+                                    SqlCommand command = new SqlCommand(SqlPerUsuaPor, connection);
                                     command.Connection.Open();
                                     TabPerUsuaPor = command.ExecuteReader();
 
                                     if (TabPerUsuaPor.HasRows == false)
                                     {
+                                        actinser = 0;
+
                                         //Agrega el permiso del usuarios
                                         Utils.SqlDatos = "INSERT INTO [DATUSIIGXPSQL].[dbo].[Datos permisos usuarios]" +
                                         "(" +
@@ -893,11 +904,12 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "'" + TabPerUsuaCen["CodModi"].ToString() + "'" +
                                         ")";
 
-                                        Boolean Regis = Conexion.SqlInsert(Utils.SqlDatos);
                                     }
                                     else
                                     {
                                         //Modifica el permiso
+
+                                        actinser = 1;
 
                                         Utils.SqlDatos = $"UPDATE [DATUSIIGXPSQL].[dbo].[Datos permisos usuarios] SET " +
                                         "PerEspe = '" + TabPerUsuaCen["PerEspe"].ToString() + "', " +
@@ -908,10 +920,11 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                                         "CodModi = '" + TabPerUsuaCen["CodModi"].ToString() + "' " +
                                         "WHERE (CodUsua = N'" + CodUsu + "') and (CodAplicati = N'" + CodApliDis + "') AND (CodMenu = N'" + MenUsua + "')  ";
 
-                                        Boolean ActControl = Conexion.SQLUpdate(Utils.SqlDatos);
-
                                     }
-                                }
+                                }//Using
+
+
+                                Boolean ActControl = actinser == 1 ? Conexion.SqlInsert(Utils.SqlDatos) : Conexion.SQLUpdate(Utils.SqlDatos);
 
                                 TabPerUsuaPor.Close();
 

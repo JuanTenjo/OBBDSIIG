@@ -581,7 +581,7 @@ namespace OBBDSIIG.Forms.FrmExportar
             this.LblTotal.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblTotal.Location = new System.Drawing.Point(301, 236);
             this.LblTotal.Name = "LblTotal";
-            this.LblTotal.Size = new System.Drawing.Size(35, 13);
+            this.LblTotal.Size = new System.Drawing.Size(64, 13);
             this.LblTotal.TabIndex = 89;
             this.LblTotal.Text = "0";
             this.LblTotal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
