@@ -64,13 +64,13 @@ namespace OBBDSIIG.Forms.FrmImportar
             try
             {
 
-                int mes = DateTime.Now.Month;
+                DateTime fechaMesAntes = DateTime.Now.Date.AddMonths(-1);
 
-                int ano = DateTime.Now.Year;
+                int mes = fechaMesAntes.Month;
 
-                int FechaUnMesAntes2 = mes - 1;
+                int ano = fechaMesAntes.Year;
 
-                DateTime primerDiaMesAntes = new DateTime(ano, FechaUnMesAntes2, 1);
+                DateTime primerDiaMesAntes = new DateTime(ano, mes, 1);
 
                 DateTime ultimoDiaMesAntes = primerDiaMesAntes.AddMonths(1).AddDays(-1);
 

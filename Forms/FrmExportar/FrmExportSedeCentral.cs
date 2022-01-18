@@ -294,15 +294,16 @@ namespace OBBDSIIG.Forms.FrmExportar
             try
             {
 
-                int mes = DateTime.Now.Month;
+                DateTime fechaMesAntes = DateTime.Now.Date.AddMonths(-1);
 
-                int ano = DateTime.Now.Year;
+                int mes = fechaMesAntes.Month;
 
-                int FechaUnMesAntes2 = mes - 1;
+                int ano = fechaMesAntes.Year;
 
-                DateTime primerDiaMesAntes = new DateTime(ano, FechaUnMesAntes2, 1);
+                DateTime primerDiaMesAntes = new DateTime(ano, mes, 1);
 
                 DateTime ultimoDiaMesAntes = primerDiaMesAntes.AddMonths(1).AddDays(-1);
+
 
                 DateInicial.Value = primerDiaMesAntes;
 
@@ -727,246 +728,212 @@ namespace OBBDSIIG.Forms.FrmExportar
                     "([Datos de las facturas realizadas].CodEstaDian = '00')";
 
 
-                    using (SqlConnection connection3 = new SqlConnection(Conexion.conexionSQL))
+                    DataTable DtCuenConsu = Conexion.SQLDataTable(SqlCuenConsu);
+
+                    if(DtCuenConsu.Rows.Count <= 0)
                     {
-                        SqlCommand command3 = new SqlCommand(SqlCuenConsu, connection3);
-                        command3.Connection.Open();
-                        TabCuenConsu = command3.ExecuteReader();
+                        SigoProcFac = 1;
+                    }
+                    else
+                    {
 
-                        if (TabCuenConsu.HasRows == false)
-                        {
-                            //'No hay facturas para generar consecutivos
+                        CantiFacElec = 0;
 
-                            SigoProcFac = 1;
-
-                        }
-                        else
+                        foreach (DataRow row in DtCuenConsu.Rows)
                         {
 
-                            CantiFacElec = 0;
 
-                            while (TabCuenConsu.Read())
+                            if (ExportarCentral.CancellationPending == true)
                             {
+                                e.Cancel = true;
+                                Utils.Titulo01 = "Control de ejecución";
+                                Utils.Informa = "Se cancelo la operacion " + "\r";
+                                MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                break;
+                            }
+
+                            contadorProgresBar += 1;
 
 
+                            FacPorta = row["NumFactura"].ToString();
 
-                                if (ExportarCentral.CancellationPending == true)
-                                {
-                                    e.Cancel = true;
-                                    Utils.Titulo01 = "Control de ejecución";
-                                    Utils.Informa = "Se cancelo la operacion " + "\r";
-                                    MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            FunConFac = ConseDocumElectro(CodConseFacE, true, UsaRegis);
+
+                            switch (FunConFac)
+                            {
+                                case "-3":
+                                    Utils.Informa = "Lo siento pero en esta base de datos no se pueden" + "\r";
+                                    Utils.Informa += "registrar más facturas de ventas electrónicas," + "\r";
+                                    Utils.Informa += "porque pasó la longitud permitida del código.";
+                                    MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                    SigoProcFac = 0;
                                     break;
-                                }
+                                case "-2":
+                                    Utils.Informa = "Lo siento pero en esta base de datos no se pueden" + "\r";
+                                    Utils.Informa += "registrar más facturas de ventas electrónicas," + "\r";
+                                    Utils.Informa += "la fecha del último generado es mayor a la del sistema.";
+                                    MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                    SigoProcFac = 0;
+                                    break;
+                                case "-1":
+                                    SigoProcFac = 0;
+                                    break;
+                                case "0":
+                                    //'NO se ha definido el tipo de documento para generar cuentas
+                                    Utils.Informa = "Lo siento pero en esta base de datos no se pueden" + "\r";
+                                    Utils.Informa += "más consecutivos de facturas de ventas electrónicas," + "\r";
+                                    Utils.Informa += "porque el número de comprobante no se encuentra definido.";
+                                    MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                    SigoProcFac = 0;
+                                    break;
+                                default:
 
-                                contadorProgresBar += 1;
+                                    PrefiFacE = PrefijoDocumenCentral(CodConseFacE); //Buscamos el prefijo de factura tradicional
 
+                                    NumFacElec = FunConFac;
 
-                                FacPorta = TabCuenConsu["NumFactura"].ToString();
+                                    //'Validamos si el prefijo tiene una resolución habilitada, y si el consecutivo es valido
 
-                                FunConFac = ConseDocumElectro(CodConseFacE, true, UsaRegis);
+                                    SqlResolFactur = "SELECT PrefiFac, NumResol, FecResol, RanIni, RanFin, TexResol, FecVigen, ResolVigen, CodiModi, FecModi ";
+                                    SqlResolFactur += "FROM [ACDATOXPSQL].[dbo].[Datos resoluciones de facturas] ";
+                                    SqlResolFactur += " WHERE (PrefiFac = N'" + PrefiFacE + " ') AND (ResolVigen = 'True')";
+                                    SqlResolFactur += " ORDER BY FecVigen ";
 
-                                switch (FunConFac)
-                                {
-                                    case "-3":
-                                        Utils.Informa = "Lo siento pero en esta base de datos no se pueden" + "\r";
-                                        Utils.Informa += "registrar más facturas de ventas electrónicas," + "\r";
-                                        Utils.Informa += "porque pasó la longitud permitida del código.";
-                                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                                        SigoProcFac = 0;
-                                        break;
-                                    case "-2":
-                                        Utils.Informa = "Lo siento pero en esta base de datos no se pueden" + "\r";
-                                        Utils.Informa += "registrar más facturas de ventas electrónicas," + "\r";
-                                        Utils.Informa += "la fecha del último generado es mayor a la del sistema.";
-                                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                                        SigoProcFac = 0;
-                                        break;
-                                    case "-1":
-                                        SigoProcFac = 0;
-                                        break;
-                                    case "0":
-                                        //'NO se ha definido el tipo de documento para generar cuentas
-                                        Utils.Informa = "Lo siento pero en esta base de datos no se pueden" + "\r";
-                                        Utils.Informa += "más consecutivos de facturas de ventas electrónicas," + "\r";
-                                        Utils.Informa += "porque el número de comprobante no se encuentra definido.";
-                                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                                        SigoProcFac = 0;
-                                        break;
-                                    default:
+                                    ConectarCentral();
 
-                                        PrefiFacE = PrefijoDocumenCentral(CodConseFacE); //Buscamos el prefijo de factura tradicional
+                                    using (SqlConnection connection = new SqlConnection(Conexion.conexionSQL))
+                                    {
+                                        SqlCommand command = new SqlCommand(SqlResolFactur, connection);
+                                        command.Connection.Open();
+                                        TabResolFactur = command.ExecuteReader();
 
-                                        NumFacElec = FunConFac;
-
-                                        //'Validamos si el prefijo tiene una resolución habilitada, y si el consecutivo es valido
-
-                                        SqlResolFactur = "SELECT PrefiFac, NumResol, FecResol, RanIni, RanFin, TexResol, FecVigen, ResolVigen, CodiModi, FecModi ";
-                                        SqlResolFactur += "FROM [ACDATOXPSQL].[dbo].[Datos resoluciones de facturas] ";
-                                        SqlResolFactur += " WHERE (PrefiFac = N'" + PrefiFacE + " ') AND (ResolVigen = 'True')";
-                                        SqlResolFactur += " ORDER BY FecVigen ";
-
-                                        ConectarCentral();
-
-                                        using (SqlConnection connection = new SqlConnection(Conexion.conexionSQL))
+                                        if (TabResolFactur.HasRows == false)
                                         {
-                                            SqlCommand command = new SqlCommand(SqlResolFactur, connection);
-                                            command.Connection.Open();
-                                            TabResolFactur = command.ExecuteReader();
+                                            Utils.Informa = "Lo siento pero el prefijo de consecutivos " + "\r";
+                                            Utils.Informa += "no tiene registrados los datos de la resolución de" + "\r";
+                                            Utils.Informa += "habilitacion de la DIAN para poder generar facturas electrónicas";
+                                            MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                            SigoProcFac = 0;
+                                            return;
+                                        }
+                                        else
+                                        {
 
-                                            if (TabResolFactur.HasRows == false)
+                                            //'Revisamos si la fecha de vencimineto de la resolución no es mayor a la del sistema
+
+                                            while (TabResolFactur.Read())
                                             {
-                                                Utils.Informa = "Lo siento pero el prefijo de consecutivos " + "\r";
-                                                Utils.Informa += "no tiene registrados los datos de la resolución de" + "\r";
-                                                Utils.Informa += "habilitacion de la DIAN para poder generar facturas electrónicas";
-                                                MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                                                SigoProcFac = 0;
-                                                return;
-                                            }
-                                            else
-                                            {
 
-                                                //'Revisamos si la fecha de vencimineto de la resolución no es mayor a la del sistema
 
-                                                while (TabResolFactur.Read())
+                                                DateTime FecVigen = Convert.ToDateTime(TabResolFactur["FecVigen"]);
+
+                                                string NumResol = TabResolFactur["NumResol"].ToString();
+
+                                                if (FecVigen < Date)
                                                 {
+                                                    //'Deshabilitamos la resolución, haber si ya se encuentra una nueva habilitada
 
 
-                                                    DateTime FecVigen = Convert.ToDateTime(TabResolFactur["FecVigen"]);
+                                                    ConectarCentral();
 
-                                                    string NumResol = TabResolFactur["NumResol"].ToString();
+                                                    Utils.SqlDatos = "UPDATE [ACDATOXPSQL].[dbo].[Datos resoluciones de facturas] SET ResolVigen = 0, CodiModi = '" + UsaRegis + "', " +
+                                                                    "FecModi =  CONVERT(DATETIME, '" + Fecha + "', 102) WHERE PrefiFac = N'" + PrefiFacE + "' AND ResolVigen = 'True' AND  NumResol = '" + NumResol + "' ";
 
 
+                                                    Boolean EstaAct = Conexion.SQLUpdate(Utils.SqlDatos);
 
-                                                    if (FecVigen < Date)
+                                                    SigoProcFac = 0;
+
+                                                }
+                                                else
+                                                {
+                                                    //Si existe una habilitada, revisamos si el consecutivo generado esta dentro del rango
+
+
+                                                    double NumFacElect = Convert.ToDouble(NumFacElec);
+
+                                                    double RanIni = Convert.ToDouble(TabResolFactur["RanIni"]);
+
+                                                    double RanFin = Convert.ToDouble(TabResolFactur["RanFin"]);
+
+
+                                                    if (RanIni <= NumFacElect && NumFacElect <= RanFin)
                                                     {
-                                                        //'Deshabilitamos la resolución, haber si ya se encuentra una nueva habilitada
-
-
-                                                        ConectarCentral();
-
-                                                        Utils.SqlDatos = "UPDATE [ACDATOXPSQL].[dbo].[Datos resoluciones de facturas] SET ResolVigen = 0, CodiModi = '" + UsaRegis + "', " +
-                                                                        "FecModi =  CONVERT(DATETIME, '" + Fecha + "', 102) WHERE PrefiFac = N'" + PrefiFacE + "' AND ResolVigen = 'True' AND  NumResol = '" + NumResol + "' ";
-
-
-                                                        Boolean EstaAct = Conexion.SQLUpdate(Utils.SqlDatos);
-
-                                                        SigoProcFac = 0;
-
+                                                        //Tomamos akgunos datos, para ser grabados en la factura
+                                                        NumResFac = TabResolFactur["NumResol"].ToString();
+                                                        TexResFacElec = TabResolFactur["TexResol"].ToString();
+                                                        SigoProcFac = 1;
+                                                        break;
                                                     }
                                                     else
                                                     {
-                                                        //Si existe una habilitada, revisamos si el consecutivo generado esta dentro del rango
-
-
-                                                        double NumFacElect = Convert.ToDouble(NumFacElec);
-
-                                                        double RanIni = Convert.ToDouble(TabResolFactur["RanIni"]);
-
-                                                        double RanFin = Convert.ToDouble(TabResolFactur["RanFin"]);
-
-
-
-
-                                                        if (RanIni <= NumFacElect && NumFacElect <= RanFin)
-                                                        {
-                                                            //Tomamos akgunos datos, para ser grabados en la factura
-                                                            NumResFac = TabResolFactur["NumResol"].ToString();
-                                                            TexResFacElec = TabResolFactur["TexResol"].ToString();
-                                                            SigoProcFac = 1;
-                                                            break;
-                                                        }
-                                                        else
-                                                        {
-                                                            //El consecutivo esta fuera del rango aprobado, deshabilitela
-                                                            SigoProcFac = 0;
-                                                        }
-
+                                                        //El consecutivo esta fuera del rango aprobado, deshabilitela
+                                                        SigoProcFac = 0;
                                                     }
 
-                                                } // while (TabResolFactur.Read())
-
-                                                if (SigoProcFac == 0)
-                                                {
-                                                    Utils.Informa = "Lo siento pero el prefijo de consecutivos " + "\r";
-                                                    Utils.Informa += "tiene vencida la resolución de habilitación de" + "\r";
-                                                    Utils.Informa += "la DIAN o el consecutivo generado no le permite";
-                                                    Utils.Informa += "generar facturas electrónicas.";
-                                                    MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                                                    break;
                                                 }
-                                            }// if(TabResolFactur.HasRows == false)
-                                        }//Using
 
-                                        TabResolFactur.Close();
+                                            } // while (TabResolFactur.Read())
 
-                                        break;
-                                }//Sinal SWICH
+                                            if (SigoProcFac == 0)
+                                            {
+                                                Utils.Informa = "Lo siento pero el prefijo de consecutivos " + "\r";
+                                                Utils.Informa += "tiene vencida la resolución de habilitación de" + "\r";
+                                                Utils.Informa += "la DIAN o el consecutivo generado no le permite";
+                                                Utils.Informa += "generar facturas electrónicas.";
+                                                MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                                break;
+                                            }
+                                        }// if(TabResolFactur.HasRows == false)
+                                    }//Using
 
-                                if (SigoProcFac == 1)
-                                {
-                                    // 'Haga la actualización de la factura electronica
+                                    TabResolFactur.Close();
 
+                                    break;
+                            }//Sinal SWICH
 
-                                    DateTime FecVenci = DateTime.Now.Date;
-                                    FecVenci = FecVenci.AddDays(Convert.ToInt32(LblDiasVenFac.Text));
-                                    string FecVenciString = FecVenci.ToString("yyyy-MM-dd");
-
-
-
-
-
-                                    Utils.SqlDatos = "UPDATE [ACDATOXPSQL].[dbo].[Datos de las facturas realizadas] SET " +
-                                    "NumFactura = '" + FunConFac + "', " +
-                                    "FechaFac = CONVERT(DATETIME, '" + Fecha + "', 102), " +
-                                    //   '****************  Los siguientes campos se agregan el 13 de octubre de 2020 ***********************************
-                                    "TexResol = '" + TexResFacElec + "', " +
-                                    "FecVenci = CONVERT(DATETIME, '" + FecVenciString + "', 102), " +                                       
-                                    "NumResol = '" + NumResFac + "', " +
-                                    "CodEstaDian = '01', " + //Preparada para enviar a la dian
-                                    "NumFacAntes =  '" + FacPorta + "' ," +
-                                    "PrefiFacElec =  '" + PrefiFacE + "' " +
-                                    "WHERE NumFactura = '" + FacPorta + "' AND PrefiFac = N'" + PfiPor + "' "; //Preguntar
+                            if (SigoProcFac == 1)
+                            {
+                                // 'Haga la actualización de la factura electronica
 
 
-                                    ConectarPortatil();
-
-                                    using (SqlConnection sqlConnection = new SqlConnection(Conexion.conexionSQL))
-                                    {
-                                        SqlCommand command = new SqlCommand(Utils.SqlDatos, sqlConnection);
-
-                                        sqlConnection.Open();
-
-                                        command.ExecuteNonQuery();
-
-                                    }
+                                DateTime FecVenci = DateTime.Now.Date;
+                                FecVenci = FecVenci.AddDays(Convert.ToInt32(LblDiasVenFac.Text));
+                                string FecVenciString = FecVenci.ToString("yyyy-MM-dd");
 
 
-                                    CantiFacElec += 1;
+                                Utils.SqlDatos = "UPDATE [ACDATOXPSQL].[dbo].[Datos de las facturas realizadas] SET " +
+                                "NumFactura = '" + FunConFac + "', " +
+                                "FechaFac = CONVERT(DATETIME, '" + Fecha + "', 102), " +
+                                //   '****************  Los siguientes campos se agregan el 13 de octubre de 2020 ***********************************
+                                "TexResol = '" + TexResFacElec + "', " +
+                                "FecVenci = CONVERT(DATETIME, '" + FecVenciString + "', 102), " +
+                                "NumResol = '" + NumResFac + "', " +
+                                "CodEstaDian = '01', " + //Preparada para enviar a la dian
+                                "NumFacAntes =  '" + FacPorta + "' ," +
+                                "PrefiFacElec =  '" + PrefiFacE + "' " +
+                                "WHERE NumFactura = '" + FacPorta + "' AND PrefiFac = N'" + PfiPor + "' "; //Preguntar
 
 
-                                    //if (EstAct) CantiFacElec += 1;
+                                ConectarPortatil();
+
+                                bool EstAct = Conexion.SQLUpdate(Utils.SqlDatos);
+                                if (EstAct) CantiFacElec += 1;
 
 
-                                }//Final de SigoProcFac = 1
+                            }//Final de SigoProcFac = 1
 
 
-                                ExportarCentral.ReportProgress(contadorProgresBar);
+                            ExportarCentral.ReportProgress(contadorProgresBar);
 
-                            } //Fin While TabCuenConsu
+                        }
 
-                            Utils.Titulo01 = "Control exportar sede central";
-                            Utils.Informa = "Se han preparado " + CantiFacElec + " facturas ";
-                            Utils.Informa += "para ser enviadas a la DIAN.";
-                            MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Utils.Titulo01 = "Control exportar sede central";
+                        Utils.Informa = "Se han preparado " + CantiFacElec + " facturas ";
+                        Utils.Informa += "para ser enviadas a la DIAN.";
+                        MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-
-                        }//Fin if  (TabCuenConsu.HasRows == false)
-
-                        TabCuenConsu.Close();
-
-                    } //Fin Using
-
+                    }
                 }
                 else
                 {
@@ -978,6 +945,7 @@ namespace OBBDSIIG.Forms.FrmExportar
 
                 if (SigoProcFac == 0)
                 {
+                    //No siga
                     return;
                 }
 
@@ -1585,6 +1553,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                                         SqlDataReader TabFacCentra;
 
                                         ConectarCentral();
+
                                         using (SqlConnection connection3 = new SqlConnection(Conexion.conexionSQL))
                                         {
                                             SqlCommand command3 = new SqlCommand(SqlFacCentra, connection3);
@@ -1921,6 +1890,7 @@ namespace OBBDSIIG.Forms.FrmExportar
 
 
                                     }//TabCuentasCen
+
                                 }//Using
 
                                 TabCuenCen.Close();

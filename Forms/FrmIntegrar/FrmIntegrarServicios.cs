@@ -334,7 +334,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                 ConectarCentral();
 
                 Utils.SqlDatos = "SELECT * FROM [BDFARMA].[dbo].[Datos casas laboratorios]";
-
+                                     
                 SqlDataReader CasasLaboratoriosCen, CasasLaboratoriosPor;
 
                 using (SqlConnection connection = new SqlConnection(Conexion.conexionSQL))

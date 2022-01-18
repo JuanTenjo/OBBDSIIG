@@ -777,10 +777,12 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     else
                     {
 
-                        ConectarPortatil();
+                       
 
                         while (TabPacien.Read())
                         {
+
+                            ConectarPortatil();
 
                             if (IntegrarPacientes.CancellationPending == true)
                             {
@@ -1342,7 +1344,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                                                         //Actualizamos digitalizacion de foto modificadas
 
-                                                        SqlBasBioFotmod = "UPDATE [BDBIOMETSQL].[Datos modificados foto] ";
+                                                        SqlBasBioFotmod = "UPDATE [BDBIOMETSQL].[dbo].[Datos modificados foto] ";
                                                         SqlBasBioFotmod = SqlBasBioFotmod + "SET HistorPaci  = '" + CodPacien + "' ";
                                                         SqlBasBioFotmod = SqlBasBioFotmod + "WHERE HistorPaci = N'" + CodPacienPort + "' ";
 
@@ -1350,7 +1352,7 @@ namespace OBBDSIIG.Forms.FrmIntegrar
 
                                                         //Actualizamos digitalizacion de huella
 
-                                                        SqlBasBioHue = "UPDATE [BDBIOMETSQL].[Datos huella digital] ";
+                                                        SqlBasBioHue = "UPDATE [BDBIOMETSQL].[dbo].[Datos huella digital] ";
                                                         SqlBasBioHue = SqlBasBioHue + "SET HistorPaci  = '" + CodPacien + "' ";
                                                         SqlBasBioHue = SqlBasBioHue + "WHERE HistorPaci = N'" + CodPacienPort + "' ";
 

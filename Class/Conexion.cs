@@ -378,6 +378,9 @@ namespace OBBDSIIG.Class
         {
             try
             {
+
+                DataTable dataTable;
+
                 using (sqlConnection = new SqlConnection(conexionSQL))
                 {
                     sqlConnection.Open();
@@ -398,18 +401,20 @@ namespace OBBDSIIG.Class
                         }
                     }
 
-                    DataTable dataTable = new DataTable();
+                    dataTable = new DataTable();
 
                     sqlDataAdapter.Fill(dataTable);
 
-                    return dataTable;
                 }
+
+                return dataTable;
+
             }
             catch (Exception ex)
             {
                 Utils.Titulo01 = "Control de errores de ejecución";
                 Utils.Informa = "Lo siento pero se ha presentado un error" + "\r";
-                Utils.Informa += "en la funcion SQLDataSet" + "\r";
+                Utils.Informa += "en la funcion SlqDataTable" + "\r";
                 Utils.Informa += "Error: " + ex.Message + " - " + ex.StackTrace;
                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;

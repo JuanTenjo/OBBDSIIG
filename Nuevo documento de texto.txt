@@ -1,0 +1,1 @@
+Modificar que solo busqye por indice en [DACONEXTSQL].[dbo].[Datos atencion de la consulta] 

@@ -63,13 +63,13 @@ namespace OBBDSIIG.Forms.FrmExportar
             try
             {
 
-                int mes = DateTime.Now.Month;
+                DateTime fechaMesAntes = DateTime.Now.Date.AddMonths(-1);
 
-                int ano = DateTime.Now.Year;
+                int mes = fechaMesAntes.Month;
 
-                int FechaUnMesAntes2 = mes - 1;
+                int ano = fechaMesAntes.Year;
 
-                DateTime primerDiaMesAntes = new DateTime(ano, FechaUnMesAntes2, 1);
+                DateTime primerDiaMesAntes = new DateTime(ano, mes, 1);
 
                 DateTime ultimoDiaMesAntes = primerDiaMesAntes.AddMonths(1).AddDays(-1);
 
@@ -137,9 +137,6 @@ namespace OBBDSIIG.Forms.FrmExportar
             {
                 CargarDatosUser();
                 CargarRangoFechas();
-
-
-
             }
             catch (Exception ex)
             {
@@ -266,10 +263,10 @@ namespace OBBDSIIG.Forms.FrmExportar
                                 ProgresBar.Minimum = 1;
                                 ProgresBar.Maximum = Total;
                                 LblTotal.Text = Total.ToString();
+                                ExportarHigieneOral.RunWorkerAsync();
                             }
                             else
-                            {
-                                
+                            {                      
                                 Utils.Informa = "Lo siento pero en el rango de fecha " + "\r";
                                 Utils.Informa += "digitado no existen datos para exportar." + "\r";
                                 MessageBox.Show(Utils.Informa, Utils.Titulo01, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -282,11 +279,7 @@ namespace OBBDSIIG.Forms.FrmExportar
 
                         }
 
-
                         if (Conexion.sqlConnection.State == ConnectionState.Open) Conexion.sqlConnection.Close();
-
-
-                        ExportarHigieneOral.RunWorkerAsync();
 
                     }
 
