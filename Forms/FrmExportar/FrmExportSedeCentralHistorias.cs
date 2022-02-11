@@ -1209,7 +1209,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                 "[Datos de los tratamientos].Izq44, [Datos de los tratamientos].Izq45, [Datos de los tratamientos].Izq46, [Datos de los tratamientos].Izq47, " +
                 "[Datos de los tratamientos].Izq48, [Datos de los tratamientos].Izq81, [Datos de los tratamientos].Izq82, [Datos de los tratamientos].Izq83, " +
                 "[Datos de los tratamientos].Izq84, [Datos de los tratamientos].Izq85, [Datos de los tratamientos].Oclusion1, [Datos de los tratamientos].Oclusion2, " +
-                "[Datos de los tratamientos].ObservaODONTO, [Datos de los tratamientos].CodRegistra, [Datos de los tratamientos].FechaRegis, " +
+                "[Datos de los tratamientos].ObservaODONTO, [Datos de los tratamientos].CodRegistra, [Datos de los tratamientos].FechaRegis, [Datos de los tratamientos].FecNotFlu, [Datos de los tratamientos].TipoFluorisis," +
                 "[Datos de los tratamientos].CodModify, [Datos de los tratamientos].FechaModify, [Datos de los tratamientos].Inicial, [Datos de los tratamientos].ActivoT " +
                 "FROM  [DACONEXTSQL].[dbo].[Datos de los tratamientos] INNER JOIN " +
                 " [DACONEXTSQL].[dbo].[Datos atencion de la consulta] ON [Datos de los tratamientos].CodigoAten = [Datos atencion de la consulta].CodConExt " +
@@ -1234,11 +1234,12 @@ namespace OBBDSIIG.Forms.FrmExportar
                         while (TabTratamiento.Read())
                         {
 
-                            ConectarCentral();
-
                             //Revisamos si el número de codigo de atencion existe
                             CodAtenLoc = TabTratamiento["CodigoAten"].ToString();
                             CodTratamiento = TabTratamiento["NumTrataM1"].ToString();
+
+                            ConectarCentral();
+
 
 
                             SqlTratamientoCen = "SELECT * FROM [DACONEXTSQL].[dbo].[Datos de los tratamientos] ";
@@ -2104,12 +2105,8 @@ namespace OBBDSIIG.Forms.FrmExportar
                     else
                     {
 
-                   
-
                         while (TabDetEscAbre.Read())
                         {
-
-                            ConectarCentral();
 
                             //Revisamos si el número de codigo de atencion existe
                             CodConReg = TabDetEscAbre["CodControl"].ToString();
@@ -2121,6 +2118,8 @@ namespace OBBDSIIG.Forms.FrmExportar
                             CodRan = TabDetEscAbre["CodigoRango"].ToString();
 
                             CodItemEscREF = TabDetEscAbre["Item"].ToString();
+
+                            ConectarCentral();
 
                             SqlDetEscAbreCen = "SELECT [Datos detalle escala abreviada].* ";
                             SqlDetEscAbreCen = SqlDetEscAbreCen + "FROM [DACONEXTSQL].[dbo].[Datos detalle escala abreviada] ";
@@ -2220,6 +2219,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                 SqlDetObsDoc += "WHERE ([Datos detalles de observaciones por documento].CodigoAtencion = N'" + CodHistDOD + "')";
 
                 ConectarPortatil();
+
                 using (SqlConnection connection = new SqlConnection(Conexion.conexionSQL))
                 {
                     SqlCommand command = new SqlCommand(SqlDetObsDoc, connection);
@@ -2236,6 +2236,7 @@ namespace OBBDSIIG.Forms.FrmExportar
                         
                         while (TabDetObsDoc.Read())
                         {
+
                             ConectarCentral();
                             //Revisamos si el número de codigo de atencion existe
 
@@ -2320,11 +2321,14 @@ namespace OBBDSIIG.Forms.FrmExportar
                                     "WHERE  (CodigoAtencion = N'" + CodDetObsDoc + "') AND (NumeroDocumento = N'" + CodNumeroDocumento + "') AND (TipoDocumento = N'" + TipoDocRegis + "')  ";
 
                                     Boolean Act = Conexion.SQLUpdate(Utils.SqlDatos);   
+
                                 }
 
-                                TabDetObsDocCen.Close();
-
+                                
                             }//Using
+
+                            TabDetObsDocCen.Close();
+
                         }//While
 
                         FunRegImag = RegistrodeimagenologiaEXP(CodDetObsDoc);

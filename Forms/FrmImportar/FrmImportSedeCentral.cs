@@ -851,7 +851,13 @@ namespace OBBDSIIG.Forms.FrmImportar
                                         "CoberSalud," +
                                         "CodSeSocial," +
                                         "NumFacAten," +
-                                        "DefiCuenta" +
+                                        "DefiCuenta," +
+                                        "FechaSolicita," +
+                                        "HoraSolicita," +
+                                        "FecEntreMedi," +
+                                        "HorEntreMedi," +
+                                        "FormEntrega," +
+                                        "DesAtenUsua" +
                                         ")" +
                                         "VALUES" +
                                         "(" +
@@ -934,7 +940,13 @@ namespace OBBDSIIG.Forms.FrmImportar
                                         "'" + TabCuenConsu["CoberSalud"].ToString() + "'," +
                                         "'" + TabCuenConsu["CodSeSocial"].ToString() + "'," +
                                         "'" + TabCuenConsu["NumFacAten"].ToString() + "'," +
-                                        "'" + TabCuenConsu["DefiCuenta"].ToString() + "')";
+                                        "'" + TabCuenConsu["DefiCuenta"].ToString() + "'," +
+                                        $"{Conexion.ValidarFechaNula(TabCuenConsu["FechaSolicita"].ToString())}" +
+                                        $"{Conexion.ValidarHoraNula(TabCuenConsu["HoraSolicita"].ToString())}" +
+                                        $"{Conexion.ValidarFechaNula(TabCuenConsu["FecEntreMedi"].ToString())}" +
+                                       $"{Conexion.ValidarHoraNula(TabCuenConsu["HorEntreMedi"].ToString())}" +
+                                        "'" + TabCuenConsu["FormEntrega"].ToString() + "'," +
+                                        "'" + TabCuenConsu["DesAtenUsua"].ToString() + "')";
 
                                         Boolean RegisCuenConsu = Conexion.SqlInsert(Utils.SqlDatos);
 

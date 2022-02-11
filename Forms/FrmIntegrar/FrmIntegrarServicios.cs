@@ -332,9 +332,9 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                 contador = 0;
 
                 ConectarCentral();
-
+                 //El Crud y Apie existe en geogra, de resto en BDFARMA
                 Utils.SqlDatos = "SELECT * FROM [BDFARMA].[dbo].[Datos casas laboratorios]";
-                                     
+                     
                 SqlDataReader CasasLaboratoriosCen, CasasLaboratoriosPor;
 
                 using (SqlConnection connection = new SqlConnection(Conexion.conexionSQL))
@@ -428,6 +428,19 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     }//Fin  if (CasasLaboratoriosCen.HasRows == false)
 
                 }//Fin Using
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 ConectarCentral();
 

@@ -317,10 +317,13 @@ namespace OBBDSIIG.Forms.FrmIntegrar
                     else
                     {
 
-                        ConectarPortatil();
+                  
 
                         while (especialidadesCen.Read())
                         {
+
+                            ConectarPortatil();
+
                             //Revisamos si el código interno de la entidad existe
 
                             string codiEspecial = especialidadesCen["CodiEspecial"].ToString();
